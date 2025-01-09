@@ -1,0 +1,31 @@
+import React from "react";
+
+const CartSummary = ({ subtotal, total, promoMessage }) => {
+    return (
+        <div className="bg-white p-6 rounded-lg shadow-sm">
+            <div className="mb-8">
+                <h6 className="text-2xl uppercase">Shopping Info</h6>
+            </div>
+            {promoMessage && (
+                <div className="bg-[#EDE5E1] flex p-2 rounded mb-4">
+                    {promoMessage} <button className="text-[#8B4513] underline ml-2">Use promo code</button>
+                </div>
+            )}
+            <div className="text-lg space-y-2">
+                <div className="flex justify-between">
+                    <span>Subtotal</span>
+                    <span>${subtotal}.00</span>
+                </div>
+                <div className="flex justify-between font-semibold text-xl">
+                    <span>Total</span>
+                    <span>${total}.00</span>
+                </div>
+            </div>
+            <button className="mt-6 w-full bg-[#8B4513] text-white py-2 rounded ">
+                Proceed to Checkout
+            </button>
+        </div>
+    );
+};
+
+export default CartSummary;

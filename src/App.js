@@ -10,6 +10,7 @@ import Login from './components/Auth/Login';
 import SignUp from './components/Auth/SignUp';
 import Wishlist from './components/Wishlist';
 import NotFound from './components/NotFound';
+import Cart from './components/cart/Cart';
 
 
 function App() {
@@ -22,6 +23,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/register" element={<SignUp />} />
+          <Route path="/cart" element={<Cart />} />
+
           <Route path="/details/:id" element={<ProductDetails />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

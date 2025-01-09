@@ -133,7 +133,7 @@ const Home = () => {
 
     return (
         <div>
-                    <Carousel />
+            <Carousel />
             <Container>
                 <div className="mt-12 my-2">
                     <div className="flex justify-between items-center">
