@@ -1,13 +1,35 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from "../../assets/images/logo.png";
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import Avatar from '@mui/material/Avatar';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { AuthContext } from '../../context/AuthContext'; // Import the AuthContext
 
 const Header = () => {
-    const location = useLocation(); // Get the current path
+    const location = useLocation();
+    const { isAuthenticated, logout } = useContext(AuthContext); 
+    const navigate = useNavigate();
+    
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleLogout = () => {
+        logout(); 
+        navigate('/login'); 
+    };
 
     return (
         <div>
@@ -64,9 +86,29 @@ const Header = () => {
                         <Link to="/cart">
                             <ShoppingCartOutlinedIcon sx={{ color: "grey", fontSize: "20px", cursor: "pointer" }} />
                         </Link>
-                        <Link to="/register">
-                            <PersonOutlineOutlinedIcon sx={{ color: "grey", fontSize: "23px", cursor: "pointer" }} />
-                        </Link>
+
+                        {isAuthenticated ? (
+                            <div>
+                                <Avatar
+                                    sx={{ cursor: 'pointer' }}
+                                    onClick={handleMenuOpen}
+                                />
+                                <Menu
+                                    anchorEl={anchorEl}
+                                    open={open}
+                                    onClose={handleMenuClose}
+                                    MenuListProps={{
+                                        'aria-labelledby': 'basic-button',
+                                    }}
+                                >
+                                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                </Menu>
+                            </div>
+                        ) : (
+                            <Link to="/login">
+                                <PersonOutlineOutlinedIcon sx={{ color: "grey", fontSize: "23px", cursor: "pointer" }} />
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>

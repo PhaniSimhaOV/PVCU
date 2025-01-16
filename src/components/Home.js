@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Header from './Layout/Header';
 import { Container } from '@mui/material';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
@@ -9,17 +9,45 @@ import c2 from "../assets/images/c2.png"
 import c3 from "../assets/images/c3.png"
 import c4 from "../assets/images/c4.png"
 
-import na1 from "../assets/images/na1.png"
-import na2 from "../assets/images/na2.png"
-import na3 from "../assets/images/na3.png"
+
 
 import a from "../assets/images/a.png"
 
-import Footer from './Layout/Footer';
 import Carousel from './Carousel';
+import axios from 'axios';
+import { API_URL, IMAGE_URL } from '../constants';
+import { Link } from 'react-router-dom';
 
 
 const Home = () => {
+    const [activeMenu, setActiveMenu] = useState(null);
+
+    const womenMenuRef = useRef(null);
+    const menMenuRef = useRef(null);
+    const electronicsMenuRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                womenMenuRef.current && !womenMenuRef.current.contains(event.target) &&
+                menMenuRef.current && !menMenuRef.current.contains(event.target) &&
+                electronicsMenuRef.current && !electronicsMenuRef.current.contains(event.target)
+            ) {
+                setActiveMenu(null); 
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    const toggleMenu = (menu) => {
+        setActiveMenu(activeMenu === menu ? null : menu); 
+    };
+
     const categories = [
         {
             name: 'Electronics',
@@ -39,101 +67,126 @@ const Home = () => {
         }
     ];
 
-    const newArrivals = [
-        {
-            name: 'Formal Women',
-            imageUrl: na1
-        },
-        {
-            name: 'Formal Men',
-            imageUrl: na2
-        },
-        {
-            name: 'Casual Style',
-            imageUrl: na3
-        },
 
-    ];
 
-    const products = [
-        {
-            id: 1,
-            imageUrl: 'https://m.media-amazon.com/images/I/61eJOdWT34L._SX569_.jpg',
-            rating: 4.5,
-            category: 'Jackets',
-            title: 'Apple iMac 27", 1TB HDD, Retina 5K Display, M3 Max',
-            discount: '-25%',
-            price: '120$',
-            originalPrice: '160$',
-        },
-        {
-            id: 2,
-            imageUrl: 'https://thehouseofrare.com/cdn/shop/products/IMG_0010_51e74518-2782-4b53-8112-a026836a45de.jpg?v=1722671264&_gl=1*1bsrjj5*_up*MQ..*_gs*MQ..&gclid=Cj0KCQiA7NO7BhDsARIsADg_hIZsLqFEJOMHbHM2fPHrlpYxhVwOE8Z4ZzaZX9bY8K1iHGYekbjEE80aAmZyEALw_wcB',
-            rating: 4.5,
-            category: 'Jackets',
-            title: 'Apple iMac 27", 1TB HDD, Retina 5K Display, M3 Max',
-            discount: '-25%',
-            price: '120$',
-            originalPrice: '160$',
-        },
-        {
-            id: 3,
-            imageUrl: 'https://m.media-amazon.com/images/I/61eJOdWT34L._SX569_.jpg',
-            rating: 4.5,
-            category: 'Jackets',
-            title: 'Apple iMac 27", 1TB HDD, Retina 5K Display, M3 Max',
-            discount: '-25%',
-            price: '120$',
-            originalPrice: '160$',
-        },
-        {
-            id: 4,
-            imageUrl: 'https://m.media-amazon.com/images/I/61eJOdWT34L._SX569_.jpg',
-            rating: 4.5,
-            category: 'Jackets',
-            title: 'Apple iMac 27", 1TB HDD, Retina 5K Display, M3 Max',
-            discount: '-25%',
-            price: '120$',
-            originalPrice: '160$',
-        },
-        {
-            id: 5,
-            imageUrl: 'https://m.media-amazon.com/images/I/61eJOdWT34L._SX569_.jpg',
-            rating: 4.5,
-            category: 'Jackets',
-            title: 'Apple iMac 27", 1TB HDD, Retina 5K Display, M3 Max',
-            discount: '-25%',
-            price: '120$',
-            originalPrice: '160$',
-        },
-        {
-            id: 6,
-            imageUrl: 'https://myraymond.com/cdn/shop/files/RMSX12887-B3-1.jpg?v=1714559309',
-            rating: 4.5,
-            category: 'Jackets',
-            title: 'Apple iMac 27", 1TB HDD, Retina 5K Display, M3 Max',
-            discount: '-25%',
-            price: '120$',
-            originalPrice: '160$',
-        }
-        // Add more product objects here
-    ];
 
+    const [product, setProduct] = useState([])
+    const [bestSelling, setBestSelling] = useState([])
+    const [newArrivals, setNewArrivals] = useState([])
     const [currentIndex, setCurrentIndex] = useState(0);
 
+
     const handleForwardClick = () => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % products.length);
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % product.length);
     };
 
     const handleBackwardClick = () => {
-        setCurrentIndex((prevIndex) => (prevIndex - 1 + products.length) % products.length);
+        setCurrentIndex((prevIndex) => (prevIndex - 1 + product.length) % product.length);
     };
 
-    const visibleProducts = products.slice(currentIndex, currentIndex + products.length);
+    const getProducts = async () => {
+        try {
+            const response = await axios.get(`${API_URL}/products?category=flashSales`)
+            setProduct(response.data.products)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    const getBestSellingProducts = async () => {
+        try {
+            const response = await axios.get(`${API_URL}/products?category=bestSelling`)
+            setBestSelling(response.data.products)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const getNewArrivals = async () => {
+        try {
+            const response = await axios.get(`${API_URL}/products?category=newArrivals`)
+            setNewArrivals(response.data.products)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    useEffect(() => {
+        getProducts()
+        getBestSellingProducts()
+        getNewArrivals()
+    }, [])
+
+    const visibleProducts = product && product.slice(currentIndex, currentIndex + product.length);
+
 
     return (
         <div>
+
+
+            <Container>
+                <div className="text-white">
+                    <nav className="flex justify-between items-center p-2">
+                        <div className="space-x-6 flex">
+                            <div className="relative" ref={womenMenuRef}>
+                                <button
+                                    className="text-black"
+                                    onClick={() => toggleMenu('women')}
+                                >
+                                    Women's Fashion
+                                </button>
+                                {activeMenu === 'women' && (
+                                    <div className="z-50 absolute left-0 mt-2.5 bg-white text-black cursor-pointer rounded-sm w-48">
+                                        <ul className="py-2">
+                                            <li className="px-4 py-2 hover:bg-slate-100">Hoodies</li>
+                                            <li className="px-4 py-2 hover:bg-slate-100">Sweatshirts</li>
+                                            <li className="px-4 py-2 hover:bg-slate-100">Tops</li>
+                                            <li className="px-4 py-2 hover:bg-slate-100">Dresses</li>
+                                        </ul>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="relative" ref={menMenuRef}>
+                                <button
+                                    className="text-black"
+                                    onClick={() => toggleMenu('men')}
+                                >
+                                    Men's Fashion
+                                </button>
+                                {activeMenu === 'men' && (
+                                    <div className="z-50 absolute left-0 mt-2.5 bg-white text-black cursor-pointer rounded-sm w-48">
+                                        <ul className="py-2">
+                                            <li className="px-4 py-2 hover:bg-slate-100">Shirts</li>
+                                            <li className="px-4 py-2 hover:bg-slate-100">Pants</li>
+                                            <li className="px-4 py-2 hover:bg-slate-100">Jackets</li>
+                                        </ul>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="relative" ref={electronicsMenuRef}>
+                                <button
+                                    className="text-black"
+                                    onClick={() => toggleMenu('electronics')}
+                                >
+                                    Electronics
+                                </button>
+                                {activeMenu === 'electronics' && (
+                                    <div className="z-50 absolute left-0 mt-2.5 bg-white text-black cursor-pointer rounded-sm w-48">
+                                        <ul className="py-2">
+                                            <li className="px-4 py-2 hover:bg-slate-100">Mobile Phones</li>
+                                            <li className="px-4 py-2 hover:bg-slate-100">Laptops</li>
+                                            <li className="px-4 py-2 hover:bg-slate-100">Headphones</li>
+                                        </ul>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </Container>
             <Carousel />
+
             <Container>
                 <div className="mt-12 my-2">
                     <div className="flex justify-between items-center">
@@ -160,18 +213,18 @@ const Home = () => {
                                     {visibleProducts.map((product) => (
                                         <div key={product.id} className="flex-none w-64 rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative">
                                             <div className="h-72 w-full">
-                                                <a href="#">
+                                                <Link to={`/details/${product._id}`}>
                                                     <img
                                                         className="w-full object-cover h-full dark:hidden"
-                                                        src={product.imageUrl}
-                                                        alt={product.title}
+                                                        src={`${IMAGE_URL}/${product.imageUrl}`}
+                                                        alt={product.name}
                                                     />
                                                     <img
                                                         className="w-full object-cover hidden h-full dark:block"
                                                         src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg"
-                                                        alt={product.title}
+                                                        alt={product.name}
                                                     />
-                                                </a>
+                                                </Link>
                                             </div>
                                             <div className="pt-6 p-3">
                                                 <div className="absolute flex gap-1 top-2 bg-[#8B4513] px-2 py-1 items-center rounded-full">
@@ -245,13 +298,13 @@ const Home = () => {
                                                         href="#"
                                                         className="text-sm font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
                                                     >
-                                                        {product.title}
+                                                        {product.name}
                                                     </a>
                                                     <div className="flex gap-3 items-center my-2">
-                                                        <span className="text-md text-[#8B4513]">{product.discount}</span>
+                                                        <span className="text-md text-[#8B4513]">-{product.discount}%</span>
                                                         <span className="text-md text-[#8B4513]">{product.price}</span>
                                                         <span className="text-xs">
-                                                            MRP: <span className="line-through">{product.originalPrice}</span>
+                                                            MRP: <span className="line-through">{product.original_price}</span>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -326,21 +379,21 @@ const Home = () => {
                         <section className="py-8 antialiased dark:bg-gray-900 md:py-12">
                             <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
                                 <div className="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
-                                    {products.map((product) => (
+                                    {bestSelling.map((product) => (
                                         <div key={product.id} className="rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative">
                                             <div className="h-72  w-full">
-                                                <a href="#">
+                                                <Link to={`/details/${product._id}`}>
                                                     <img
                                                         className="w-full object-cover h-full dark:hidden"
-                                                        src={product.imageUrl}
-                                                        alt={product.title}
+                                                        src={`${IMAGE_URL}/${product.imageUrl}`}
+                                                        alt={product.name}
                                                     />
                                                     <img
                                                         className="w-full object-cover hidden h-full dark:block"
                                                         src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg"
-                                                        alt={product.title}
+                                                        alt={product.name}
                                                     />
-                                                </a>
+                                                </Link>
                                             </div>
                                             <div className="pt-6 p-3">
                                                 <div className="absolute flex gap-1 top-2 bg-[#8B4513] px-2 py-1 items-center rounded-full">
@@ -414,13 +467,13 @@ const Home = () => {
                                                         href="#"
                                                         className="text-sm font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
                                                     >
-                                                        {product.title}
+                                                        {product.name}
                                                     </a>
                                                     <div className="flex gap-3 items-center my-2">
-                                                        <span className="text-md text-[#8B4513]">{product.discount}</span>
+                                                        <span className="text-md text-[#8B4513]">-{product.discount}%</span>
                                                         <span className="text-md text-[#8B4513]">{product.price}</span>
                                                         <span className="text-xs">
-                                                            MRP: <span className="line-through">{product.originalPrice}</span>
+                                                            MRP: <span className="line-through">{product.original_price}</span>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -464,7 +517,6 @@ const Home = () => {
                                 </div>
                             ))}
                         </div>
-                        {/* Button */}
                         <button
                             type="button"
                             className="rounded-md border border-gray-200 px-5 py-2 text-sm focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 text-black bg-white font-medium"
@@ -472,7 +524,6 @@ const Home = () => {
                             Buy Now
                         </button>
                     </div>
-                    {/* Right Section */}
                     <div className="flex justify-center lg:justify-end">
                         <img
                             src={a}
@@ -501,21 +552,21 @@ const Home = () => {
                         <section className="py-8 antialiased md:py-12">
                             <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
                                 <div className="mb-4 flex gap-4 overflow-x-auto">
-                                    {visibleProducts.map((product) => (
+                                    {product.map((product) => (
                                         <div key={product.id} className="flex-none w-64 rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative">
                                             <div className="h-72 w-full">
-                                                <a href="#">
+                                                <Link to={`/details/${product._id}`}>
                                                     <img
                                                         className="w-full object-cover h-full dark:hidden"
-                                                        src={product.imageUrl}
-                                                        alt={product.title}
+                                                        src={`${IMAGE_URL}/${product.imageUrl}`}
+                                                        alt={product.name}
                                                     />
                                                     <img
                                                         className="w-full object-cover hidden h-full dark:block"
                                                         src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg"
-                                                        alt={product.title}
+                                                        alt={product.name}
                                                     />
-                                                </a>
+                                                </Link>
                                             </div>
                                             <div className="pt-6 p-3">
                                                 <div className="absolute flex gap-1 top-2 bg-[#8B4513] px-2 py-1 items-center rounded-full">
@@ -589,13 +640,13 @@ const Home = () => {
                                                         href="#"
                                                         className="text-sm font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
                                                     >
-                                                        {product.title}
+                                                        {product.name}
                                                     </a>
                                                     <div className="flex gap-3 items-center my-2">
-                                                        <span className="text-md text-[#8B4513]">{product.discount}</span>
+                                                        <span className="text-md text-[#8B4513]">-{product.discount}%</span>
                                                         <span className="text-md text-[#8B4513]">{product.price}</span>
                                                         <span className="text-xs">
-                                                            MRP: <span className="line-through">{product.originalPrice}</span>
+                                                            MRP: <span className="line-through">{product.original_price}</span>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -630,7 +681,7 @@ const Home = () => {
                                             <a href="">
                                                 <img
                                                     className="w-full h-full object-cover rounded-lg"
-                                                    src={product.imageUrl}
+                                                    src={`${IMAGE_URL}/${product.imageUrl}`}
                                                     alt={product.name}
                                                 />
                                             </a>
@@ -642,7 +693,6 @@ const Home = () => {
                                         </div>
                                     ))}
                                 </div>
-                                {/* Right Side: Full Height Image */}
                                 <div className="row-span-1">
                                     {newArrivals[2] && (
                                         <div
@@ -652,7 +702,7 @@ const Home = () => {
                                             <a href="">
                                                 <img
                                                     className="w-full h-full object-cover rounded-lg"
-                                                    src={newArrivals[2].imageUrl}
+                                                    src={`${IMAGE_URL}/${newArrivals[2].imageUrl}`}
                                                     alt={newArrivals[2].name}
                                                 />
                                             </a>
