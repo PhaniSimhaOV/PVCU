@@ -37,6 +37,8 @@ const ProductDetails = () => {
 
     const navigate = useNavigate()
 
+    const [isAdded, setIsAdded] = useState(false); // To track if the product is already added
+
     const addToCart = async () => {
         try {
             setLoading(true);
@@ -56,6 +58,21 @@ const ProductDetails = () => {
                 },
             };
 
+            const cartResponse = await axios.get(`${API_URL}/cart/cart-details`, config);
+            const cartItems = cartResponse.data.cart.items;
+
+            const isProductInCart = cartItems.some(
+                (item) => item.productId?._id === product._id && item.size === size
+            );
+
+            console.log(isProductInCart)
+            if (isProductInCart) {
+                setIsAdded(true);
+                toast.error('This product is already in your cart');
+                return; // Prevent adding the product again
+            }
+
+            // If not added, proceed with adding the item to the cart
             await axios.post(
                 `${API_URL}/cart/add`,
                 {
@@ -66,10 +83,11 @@ const ProductDetails = () => {
                 config
             );
 
-            toast.success('Item added to cart successfully'); // Success toast
+            toast.success('Item added to cart successfully');
+            setIsAdded(true); // Mark as added after successful addition
         } catch (error) {
             console.error('Error adding to cart:', error.response?.data || error.message);
-            toast.error('Error adding item to cart'); // Error toast
+            toast.error('Error adding item to cart');
         } finally {
             setLoading(false);
         }
@@ -186,32 +204,20 @@ const ProductDetails = () => {
 
                                 {/* Thumbnail images */}
                                 <div className="grid grid-cols-3 lg:grid-cols-5 gap-2">
-                                    <img
-                                        src={`${IMAGE_URL}/${product.imageUrl}`}
-                                        alt="Thumbnail"
-                                        className="border rounded-lg w-full cursor-pointer h-32"
-                                    />
-                                    <img
-                                        src={`${IMAGE_URL}/${product.imageUrl}`}
-                                        alt="Thumbnail"
-                                        className="border rounded-lg w-full cursor-pointer h-32"
-                                    />
-                                    <img
-                                        src={`${IMAGE_URL}/${product.imageUrl}`}
-                                        alt="Thumbnail"
-                                        className="border rounded-lg w-full cursor-pointer h-32"
-                                    />
-                                    <img
-                                        src={`${IMAGE_URL}/${product.imageUrl}`}
-                                        alt="Thumbnail"
-                                        className="border rounded-lg w-full cursor-pointer h-32"
-                                    />
-                                    <img
-                                        src={`${IMAGE_URL}/${product.imageUrl}`}
-                                        alt="Thumbnail"
-                                        className="border rounded-lg w-full cursor-pointer h-32"
-                                    />
+
+                                    {
+                                        product?.slideImages?.map((sld, index) => (
+                                            <img
+                                                key={index}
+                                                src={`${IMAGE_URL}/${sld}`}
+                                                alt="Thumbnail"
+                                                className="border rounded-lg w-full cursor-pointer h-32"
+                                            />
+                                        ))
+
+                                    }
                                 </div>
+
 
                                 {/* Shipping & Return info */}
                                 <div className="mt-4">
