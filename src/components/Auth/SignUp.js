@@ -61,7 +61,7 @@ const SignUp = () => {
 
                 {/* Right Form Section */}
                 <div className="flex flex-col justify-center md:w-1/2  p-8 md:p-16">
-                    <h1 className="text-4xl font-semibold text-[#3E3E3E] font-mono mb-6">SIGN UP</h1>
+                    <h1 className="text-4xl font-semibold text-[#3E3E3E]  mb-6">SIGN UP</h1>
                     <form className="space-y-6" onSubmit={handleSubmit}>
                         <div>
                             <label

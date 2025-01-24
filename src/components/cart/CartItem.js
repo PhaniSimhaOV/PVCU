@@ -49,7 +49,7 @@ const CartItem = ({ item, updateCart, removeItem }) => {
                 className="w-20 h-20 rounded-lg object-cover"
             />
             <div className="flex-grow">
-                <h3 className="font-semibold text-[#565656] font-mono text-xl">{name}</h3>
+                <h3 className="font-medium  mb-2  text-xl">{name}</h3>
                 <div className="flex items-center space-x-2">
                     <span className="font-normal text-sm">${price}</span>
                     {discount && (

@@ -13,6 +13,7 @@ import Cart from './components/cart/Cart';
 import { AuthContext } from './context/AuthContext';
 import Contact from './components/contact/Contact';
 import AboutUs from './components/About';
+import AllProductsPage from './AllProductsPage';
 
 function App() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -35,10 +36,10 @@ function App() {
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<AboutUs />} />
-
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/products" element={<AllProductsPage />} />
 
           <Route path="/cart" element={<Cart />} />
-
           <Route path="/details/:id" element={<ProductDetails />} />
 
           <Route path="*" element={<NotFound />} />

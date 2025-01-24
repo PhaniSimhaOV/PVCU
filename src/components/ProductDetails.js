@@ -10,9 +10,8 @@ import toast, { Toaster } from 'react-hot-toast';
 const ProductDetails = () => {
     const { id } = useParams();
     const [product, setProduct] = useState()
-    const [size, setSize] = useState('');
+    const [size, setSize] = useState('XS');
     const [quantity, setQuantity] = useState(1);
-    const [cart, setCart] = useState([]);
     const location = useLocation();
     const [loading, setLoading] = useState(false);
 
@@ -240,12 +239,12 @@ const ProductDetails = () => {
 
                             <div>
                                 {/* Product name */}
-                                <h1 className="text-2xl font-bold mb-2 font-mono">{product.name}</h1>
+                                <h1 className="text-2xl font-bold mb-2 ">{product.name}</h1>
                                 <div className="flex flex-col gap-4 mb-4">
                                     {/* Price and Discount */}
                                     <div className='flex gap-2'>
                                         <p className="line-through text-gray-500 text-xl">${product.price}</p>
-                                        <div className="text-white  text-sm  rounded-full bg-[#E90000] px-2 py-0.5">{product.discount}%</div>
+                                        <div className="text-white  text-sm  rounded-full bg-[#8B4513] px-2 py-0.5">{product.discount}%</div>
                                     </div>
                                     <div>
                                         <p className="text-2xl font-medium text-[#8B4513]">${product.original_price}</p>
@@ -268,7 +267,7 @@ const ProductDetails = () => {
                                 </div>
 
                                 {/* Quantity */}
-                                <p className="text-gray-600 mb-2">Quantity:</p>
+                                <p className="text-gray-600 my-4">Quantity:</p>
                                 <div className='flex gap-4 my-2 items-center'>
                                     <div>
                                         <div className="flex items-center gap-4">

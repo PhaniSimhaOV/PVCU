@@ -16,14 +16,14 @@ import a from "../assets/images/a.png"
 import Carousel from './Carousel';
 import axios from 'axios';
 import { API_URL, IMAGE_URL } from '../constants';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import NoFound from './common/NoFound';
 
 
 const Home = () => {
     const [activeMenu, setActiveMenu] = useState(null);
-
+    const navigate = useNavigate()
     const womenMenuRef = useRef(null);
     const menMenuRef = useRef(null);
     const electronicsMenuRef = useRef(null);
@@ -400,6 +400,7 @@ const Home = () => {
                                     </div>
                                     <div className="w-full text-center">
                                         <button
+                                            onClick={() => navigate("/products")}
                                             type="button"
                                             className="rounded-sm border border-gray-200 px-5 py-2 text-sm font-normal focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 text-white bg-[#8B4513]"
                                         >
@@ -565,6 +566,7 @@ const Home = () => {
                                     </div>
                                     <div className="w-full text-center">
                                         <button
+                                            onClick={() => navigate("/products")}
                                             type="button"
                                             className="rounded-sm border border-gray-200 px-5 py-2 text-sm font-normal focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 text-white bg-[#8B4513]"
                                         >
@@ -583,7 +585,7 @@ const Home = () => {
                     {/* Left Section */}
                     <div className="text-white space-y-6">
                         <div className=" text-sm ">Categories</div>
-                        <h1 className="text-4xl lg:text-5xl font-bold font-mono">
+                        <h1 className="text-4xl lg:text-5xl font-bold ">
                             Enhance Your Winter Wardrobe
                         </h1>
                         {/* Countdown Timer */}
@@ -723,6 +725,7 @@ const Home = () => {
                                     </div>
                                     <div className="w-full text-center">
                                         <button
+                                            onClick={() => navigate("/products")}
                                             type="button"
                                             className="rounded-sm border border-gray-200 px-5 py-2 text-sm font-normal focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 text-white bg-[#8B4513]"
                                         >
@@ -751,7 +754,7 @@ const Home = () => {
                             ) : (
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                     <div className="grid grid-rows-2 gap-4">
-                                        {newArrivals.slice(0, 2).map((product) => (
+                                        {newArrivals.slice(1, 3).map((product) => (
                                             <div
                                                 key={product.id}
                                                 className="rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative"
@@ -763,27 +766,27 @@ const Home = () => {
                                                         alt={product.name}
                                                     />
                                                 </a>
-                                                <div className="w-full text-center absolute bottom-3 text-3xl text-white font-mono uppercase">
+                                                <div className="w-full text-center absolute bottom-3 text-3xl text-white  uppercase">
                                                     {product.name}
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
                                     <div className="row-span-1">
-                                        {newArrivals[2] && (
+                                        {newArrivals[0] && (
                                             <div
-                                                key={newArrivals[2].id}
+                                                key={newArrivals[0].id}
                                                 className="rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative h-full"
                                             >
                                                 <a href="">
                                                     <img
                                                         className="w-full h-full object-cover rounded-lg"
-                                                        src={`${IMAGE_URL}/${newArrivals[2].imageUrl}`}
-                                                        alt={newArrivals[2].name}
+                                                        src={`${IMAGE_URL}/${newArrivals[0].imageUrl}`}
+                                                        alt={newArrivals[0].name}
                                                     />
                                                 </a>
-                                                <div className="w-full text-center absolute bottom-3 text-3xl text-white font-mono uppercase">
-                                                    {newArrivals[2].name}
+                                                <div className="w-full text-center absolute bottom-3 text-3xl text-white  uppercase">
+                                                    {newArrivals[0].name}
                                                 </div>
                                             </div>
                                         )}

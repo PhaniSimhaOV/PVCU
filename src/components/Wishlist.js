@@ -4,6 +4,7 @@ import { API_URL, IMAGE_URL } from '../constants';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import NoFound from "../components/common/NoFound"
+import { Link } from 'react-router-dom';
 
 const Wishlist = () => {
     const [wishlist, setWishlist] = useState([]);
@@ -191,7 +192,7 @@ const Wishlist = () => {
                                                     className="flex-none w-64 rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative"
                                                 >
                                                     <div className="h-72 w-full">
-                                                        <a href="#">
+                                                        <Link to={`/details/${product.productId._id}`}>
                                                             <img
                                                                 className="w-full object-cover h-full dark:hidden"
                                                                 src={`${IMAGE_URL}/${product?.productId?.imageUrl}`}
@@ -202,7 +203,7 @@ const Wishlist = () => {
                                                                 src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg"
                                                                 alt={product?.productId?.name}
                                                             />
-                                                        </a>
+                                                        </Link>
                                                     </div>
                                                     <div className="pt-6 p-3">
                                                         <div className="absolute flex gap-1 top-2 bg-[#8B4513] px-2 py-1 items-center rounded-full">
