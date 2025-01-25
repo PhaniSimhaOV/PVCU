@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from "react";
 import { Container, Pagination, Skeleton } from "@mui/material";
@@ -21,14 +22,32 @@ const Accordion = ({ title, children }) => {
                 onClick={() => setIsOpen(!isOpen)}
             >
                 {title}
-                <span className="text-xs">{isOpen ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}</span>
+                <span className="text-xs">{isOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}</span>
             </button>
             {isOpen && <div className="px-4 pb-4">{children}</div>}
         </div>
     );
 };
 
-const FilterSidebar = () => {
+const FilterSidebar = ({ selectedSizes, setSelectedSizes, setPriceRange,priceRange }) => {
+    const toggleSize = (size) => {
+        setSelectedSizes((prev) =>
+            prev.includes(size) ? prev.filter((s) => s !== size) : [...prev, size]
+        );
+    };
+    const handlePriceChange = (min, max) => {
+        if (priceRange && priceRange.min === min && priceRange.max === max) {
+            setPriceRange({ min: null, max: null }); 
+        } else {
+            setPriceRange({ min, max });
+        }
+    };
+    
+    const priceRanges = [
+        { label: "$100 - $1000", min: 100, max: 1000 },
+        { label: "$1001 - $5000", min: 1001, max: 5000 }
+    ];
+
     return (
 
         <div className="w-64 border-r my-8 pr-2 space-y-4">
@@ -57,14 +76,16 @@ const FilterSidebar = () => {
 
             <Accordion title="Price">
                 <div className="space-y-2">
-                    <label className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" />
-                        <span>$100 - $1000</span>
-                    </label>
-                    <label className="flex items-center space-x-2">
-                        <input type="checkbox" className="rounded" />
-                        <span>$1001 - $5000</span>
-                    </label>
+                    {priceRanges.map((range) => (
+                        <label
+                            key={`${range.min}-${range.max}`}
+                            className="flex items-center space-x-2 cursor-pointer"
+                            onClick={() => handlePriceChange(range.min, range.max)}
+                        >
+                            <input onChange={() => {}} type="checkbox" checked={priceRange && priceRange.min === range.min && priceRange.max === range.max} className="rounded" />
+                            <span>{range.label}</span>
+                        </label>
+                    ))}
                 </div>
             </Accordion>
 
@@ -73,7 +94,9 @@ const FilterSidebar = () => {
                     {["XS", "S", "M", "L", "XL", "XXL"].map((size) => (
                         <button
                             key={size}
-                            className="px-4 py-1 border rounded-full hover:bg-gray-100"
+                            className={`px-4 py-1 border rounded-full ${selectedSizes.includes(size) ? "bg-gray-200" : "hover:bg-gray-100"
+                                }`}
+                            onClick={() => toggleSize(size)}
                         >
                             {size}
                         </button>
@@ -98,7 +121,7 @@ const ProductGrid = ({ bestSelling, loading }) => {
         } catch (error) {
             // toast.error(error.response.data.message)
             console.error('Error adding to wishlist', error);
-            
+
         }
     };
 
@@ -249,13 +272,18 @@ const AllProductsPage = () => {
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1); // Current page state
     const [totalProducts, setTotalProducts] = useState(0); // Total products from API
+    const [selectedSizes, setSelectedSizes] = useState([]);
     const productsPerPage = 8; // Number of products per page
+    const [priceRange, setPriceRange] = useState({ min: null, max: null });
+    console.log("PriceRange",priceRange)
 
     const getBestSellingProducts = async (page = 1) => {
         setLoading(true);
         try {
+            const sizesQuery = selectedSizes.join(",");
+            const priceQuery = priceRange.min && priceRange.max ? `&price_min=${priceRange.min}&price_max=${priceRange.max}` : '';
             const response = await axios.get(
-                `${API_URL}/products?pagination=true&page=${page}&limit=${productsPerPage}`
+                `${API_URL}/products?pagination=true&page=${page}&limit=${productsPerPage}&sizes=${sizesQuery}${priceQuery}`
             );
             setBestSelling(response.data.products);
             setTotalProducts(response.data.pagination.totalItems); // Assuming the API provides the total count
@@ -268,7 +296,7 @@ const AllProductsPage = () => {
 
     useEffect(() => {
         getBestSellingProducts(currentPage);
-    }, [currentPage]);
+    }, [currentPage, selectedSizes, priceRange]);
 
     const totalPages = Math.ceil(totalProducts / productsPerPage);
 
@@ -281,7 +309,7 @@ const AllProductsPage = () => {
             <div className="container mx-auto p-4 my-6">
                 <h2 className="text-3xl font-medium">All Products</h2>
                 <div className="flex">
-                    <FilterSidebar />
+                    <FilterSidebar setPriceRange={setPriceRange} priceRange={priceRange} selectedSizes={selectedSizes} setSelectedSizes={setSelectedSizes} />
                     <div className="flex-1">
                         <div className="p-4 flex flex-col md:flex-row lg:flex-row justify-between items-center">
                             <p className="text-gray-500 mt-2">

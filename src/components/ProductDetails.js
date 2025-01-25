@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { CircularProgress, Container, Skeleton } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
@@ -10,16 +11,19 @@ import toast, { Toaster } from 'react-hot-toast';
 const ProductDetails = () => {
     const { id } = useParams();
     const [product, setProduct] = useState()
-    const [size, setSize] = useState('XS');
+    const [size, setSize] = useState('S');
     const [quantity, setQuantity] = useState(1);
     const location = useLocation();
+    const [previewImage, setPreviewImage] = useState('');
     const [loading, setLoading] = useState(false);
 
     const getProductsById = async () => {
         if (id) {
             try {
                 const response = await axios.get(`${API_URL}/products/get/${id}`)
+                const fetchedProduct = response.data.product;
                 setProduct(response.data.product)
+                setPreviewImage(`${IMAGE_URL}/${fetchedProduct.imageUrl}`);
             } catch (err) {
                 console.log(err);
             }
@@ -45,9 +49,7 @@ const ProductDetails = () => {
             const token = localStorage.getItem('token');
             if (!token) {
                 toast.error('Please log in to add items to your cart');
-                setTimeout(() => {
-                    navigate("/login");
-                }, 3000);
+
                 return;
             }
 
@@ -64,14 +66,12 @@ const ProductDetails = () => {
                 (item) => item.productId?._id === product._id && item.size === size
             );
 
-            console.log(isProductInCart)
             if (isProductInCart) {
                 setIsAdded(true);
                 toast.error('This product is already in your cart');
-                return; // Prevent adding the product again
+                return;
             }
 
-            // If not added, proceed with adding the item to the cart
             await axios.post(
                 `${API_URL}/cart/add`,
                 {
@@ -129,7 +129,6 @@ const ProductDetails = () => {
                                     <Skeleton variant="rectangular" width="100%" height="120px" />
                                 </div>
 
-                                {/* Shipping & Return info */}
                                 <div className="mt-4">
                                     <div className="flex items-center gap-3 px-2 py-3 border bg-[#F2F2F2]">
                                         <Skeleton variant="circular" width={24} height={24} />
@@ -149,10 +148,8 @@ const ProductDetails = () => {
                             </div>
 
                             <div>
-                                {/* Product name */}
                                 <Skeleton width="300px" height="30px" />
                                 <div className="flex flex-col gap-4 mb-4">
-                                    {/* Price and Discount */}
                                     <div className='flex gap-2'>
                                         <Skeleton width="80px" height="30px" />
                                         <Skeleton variant="rectangular" width={50} height={30} />
@@ -161,10 +158,8 @@ const ProductDetails = () => {
                                         <Skeleton width="120px" height="30px" />
                                     </div>
                                 </div>
-                                {/* Product Description */}
                                 <Skeleton width="300px" height="20px" />
                                 <Skeleton width="400px" height="50px" />
-                                {/* Size Selection */}
                                 <Skeleton width="100px" height="20px" />
                                 <div className="grid grid-cols-4 lg:grid-cols-6 items-center gap-4">
                                     <Skeleton variant="rectangular" width={60} height={40} />
@@ -192,16 +187,14 @@ const ProductDetails = () => {
 
                         <div className="grid lg:grid-cols-2 gap-8">
                             <div>
-                                {/* Product image */}
                                 <div className="border rounded-lg overflow-hidden mb-4">
                                     <img
-                                        src={`${IMAGE_URL}/${product.imageUrl}`}
+                                        src={`${previewImage}`}
                                         alt="White Casual T-Shirt"
                                         className="w-full object-cover h-1/2"
                                     />
                                 </div>
 
-                                {/* Thumbnail images */}
                                 <div className="grid grid-cols-3 lg:grid-cols-5 gap-2">
 
                                     {
@@ -210,6 +203,7 @@ const ProductDetails = () => {
                                                 key={index}
                                                 src={`${IMAGE_URL}/${sld}`}
                                                 alt="Thumbnail"
+                                                onClick={() => setPreviewImage(`${IMAGE_URL}/${sld}`)}
                                                 className="border rounded-lg w-full cursor-pointer h-32"
                                             />
                                         ))
@@ -253,18 +247,22 @@ const ProductDetails = () => {
                                 {/* Product Description */}
                                 <p className="text-gray-600 mb-4">{product.description}</p>
                                 {/* Size Selection */}
-                                <p className="text-gray-600 mb-2">Size:</p>
-                                <div className="grid grid-cols-4 lg:grid-cols-6 items-center gap-4">
-                                    {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((sizeOption) => (
-                                        <button
-                                            key={sizeOption}
-                                            className={`px-4 py-2 border rounded-lg ${size === sizeOption ? 'bg-[#8B4513] text-white' : 'hover:bg-gray-100'}`}
-                                            onClick={() => setSize(sizeOption)}
-                                        >
-                                            {sizeOption}
-                                        </button>
-                                    ))}
-                                </div>
+                                {
+                                    product.sizes?.length > 0 && <>
+                                        <p className="text-gray-600 mb-2">Size:</p>
+                                        <div className="grid grid-cols-4 lg:grid-cols-6 items-center gap-4">
+                                            {product.sizes.map((sizeOption) => (
+                                                <button
+                                                    key={sizeOption.size}
+                                                    className={`px-4 py-2 border rounded-lg ${size === sizeOption.size ? 'bg-[#8B4513] text-white' : 'hover:bg-gray-100'}`}
+                                                    onClick={() => setSize(sizeOption.size)}
+                                                >
+                                                    {sizeOption.size}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </>
+                                }
 
                                 {/* Quantity */}
                                 <p className="text-gray-600 my-4">Quantity:</p>
@@ -278,7 +276,7 @@ const ProductDetails = () => {
                                     </div>
                                     <button onClick={addToCart} className="w-full bg-[#8B4513] text-white py-3 rounded-lg ">
                                         {loading ? (
-                                            <CircularProgress size={24} color="inherit" /> // Show Circular Progress
+                                            <CircularProgress size={24} color="inherit" />
                                         ) : (
                                             'ADD TO CART'
                                         )}

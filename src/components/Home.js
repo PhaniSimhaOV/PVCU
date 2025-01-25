@@ -127,6 +127,10 @@ const Home = () => {
     const visibleProducts = product && product.slice(currentIndex, currentIndex + product.length);
     const addToWishlist = async (productId) => {
         const token = localStorage.getItem('token');
+        if (!token) {
+            toast.error('Please log in to add items to your wishlist');
+            return;
+        }
         try {
             const response = await axios.post(
                 `${API_URL}/wishlist/add`,
@@ -310,7 +314,8 @@ const Home = () => {
                             </div>
                         </div>
                     ) : visibleProducts?.length === 0 ? (
-                        <NoFound name={"Products"} />
+                        // <NoFound name={"Products"} />
+                        <></>
                     ) : (
                         <div className="today_flash_sale">
                             <section className="py-8 antialiased md:py-12">
@@ -479,7 +484,8 @@ const Home = () => {
                             </div>
                         </div>
                     ) : bestSelling?.length === 0 ? (
-                        <NoFound name={"Products"} />
+                        // <NoFound name={"Products"} />
+                        <></>
                     ) : (
                         <div>
                             <section className="py-8 antialiased dark:bg-gray-900 md:py-12">
@@ -635,7 +641,8 @@ const Home = () => {
                             </section>
                         </div>
                     ) : visibleProducts?.length === 0 ? (
-                        <NoFound name={"Products"} />
+                        // <NoFound name={"Products"} />
+                        <></>
                     ) : (
                         <div className="today_flash_sale">
                             <section className="py-8 antialiased md:py-12">
@@ -750,7 +757,8 @@ const Home = () => {
                             {loading ? (
                                 skeletons
                             ) : newArrivals?.length === 0 ? (
-                                <NoFound name="New Arrivals" />
+                                // <NoFound name="New Arrivals" />
+                                <></>
                             ) : (
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                     <div className="grid grid-rows-2 gap-4">
