@@ -272,7 +272,7 @@ const Wishlist = () => {
             </Container>
 
 
-            <div className='bg-[#F2F2F2]'>
+            {/* <div className='bg-[#F2F2F2]'>
                 <Container>
                     <div className="mt-12 py-6 my-2">
                         <div className="flex justify-between items-center">
@@ -398,7 +398,7 @@ const Wishlist = () => {
                         </div>
                     </div>
                 </Container>
-            </div>
+            </div> */}
         </div>
     )
 }

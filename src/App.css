@@ -12,3 +12,16 @@
       opacity: 1;
     }
   }
+  .price::-webkit-scrollbar{
+    width: 10px;
+  }
+
+  .price::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    border-radius: 5px;
+}
+
+.price::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}

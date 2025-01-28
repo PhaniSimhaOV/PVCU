@@ -7,14 +7,14 @@ import axios from "axios";
 import NoFound from "./components/common/NoFound";
 import debounce from 'lodash.debounce';
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 
 
-const Accordion = ({ title, children,isArrow=true }) => {
+const Accordion = ({ title, children, isArrow = true }) => {
     const [isOpen, setIsOpen] = useState(true);
 
     return (
@@ -32,6 +32,7 @@ const Accordion = ({ title, children,isArrow=true }) => {
 };
 
 const FilterSidebar = ({ selectedSizes, setSelectedSizes, setPriceRange, priceRange, handleCategoryChange, selectedCategories, handleGenderChange, selectedGender }) => {
+    const [filters, setFilters] = useState({})
     const toggleSize = (size) => {
         setSelectedSizes((prev) =>
             prev.includes(size) ? prev.filter((s) => s !== size) : [...prev, size]
@@ -46,11 +47,24 @@ const FilterSidebar = ({ selectedSizes, setSelectedSizes, setPriceRange, priceRa
     };
 
     const priceRanges = [
-        { label: "$100 - $1000", min: 100, max: 1000 },
-        { label: "$1001 - $5000", min: 1001, max: 5000 }
+        { label: "100 - 1000", min: 100, max: 1000 },
+        { label: "1001 - 5000", min: 1001, max: 5000 },
+        { label: "100 - 100", min: 100, max: 100 },
+        { label: "1001 - 5000", min: 1001, max: 5000 },
+        { label: "5001 - 10000", min: 5001, max: 10000 },
+        { label: "10001 - 15000", min: 10001, max: 15000 },
+        { label: "Above 15000", min: 15001, max: Infinity }
     ];
-    const categories = ["Dress", "Shirt", "Jackets", "Pants"];
-    const gender = ["Woman", "Man", "Boys", "Girls"];
+    const getFilters = async () => {
+        try {
+            const response = await axios.get(`${API_URL}/filters`)
+            setFilters(response.data)
+
+        } catch (e) { }
+    }
+    useEffect(() => {
+        getFilters()
+    }, [])
 
     return (
 
@@ -58,38 +72,42 @@ const FilterSidebar = ({ selectedSizes, setSelectedSizes, setPriceRange, priceRa
             <h3 className="text-md bg-[#E8E1DE] p-2">CATEGORY</h3>
             <Accordion isArrow={false}>
                 <div className="space-y-2">
-                    {gender.map((category) => (
-                        <label key={category} className="flex items-center space-x-2">
-                            <input
-                                type="checkbox"
-                                className="rounded"
-                                onChange={() => handleGenderChange(category)}
-                                checked={selectedGender.includes(category)}
-                            />
-                            <span>{category}</span>
-                        </label>
+                    {filters?.length > 0 && filters?.map((category) => (
+                        category?.category === "gender" && category?.values.map((value) => (
+                            <label key={value} className="flex items-center space-x-2">
+                                <input
+                                    type="checkbox"
+                                    className="rounded"
+                                    onChange={() => handleGenderChange(value)}
+                                    checked={selectedGender.includes(value)}
+                                />
+                                <span>{value}</span>
+                            </label>
+                        ))
                     ))}
                 </div>
             </Accordion>
 
             <Accordion title="Categories">
-                <div className="space-y-2">
-                    {categories.map((category) => (
-                        <label key={category} className="flex items-center space-x-2">
-                            <input
-                                type="checkbox"
-                                className="rounded"
-                                onChange={() => handleCategoryChange(category)}
-                                checked={selectedCategories.includes(category)}
-                            />
-                            <span>{category}</span>
-                        </label>
+                <div className="price space-y-2 h-32 overflow-y-scroll">
+                    {filters?.length > 0 && filters?.map((category) => (
+                        category?.category === "categories" && category?.values.map((value) => (
+                            <label key={value} className="flex items-center space-x-2">
+                                <input
+                                    type="checkbox"
+                                    className="rounded"
+                                    onChange={() => handleCategoryChange(value)}
+                                    checked={selectedCategories.includes(value)}
+                                />
+                                <span>{value}</span>
+                            </label>
+                        ))
                     ))}
                 </div>
             </Accordion>
 
             <Accordion title="Price">
-                <div className="space-y-2">
+                <div className="price space-y-2 h-32 overflow-y-scroll">
                     {priceRanges.map((range) => (
                         <label
                             key={`${range.min}-${range.max}`}
@@ -105,15 +123,18 @@ const FilterSidebar = ({ selectedSizes, setSelectedSizes, setPriceRange, priceRa
 
             <Accordion title="Size">
                 <div className="grid grid-cols-3 gap-2">
-                    {["XS", "S", "M", "L", "XL", "XXL"].map((size) => (
-                        <button
-                            key={size}
-                            className={`px-4 py-1 border rounded-full ${selectedSizes.includes(size) ? "bg-gray-200" : "hover:bg-gray-100"
-                                }`}
-                            onClick={() => toggleSize(size)}
-                        >
-                            {size}
-                        </button>
+
+                    {filters?.length > 0 && filters?.map((category) => (
+                        category?.category === "sizes" && category?.values?.map((size) => (
+                            <button
+                                key={size}
+                                className={`px-4 py-1 border rounded-full ${selectedSizes.includes(size) ? "bg-gray-200" : "hover:bg-gray-100"
+                                    }`}
+                                onClick={() => toggleSize(size)}
+                            >
+                                {size}
+                            </button>
+                        ))
                     ))}
                 </div>
             </Accordion>
@@ -121,7 +142,7 @@ const FilterSidebar = ({ selectedSizes, setSelectedSizes, setPriceRange, priceRa
     );
 };
 
-const ProductGrid =  React.memo(({ bestSelling, loading }) => {
+const ProductGrid = React.memo(({ bestSelling, loading }) => {
     const addToWishlist = async (productId) => {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -294,6 +315,14 @@ const AllProductsPage = () => {
     const productsPerPage = 8; // Number of products per page
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedGender, setSelectedGender] = useState([]);
+    const location = useLocation();
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const category = params.get('category');
+        if (category) {
+            setSelectedCategories([category]); 
+        }
+    }, [location.search])
 
     const [priceRange, setPriceRange] = useState({ min: null, max: null });
 
@@ -314,11 +343,11 @@ const AllProductsPage = () => {
             console.log(e);
             setLoading(false);
         }
-    },500);
+    }, 500);
 
     useEffect(() => {
         getBestSellingProducts(currentPage);
-    }, [currentPage, selectedSizes, priceRange,selectedGender,selectedCategories]);
+    }, [currentPage, selectedSizes, priceRange, selectedGender, selectedCategories]);
 
     const totalPages = Math.ceil(totalProducts / productsPerPage);
 
@@ -359,9 +388,9 @@ const AllProductsPage = () => {
                             <p className="text-gray-500 mt-2">
                                 {`Showing ${bestSelling.length} of ${totalProducts} results`}
                             </p>
-                            <select className="border w-full md:w-ft lg:w-fit mt-4 p-2 rounded">
+                            {/* <select className="border w-full md:w-ft lg:w-fit mt-4 p-2 rounded">
                                 <option>Sort by: Avg Customer Reviews</option>
-                            </select>
+                            </select> */}
                         </div>
                         <ProductGrid loading={loading} bestSelling={bestSelling} />
                         {/* MUI Pagination Controls */}

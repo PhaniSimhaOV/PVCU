@@ -210,7 +210,24 @@ const Home = () => {
             </div>
         </div>
     );
+    const [filters, setFilters] = useState({})
+    const getFilters = async () => {
+        try {
+            const response = await axios.get(`${API_URL}/filters`)
+            setFilters(response.data)
 
+        } catch (e) { }
+    }
+    useEffect(() => {
+        getFilters()
+    }, [])
+
+    const handleNavigate = (value) => {
+        navigate({
+            pathname: '/products', 
+            search: `?category=${value}`, // Add more parameters as needed
+        });
+    }
     return (
         <div>
 
@@ -222,7 +239,7 @@ const Home = () => {
                 <div className="text-white">
                     <nav className="flex justify-between items-center p-2">
                         <div className="space-x-6 flex">
-                            <div className="relative" ref={womenMenuRef}>
+                            {/* <div className="relative" ref={womenMenuRef}>
                                 <button
                                     className="text-black"
                                     onClick={() => toggleMenu('women')}
@@ -239,27 +256,32 @@ const Home = () => {
                                         </ul>
                                     </div>
                                 )}
-                            </div>
-
+                            </div> */}
                             <div className="relative" ref={menMenuRef}>
                                 <button
                                     className="text-black"
                                     onClick={() => toggleMenu('men')}
                                 >
-                                    Men's Fashion
+                                    Fashion & Clothing
                                 </button>
                                 {activeMenu === 'men' && (
                                     <div className="z-50 absolute left-0 mt-2.5 bg-white text-black cursor-pointer rounded-sm w-48">
                                         <ul className="py-2">
-                                            <li className="px-4 py-2 hover:bg-slate-100">Shirts</li>
-                                            <li className="px-4 py-2 hover:bg-slate-100">Pants</li>
-                                            <li className="px-4 py-2 hover:bg-slate-100">Jackets</li>
+                                            {filters?.length > 0 && filters?.map((category) => (
+                                                category?.category === "categories" && category?.values.map((value) => (
+                                                    <li onClick={() => handleNavigate(value)} className="px-4 py-2 hover:bg-slate-100">{value}</li>
+                                                ))
+                                            ))}
+
                                         </ul>
                                     </div>
                                 )}
                             </div>
 
-                            <div className="relative" ref={electronicsMenuRef}>
+
+
+
+                            {/* <div className="relative" ref={electronicsMenuRef}>
                                 <button
                                     className="text-black"
                                     onClick={() => toggleMenu('electronics')}
@@ -275,7 +297,7 @@ const Home = () => {
                                         </ul>
                                     </div>
                                 )}
-                            </div>
+                            </div> */}
                         </div>
                     </nav>
                 </div>
