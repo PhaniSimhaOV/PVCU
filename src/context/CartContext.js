@@ -1,7 +1,4 @@
 import React, { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
-import { API_URL } from '../constants';
-
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
@@ -9,28 +6,6 @@ export const CartProvider = ({ children }) => {
     const [subtotal, setSubtotal] = useState(0);
     const [total, setTotal] = useState(0);
 
-    // Fetch cart items from the API
-    useEffect(() => {
-        const fetchCart = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                const config = {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                };
-
-                const response = await axios.get(`${API_URL}/cart/cart-details`, config);
-                setCartItems(response.data.cart.items);  // Assuming the cart structure has a field `items`
-            } catch (error) {
-                console.error('Error fetching cart:', error);
-            }
-        };
-
-        fetchCart();
-    }, [cartItems]);
-
-    // Calculate the subtotal and total based on cart items
     const calculateCart = (items) => {
         let subtotal = 0;
         items.forEach(item => {
@@ -67,7 +42,7 @@ export const CartProvider = ({ children }) => {
     };
 
     return (
-        <CartContext.Provider value={{ cartItems, subtotal, total, updateCart, removeItem }}>
+        <CartContext.Provider value={{ cartItems, subtotal, total, updateCart, removeItem ,setCartItems}}>
             {children}
         </CartContext.Provider>
     );

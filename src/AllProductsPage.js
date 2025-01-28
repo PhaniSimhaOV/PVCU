@@ -322,7 +322,7 @@ const AllProductsPage = () => {
         if (category) {
             setSelectedCategories([category]); 
         }
-    }, [location.search])
+    }, [])
 
     const [priceRange, setPriceRange] = useState({ min: null, max: null });
 
