@@ -3,9 +3,11 @@ import { useCart } from "../context/CartContext"; // Import the custom hook from
 import { API_URL, IMAGE_URL } from "../constants";
 import payment from "../assets/images/payment.png";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutForm = () => {
-  const { cartItems, subtotal, total } = useCart(); // Fetch cart data from context
+  const { cartItems, subtotal, total, setCartItems } = useCart(); // Fetch cart data from context
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -16,6 +18,7 @@ const CheckoutForm = () => {
     zip: "",
   });
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   // Handle form input changes
   const handleInputChange = (e) => {
@@ -80,7 +83,17 @@ const CheckoutForm = () => {
               }
             );
 
-            alert(paymentVerification.data.message); // Show success message
+            toast.success(paymentVerification.data.message);
+            setCartItems([])
+            await axios.delete(`${API_URL}/cart/delete/clear-cart`, {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            });
+            setTimeout(() => {
+              navigate("/cart"); 
+            }, 3000);
+
           } catch (error) {
             alert("Payment verification failed. Please try again."); // Show error
             console.error(error);
@@ -108,6 +121,10 @@ const CheckoutForm = () => {
 
   return (
     <div className="min-h-screen p-8">
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+      />
       <div className="">
         <form onSubmit={handlePayment} className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
 
@@ -137,7 +154,7 @@ const CheckoutForm = () => {
                   className="border border-black px-3 py-2"
                   value={formData.country}
                   name="country"
-                required
+                  required
 
                   onChange={handleInputChange}
                 >
@@ -148,7 +165,7 @@ const CheckoutForm = () => {
                   type="tel"
                   id="phone"
                   name="phone"
-                required
+                  required
 
                   value={formData.phone}
                   onChange={handleInputChange}
@@ -204,7 +221,7 @@ const CheckoutForm = () => {
                   type="text"
                   id="province"
                   name="province"
-                required
+                  required
 
                   value={formData.province}
                   onChange={handleInputChange}
@@ -220,7 +237,7 @@ const CheckoutForm = () => {
                   type="text"
                   id="zip"
                   name="zip"
-                required
+                  required
 
                   value={formData.zip}
                   onChange={handleInputChange}
@@ -314,7 +331,7 @@ const CheckoutForm = () => {
               <button
                 className="w-full bg-[#8B4513] text-white py-2 rounded my-4"
                 disabled={loading}
-                
+
               >
                 {loading ? "Placing order" : "Place Order"}
               </button>

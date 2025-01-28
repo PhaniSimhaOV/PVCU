@@ -272,7 +272,7 @@ const Wishlist = () => {
             </Container>
 
 
-            {/* <div className='bg-[#F2F2F2]'>
+            <div className='bg-[#F2F2F2]'>
                 <Container>
                     <div className="mt-12 py-6 my-2">
                         <div className="flex justify-between items-center">
@@ -286,7 +286,7 @@ const Wishlist = () => {
                                 </button>
                             </div>
                         </div>
-                        <div className='today_flash_sale'>
+                        {/* <div className='today_flash_sale'>
                             <section className="py-8 antialiased md:py-12">
                                 <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
                                     <div className="mb-4 flex gap-4 overflow-x-auto">
@@ -395,10 +395,10 @@ const Wishlist = () => {
 
                                 </div>
                             </section>
-                        </div>
+                        </div> */}
                     </div>
                 </Container>
-            </div> */}
+            </div>
         </div>
     )
 }
