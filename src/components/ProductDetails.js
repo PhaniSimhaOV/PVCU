@@ -45,33 +45,46 @@ const ProductDetails = () => {
     const addToCart = async () => {
         try {
             setLoading(true);
-
+    
             const token = localStorage.getItem('token');
             if (!token) {
                 toast.error('Please log in to add items to your cart');
-
                 return;
             }
-
+    
             const config = {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             };
-
-            const cartResponse = await axios.get(`${API_URL}/cart/cart-details`, config);
-            const cartItems = cartResponse.data.cart.items;
-
+    
+            // Try fetching cart details
+            let cartItems = [];
+            try {
+                const cartResponse = await axios.get(`${API_URL}/cart/cart-details`, config);
+                cartItems = cartResponse.data.cart.items; // Get items if cart exists
+            } catch (error) {
+                // If the cart is not found (404 error), initialize cartItems as an empty array
+                if (error.response?.status === 404) {
+                    console.log('Cart not found. Creating a new cart...');
+                    cartItems = []; // No items, create a new cart
+                } else {
+                    throw error; // Re-throw the error if it’s something else (network issues, etc.)
+                }
+            }
+    
+            // Check if the product is already in the cart
             const isProductInCart = cartItems.some(
                 (item) => item.productId?._id === product._id && item.size === size
             );
-
+    
             if (isProductInCart) {
                 setIsAdded(true);
                 toast.error('This product is already in your cart');
                 return;
             }
-
+    
+            // Add product to the cart
             await axios.post(
                 `${API_URL}/cart/add`,
                 {
@@ -81,7 +94,7 @@ const ProductDetails = () => {
                 },
                 config
             );
-
+    
             toast.success('Item added to cart successfully');
             setIsAdded(true); // Mark as added after successful addition
         } catch (error) {
@@ -91,7 +104,7 @@ const ProductDetails = () => {
             setLoading(false);
         }
     };
-
+    
 
 
     const handleQuantityChange = (action) => {

@@ -1,6 +1,7 @@
 import React from "react";
+import PaymentButton from "../PaymentButton";
 
-const CartSummary = ({ subtotal, total, promoMessage }) => {
+const CartSummary = ({ subtotal, total, promoMessage,cartItems }) => {
     return (
         <div className="bg-white p-6 rounded-lg shadow-sm">
             <div className="mb-8">
@@ -14,16 +15,14 @@ const CartSummary = ({ subtotal, total, promoMessage }) => {
             <div className="text-lg space-y-2">
                 <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span>${subtotal}.00</span>
+                    <span>{subtotal}.00</span>
                 </div>
                 <div className="flex justify-between font-semibold text-xl">
                     <span>Total</span>
-                    <span>${total}.00</span>
+                    <span>{total}.00</span>
                 </div>
             </div>
-            <button className="mt-6 w-full bg-[#8B4513] text-white py-2 rounded ">
-                Proceed to Checkout
-            </button>
+            <PaymentButton cartItems={cartItems} totalAmount={total} />
         </div>
     );
 };
