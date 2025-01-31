@@ -12,9 +12,9 @@ import { AuthContext } from '../../context/AuthContext'; // Import the AuthConte
 
 const Header = () => {
     const location = useLocation();
-    const { isAuthenticated, logout } = useContext(AuthContext); 
+    const { isAuthenticated, logout } = useContext(AuthContext);
     const navigate = useNavigate();
-    
+
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -27,9 +27,14 @@ const Header = () => {
     };
 
     const handleLogout = () => {
-        logout(); 
-        navigate('/login'); 
+        logout();
+        navigate('/login');
+        handleMenuClose()
     };
+    const handleNavigateOrders = () => {
+        navigate('/orders');
+        handleMenuClose()
+    }
 
     return (
         <div>
@@ -102,6 +107,7 @@ const Header = () => {
                                     }}
                                 >
                                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                    <MenuItem onClick={handleNavigateOrders}>Orders</MenuItem>
                                 </Menu>
                             </div>
                         ) : (

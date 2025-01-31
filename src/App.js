@@ -15,6 +15,7 @@ import Contact from './components/contact/Contact';
 import AboutUs from './components/About';
 import AllProductsPage from './AllProductsPage';
 import CheckoutForm from './components/CheckoutForm';
+import Orders from './components/Orders';
 
 function App() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -42,6 +43,8 @@ function App() {
           <Route path="/products" element={<AllProductsPage />} />
 
           <Route path="/cart" element={<Cart />} />
+          <Route path="/orders" element={<Orders />} />
+
           <Route path="/details/:id" element={<ProductDetails />} />
 
           <Route path="*" element={<NotFound />} />
