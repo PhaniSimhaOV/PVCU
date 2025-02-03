@@ -7,6 +7,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { API_URL } from '../../constants';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+
 
 const SignUp = () => {
     const [formData, setFormData] = useState({
@@ -42,6 +44,20 @@ const SignUp = () => {
             setLoading(false);
         }
     };
+
+    const handleGoogleLogin = async (response) => {
+        if (response.tokenId) {
+            try {
+                const { data } = await axios.post(`${API_URL}/auth/google-login`, { token: response.tokenId });
+                toast.success(data.message);
+                // Store the token in localStorage or state
+                localStorage.setItem('token', data.token);
+            } catch (error) {
+                toast.error(error.response?.data?.error || 'Google sign-in failed.');
+            }
+        }
+    };
+
 
     return (
         <Container>
@@ -133,7 +149,7 @@ const SignUp = () => {
                         <hr className="w-full border-gray-300" />
                     </div>
 
-                    <button
+                    {/* <button
                         type="button"
                         className="flex items-center justify-center w-full px-4 py-2 text-xs font-normal text-[#8B4513] bg-white border border-[#8B4513] rounded-sm "
                     >
@@ -143,7 +159,19 @@ const SignUp = () => {
                             className="w-7 h-7 mr-2"
                         />
                         SIGN UP WITH GOOGLE
-                    </button>
+                    </button> */}
+                    <GoogleOAuthProvider clientId="AIzaSyAqTALAyu0eTzDj3BaEhTVMLXx9UnZ4vbs">
+                        <div>
+                            <Toaster position="top-right" reverseOrder={false} />
+                            <GoogleLogin
+                                onSuccess={handleGoogleLogin}
+                                onError={() => toast.error('Google login failed')}
+                                useOneTap
+                            />
+                            {/* Your form here */}
+                        </div>
+                    </GoogleOAuthProvider>
+
 
                     <p className="text-sm text-center font-normal mt-6">
                         Already have an account?{' '}
