@@ -46,12 +46,14 @@ const SignUp = () => {
     };
 
     const handleGoogleLogin = async (response) => {
-        if (response.tokenId) {
+        if (response.credential) {
             try {
-                const { data } = await axios.post(`${API_URL}/auth/google-login`, { token: response.tokenId });
+                const { data } = await axios.post(`${API_URL}/auth/google-login`, { token: response.credential });
                 toast.success(data.message);
-                // Store the token in localStorage or state
+                window.scrollTo(0, 0);
+                window.location.reload();
                 localStorage.setItem('token', data.token);
+                // navigate('/');
             } catch (error) {
                 toast.error(error.response?.data?.error || 'Google sign-in failed.');
             }
@@ -160,7 +162,7 @@ const SignUp = () => {
                         />
                         SIGN UP WITH GOOGLE
                     </button> */}
-                    <GoogleOAuthProvider clientId="AIzaSyAqTALAyu0eTzDj3BaEhTVMLXx9UnZ4vbs">
+                    <GoogleOAuthProvider clientId={process.env.REACT_CLIENT_ID}>
                         <div>
                             <Toaster position="top-right" reverseOrder={false} />
                             <GoogleLogin

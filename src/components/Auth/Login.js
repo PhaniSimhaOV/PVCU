@@ -8,6 +8,7 @@ import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { AuthContext } from '../../context/AuthContext';
 import { API_URL } from '../../constants';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -17,7 +18,7 @@ const Login = () => {
 
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
-    const { setToken } = useContext(AuthContext); 
+    const { setToken } = useContext(AuthContext);
 
 
     const handleChange = (e) => {
@@ -40,6 +41,21 @@ const Login = () => {
             toast.error(error.response?.data?.error || 'An unexpected error occurred.');
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleGoogleLogin = async (response) => {
+        if (response.credential) {
+            try {
+                const { data } = await axios.post(`${API_URL}/auth/google-login`, { token: response.credential });
+                toast.success(data.message);
+                window.scrollTo(0, 0);
+                window.location.reload();
+                localStorage.setItem('token', data.token);
+                // navigate('/');
+            } catch (error) {
+                toast.error(error.response?.data?.error || 'Google sign-in failed.');
+            }
         }
     };
 
@@ -123,7 +139,7 @@ const Login = () => {
                         <hr className="w-full border-gray-300" />
                     </div>
 
-                    <button
+                    {/* <button
                         type="button"
                         className="flex items-center justify-center w-full px-4 py-2 text-xs font-normal text-[#8B4513] bg-white border border-[#8B4513] rounded-sm"
                     >
@@ -133,7 +149,19 @@ const Login = () => {
                             className="w-7 h-7 mr-2"
                         />
                         SIGN IN WITH GOOGLE
-                    </button>
+                    </button> */}
+
+                    <GoogleOAuthProvider clientId={process.env.REACT_CLIENT_ID}>
+                        <div>
+                            <Toaster position="top-right" reverseOrder={false} />
+                            <GoogleLogin
+                                onSuccess={handleGoogleLogin}
+                                onError={() => toast.error('Google login failed')}
+                                useOneTap
+                            />
+                            {/* Your form here */}
+                        </div>
+                    </GoogleOAuthProvider>
 
                     <p className="text-sm text-center font-normal mt-6">
                         Don’t have an account?{' '}
