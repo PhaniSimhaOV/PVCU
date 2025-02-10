@@ -143,6 +143,18 @@ const FilterSidebar = ({ selectedSizes, setSelectedSizes, setPriceRange, priceRa
 };
 
 const ProductGrid = React.memo(({ bestSelling, loading }) => {
+    const [wishlist, setWishlist] = useState([]);
+    useEffect(() => {
+        const wishlistedData = localStorage.getItem("wishlist")
+        if (wishlistedData) {
+            const data = JSON.parse(wishlistedData)
+            setWishlist(data)
+        }
+    }, [wishlist])
+
+    const isProductInWishlist = (productId) => {
+        return wishlist.some((item) => item.id === productId);
+    };
     const addToWishlist = async (productId) => {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -156,6 +168,14 @@ const ProductGrid = React.memo(({ bestSelling, loading }) => {
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             toast.success("Products added successfully to Wishlist")
+            const prev = JSON.parse(localStorage.getItem("wishlist")) || [];
+            const newWishlist = [...wishlist, { id: productId, isWishlisted: true }];
+            setWishlist(newWishlist);
+            if (Array.isArray(prev)) {
+                localStorage.setItem("wishlist", JSON.stringify([...prev, { id: productId, isWishlisted: true }]));
+            } else {
+                localStorage.setItem("wishlist", JSON.stringify([{ id: productId, isWishlisted: true }]));
+            }
             return response.data;
         } catch (error) {
             // toast.error(error.response.data.message)
@@ -260,7 +280,7 @@ const ProductGrid = React.memo(({ bestSelling, loading }) => {
                                                         >
                                                             <span className="sr-only"> Add to Favorites </span>
                                                             <svg
-                                                                className="h-5 w-5"
+                                                                className={`h-5 w-5 ${isProductInWishlist(product._id) ? 'text-red-500' : 'text-gray-500'}`}
                                                                 aria-hidden="true"
                                                                 xmlns="http://www.w3.org/2000/svg"
                                                                 fill="none"
@@ -320,7 +340,7 @@ const AllProductsPage = () => {
         const params = new URLSearchParams(location.search);
         const category = params.get('category');
         if (category) {
-            setSelectedCategories([category]); 
+            setSelectedCategories([category]);
         }
     }, [])
 

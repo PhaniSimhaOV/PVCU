@@ -124,6 +124,19 @@ const Home = () => {
         getBestSellingProducts()
         getNewArrivals()
     }, [])
+    const [wishlist, setWishlist] = useState([]);
+    useEffect(() => {
+        const wishlistedData = localStorage.getItem("wishlist")
+        if (wishlistedData) {
+            const data = JSON.parse(wishlistedData)
+            setWishlist(data)
+        }
+    }, [wishlist])
+
+    const isProductInWishlist = (productId) => {
+        return wishlist.some((item) => item.id === productId);
+    };
+
     const visibleProducts = product && product.slice(currentIndex, currentIndex + product.length);
     const addToWishlist = async (productId) => {
         const token = localStorage.getItem('token');
@@ -138,6 +151,14 @@ const Home = () => {
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             toast.success("Products added successfully to Wishlist")
+            const prev = JSON.parse(localStorage.getItem("wishlist")) || [];
+            const newWishlist = [...wishlist, { id: productId, isWishlisted: true }];
+            setWishlist(newWishlist);
+            if (Array.isArray(prev)) {
+                localStorage.setItem("wishlist", JSON.stringify([...prev, { id: productId, isWishlisted: true }]));
+            } else {
+                localStorage.setItem("wishlist", JSON.stringify([{ id: productId, isWishlisted: true }]));
+            }
             return response.data;
         } catch (error) {
             console.error('Error adding to wishlist', error);
@@ -224,7 +245,7 @@ const Home = () => {
 
     const handleNavigate = (value) => {
         navigate({
-            pathname: '/products', 
+            pathname: '/products',
             search: `?category=${value}`, // Add more parameters as needed
         });
     }
@@ -277,27 +298,6 @@ const Home = () => {
                                     </div>
                                 )}
                             </div>
-
-
-
-
-                            {/* <div className="relative" ref={electronicsMenuRef}>
-                                <button
-                                    className="text-black"
-                                    onClick={() => toggleMenu('electronics')}
-                                >
-                                    Electronics
-                                </button>
-                                {activeMenu === 'electronics' && (
-                                    <div className="z-50 absolute left-0 mt-2.5 bg-white text-black cursor-pointer rounded-sm w-48">
-                                        <ul className="py-2">
-                                            <li className="px-4 py-2 hover:bg-slate-100">Mobile Phones</li>
-                                            <li className="px-4 py-2 hover:bg-slate-100">Laptops</li>
-                                            <li className="px-4 py-2 hover:bg-slate-100">Headphones</li>
-                                        </ul>
-                                    </div>
-                                )}
-                            </div> */}
                         </div>
                     </nav>
                 </div>
@@ -387,7 +387,7 @@ const Home = () => {
                                                             >
                                                                 <span className="sr-only"> Add to Favorites </span>
                                                                 <svg
-                                                                    className="h-5 w-5"
+                                                                    className={`h-5 w-5 ${isProductInWishlist(product._id) ? 'text-red-500' : 'text-gray-500'}`}
                                                                     aria-hidden="true"
                                                                     xmlns="http://www.w3.org/2000/svg"
                                                                     fill="none"
@@ -555,7 +555,7 @@ const Home = () => {
                                                             >
                                                                 <span className="sr-only"> Add to Favorites </span>
                                                                 <svg
-                                                                    className="h-5 w-5"
+                                                                    className={`h-5 w-5 ${isProductInWishlist(product._id) ? 'text-red-500' : 'text-gray-500'}`}
                                                                     aria-hidden="true"
                                                                     xmlns="http://www.w3.org/2000/svg"
                                                                     fill="none"
@@ -714,7 +714,7 @@ const Home = () => {
                                                             >
                                                                 <span className="sr-only"> Add to Favorites </span>
                                                                 <svg
-                                                                    className="h-5 w-5"
+                                                                    className={`h-5 w-5 ${isProductInWishlist(product._id) ? 'text-red-500' : 'text-gray-500'}`}
                                                                     aria-hidden="true"
                                                                     xmlns="http://www.w3.org/2000/svg"
                                                                     fill="none"

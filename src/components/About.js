@@ -92,34 +92,34 @@ const AboutUs = () => {
                     </div>
 
                     {/* Team Section */}
-                    <div>
-                        {/* <h2 className="text-3xl font-bold mb-10 text-center">
+                    {/* <div>
+                        <h2 className="text-3xl font-bold mb-10 text-center">
                             Meet Our Team
-                        </h2> */}
+                        </h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                             {[
                                 {
                                     name: "Tom Cruise",
                                     title: "Founder & Chairman",
-                                    img: "https://via.placeholder.com/150", // Replace with your image URL
+                                    img: "https://via.placeholder.com/150", 
                                     social: ["instagram", "linkedin", "facebook"],
                                 },
                                 {
                                     name: "Emma Watson",
                                     title: "Managing Director",
-                                    img: "https://via.placeholder.com/150", // Replace with your image URL
+                                    img: "https://via.placeholder.com/150", 
                                     social: ["instagram", "linkedin", "facebook"],
                                 },
                                 {
                                     name: "Will Smith",
                                     title: "Product Designer",
-                                    img: "https://via.placeholder.com/150", // Replace with your image URL
+                                    img: "https://via.placeholder.com/150", 
                                     social: ["instagram", "linkedin", "facebook"],
                                 },
                                 {
                                     name: "Will Smith",
                                     title: "Product Designer",
-                                    img: "https://via.placeholder.com/150", // Replace with your image URL
+                                    img: "https://via.placeholder.com/150", 
                                     social: ["instagram", "linkedin", "facebook"],
                                 },
                             ].map((member, index) => (
@@ -127,17 +127,14 @@ const AboutUs = () => {
                                     key={index}
                                     className="bg-white border-0 m-0 rounded-lg flex flex-col"
                                 >
-                                    {/* Image */}
                                     <img
                                         src={a2}
                                         alt={member.name}
                                         className="w-full h-[300px] object-cover rounded-t-lg"
                                     />
-                                    {/* Text Content */}
                                     <div className="p-4 text-center">
                                         <h3 className="text-lg font-semibold">{member.name}</h3>
                                         <p className="text-gray-600 text-sm">{member.title}</p>
-                                        {/* Social Links */}
                                         <div className="flex justify-center space-x-4 mt-2">
                                             {member.social.map((platform, i) => (
                                                 <a
@@ -154,7 +151,7 @@ const AboutUs = () => {
                             ))}
                         </div>
 
-                    </div>
+                    </div> */}
                 </div>
             </Container>
         </>

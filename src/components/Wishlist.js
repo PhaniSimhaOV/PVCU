@@ -140,6 +140,13 @@ const Wishlist = () => {
         try {
             await removeFromWishlist(productId);
             toast.success('Product removed from wishlist');
+            const currentWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+            console.log(currentWishlist)
+            const updatedWishlist = currentWishlist.filter(
+                (product) => product?.id !== productId
+            );
+
+            localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
             setWishlist((prev) => prev.filter((product) => product?.productId?._id !== productId));
         } catch (error) {
         }

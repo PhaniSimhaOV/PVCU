@@ -151,7 +151,7 @@ const Login = () => {
                         SIGN IN WITH GOOGLE
                     </button> */}
 
-                    <GoogleOAuthProvider clientId={process.env.REACT_CLIENT_ID}>
+                    <GoogleOAuthProvider clientId="6871043980-ql7icu6dkt4imqn2g555j9l58gr81hrj.apps.googleusercontent.com">
                         <div>
                             <Toaster position="top-right" reverseOrder={false} />
                             <GoogleLogin

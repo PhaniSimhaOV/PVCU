@@ -43,7 +43,7 @@ const Header = () => {
             </div>
             <div className='py-4 flex flex-col md:flex-row justify-between items-center px-4 md:px-10 border-b'>
                 <div className='mb-4 md:mb-0'>
-                    <img src={logo} alt="Logo" className='w-24' />
+                    <img onClick={() => navigate('/')} src={logo} alt="Logo" className='w-24' />
                 </div>
                 <div className='flex justify-center mb-4 md:mb-0'>
                     <ul className='flex flex-col md:flex-row gap-4'>
