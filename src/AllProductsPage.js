@@ -338,8 +338,12 @@ const AllProductsPage = () => {
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         const category = params.get('category');
+        const gender = params.get('gender');
         if (category) {
             setSelectedCategories([category]);
+        }else if(gender){
+            setSelectedGender([gender]);
+
         }
     }, [])
 
@@ -387,6 +391,8 @@ const AllProductsPage = () => {
                 : [...prev, category]
         );
     }, []);
+
+    console.log("Selected",selectedGender)
 
     return (
         <Container>
