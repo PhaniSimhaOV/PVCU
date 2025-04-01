@@ -419,9 +419,9 @@ const Home = () => {
                                                             href="#"
                                                             className="text-sm font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
                                                         >
-                                                            <strong>{product.name}</strong>
+                                                            <h6 className='text-md'>{product.name}</h6>
                                                         </a>
-                                                        <div className="flex gap-3 items-center my-2">
+                                                        <div className="flex gap-3 items-center my-1">
                                                             {
                                                                 product.discount !== 0 && <span className="text-md text-[#8B4513]">-{product.discount}%</span>
                                                             }
@@ -605,7 +605,7 @@ const Home = () => {
                                                             href="#"
                                                             className="text-sm font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
                                                         >
-                                                            <strong>{product.name}</strong>
+                                                            <h6 className='text-md'>{product.name}</h6>
                                                         </a>
                                                         <div className="flex gap-3 items-center my-2">
                                                             {
