@@ -42,7 +42,7 @@ const Header = () => {
                 <p className='text-xs text-center text-white'>Discount 20% For New Member, ONLY FOR TODAY!!</p>
             </div>
             <div className='py-4 flex flex-col md:flex-row justify-between items-center px-4 md:px-10 border-b'>
-                <div className='mb-4 md:mb-0'>
+                <div className='mb-4 md:mb-0 cursor-pointer'>
                     <img onClick={() => navigate('/')} src={logo} alt="Logo" className='w-24' />
                 </div>
                 <div className='flex justify-center mb-4 md:mb-0'>
@@ -75,11 +75,11 @@ const Header = () => {
                 </div>
                 <div className='flex flex-col md:flex-row items-center gap-4 md:gap-8'>
                     <div className='relative mb-4 md:mb-0 w-full md:w-auto'>
-                        <input
+                        {/* <input
                             className='w-full md:w-64 outline-none border border-slate-100 p-2.5 rounded-sm text-sm pr-10 focus:outline-none focus:border-slate-100'
                             type='text'
                             placeholder='What are you looking for?'
-                        />
+                        /> */}
                         <div className='absolute right-2 top-0 bottom-0 flex items-center'>
                             <SearchOutlinedIcon sx={{ color: "grey", fontSize: "20px" }} />
                         </div>
