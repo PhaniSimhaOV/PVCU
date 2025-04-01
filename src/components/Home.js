@@ -614,15 +614,13 @@ const Home = () => {
                 </div>
             </Container> */}
 
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#3C1E09] via-[#763c13] to-[#41210A]">
+            {/* <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#3C1E09] via-[#763c13] to-[#41210A]">
                 <div className="grid lg:grid-cols-2 grid-cols-1 gap-8 items-center p-6 max-w-7xl mx-auto">
-                    {/* Left Section */}
                     <div className="text-white space-y-6">
                         <div className=" text-sm ">Categories</div>
                         <h1 className="text-4xl lg:text-5xl font-bold ">
                             Enhance Your Winter Wardrobe
                         </h1>
-                        {/* Countdown Timer */}
                         <div className="flex space-x-6 text-lg font-medium">
                             {["Hours", "Days", "Minutes", "Seconds"].map((label, index, arr) => (
                                 <div
@@ -650,7 +648,7 @@ const Home = () => {
                         />
                     </div>
                 </div>
-            </div>
+            </div> */}
 
 
             <Container>
