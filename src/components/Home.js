@@ -307,7 +307,7 @@ const Home = () => {
             <Container>
                 <div className="mt-12 my-2">
                     <div className="flex justify-between items-center">
-                        <h1 className="text-3xl font-semibold">Today's Flash Sales</h1>
+                        <h1 className="text-3xl font-semibold">Our Products</h1>
                         <div className="flex gap-2">
                             <div
                                 className="border rounded-full px-2 py-1 bg-slate-100 cursor-pointer"
@@ -406,21 +406,21 @@ const Home = () => {
                                                     </div>
                                                     {/* Product Details */}
                                                     <div className="flex flex-col gap-1">
-                                                        <span className="text-xs">{product.category}</span>
+                                                        {/* <span className="text-xs">{product.category}</span> */}
                                                         <a
                                                             href="#"
                                                             className="text-sm font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
                                                         >
-                                                            {product.name}
+                                                            <strong>{product.name}</strong>
                                                         </a>
                                                         <div className="flex gap-3 items-center my-2">
-                                                        {
-                                                            product.discount !== 0 && <span className="text-md text-[#8B4513]">-{product.discount}%</span>
-                                                        }
+                                                            {
+                                                                product.discount !== 0 && <span className="text-md text-[#8B4513]">-{product.discount}%</span>
+                                                            }
                                                             <span className="text-md text-[#8B4513]">₹{product.price}</span>
-                                                            <span className="text-xs">
+                                                            {/* <span className="text-xs">
                                                                 MRP: <span className="line-through">₹{product.original_price}</span>
-                                                            </span>
+                                                            </span> */}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -575,21 +575,21 @@ const Home = () => {
                                                         </div>
                                                     </div>
                                                     <div className="flex flex-col gap-1">
-                                                        <span className="text-xs">{product.category}</span>
+                                                        {/* <span className="text-xs">{product.category}</span> */}
                                                         <a
                                                             href="#"
                                                             className="text-sm font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
                                                         >
-                                                            {product.name}
+                                                            <strong>{product.name}</strong>
                                                         </a>
                                                         <div className="flex gap-3 items-center my-2">
-                                                        {
-                                                            product.discount !== 0 && <span className="text-md text-[#8B4513]">-{product.discount}%</span>
-                                                        }
+                                                            {
+                                                                product.discount !== 0 && <span className="text-md text-[#8B4513]">-{product.discount}%</span>
+                                                            }
                                                             <span className="text-md text-[#8B4513]">₹{product.price}</span>
-                                                            <span className="text-xs">
+                                                            {/* <span className="text-xs">
                                                                 MRP: <span className="line-through">₹{product.original_price}</span>
-                                                            </span>
+                                                            </span> */}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -737,21 +737,21 @@ const Home = () => {
                                                     </div>
                                                     {/* Product Details */}
                                                     <div className="flex flex-col gap-1">
-                                                        <span className="text-xs">{product.category}</span>
+                                                        {/* <span className="text-xs">{product.category}</span> */}
                                                         <a
                                                             href="#"
                                                             className="text-sm font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
                                                         >
-                                                            {product.name}
+                                                            <strong>{product.name}</strong>
                                                         </a>
                                                         <div className="flex gap-3 items-center my-2">
-                                                        {
-                                                            product.discount !== 0 && <span className="text-md text-[#8B4513]">-{product.discount}%</span>
-                                                        }
+                                                            {
+                                                                product.discount !== 0 && <span className="text-md text-[#8B4513]">-{product.discount}%</span>
+                                                            }
                                                             <span className="text-md text-[#8B4513]">₹{product.price}</span>
-                                                            <span className="text-xs">
+                                                            {/* <span className="text-xs">
                                                                 MRP: <span className="line-through">₹{product.original_price}</span>
-                                                            </span>
+                                                            </span> */}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -775,7 +775,7 @@ const Home = () => {
             </Container>
 
 
-            <Container>
+            {/* <Container>
                 <div>
                     <h1 className="text-3xl font-semibold">New Arrivals</h1>
                 </div>
@@ -832,7 +832,7 @@ const Home = () => {
                         </div>
                     </section>
                 </div>
-            </Container>
+            </Container> */}
 
 
 
