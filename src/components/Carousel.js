@@ -37,7 +37,7 @@ const Carousel = () => {
 
     return (
         <div id="custom-carousel" className="relative w-full">
-            <div className="relative h-56 overflow-hidden md:h-96">
+            <div className="relative h-56 overflow-hidden lg:h-96">
                 {/* Display banners */}
                 {banners.length > 0 && (
                     <div
@@ -53,7 +53,7 @@ const Carousel = () => {
                             >
                                 <img
                                     src={`${IMAGE_URL}${banner.imageUrl}`}
-                                    className="absolute block w-full"
+                                    className="absolute block w-full h-96 object-cover"
                                     alt={`Banner ${banner._id}`}
                                 />
                             </div>

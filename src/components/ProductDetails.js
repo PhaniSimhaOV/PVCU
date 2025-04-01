@@ -200,15 +200,15 @@ const ProductDetails = () => {
 
                         <div className="grid lg:grid-cols-2 gap-8">
                             <div>
-                                <div className="border rounded-lg overflow-hidden mb-4">
+                                {/* <div className="border rounded-lg overflow-hidden mb-4">
                                     <img
                                         src={`${previewImage}`}
                                         alt="White Casual T-Shirt"
                                         className="w-full object-cover h-1/2"
                                     />
-                                </div>
+                                </div> */}
 
-                                <div className="grid grid-cols-3 lg:grid-cols-5 gap-2">
+                                <div className="grid grid-cols-3 lg:grid-cols-2 gap-2">
 
                                     {
                                         product?.slideImages?.map((sld, index) => (
@@ -217,7 +217,7 @@ const ProductDetails = () => {
                                                 src={`${IMAGE_URL}/${sld}`}
                                                 alt="Thumbnail"
                                                 onClick={() => setPreviewImage(`${IMAGE_URL}/${sld}`)}
-                                                className="border rounded-lg w-full cursor-pointer h-32"
+                                                className="border rounded-lg w-full object-cover h-full cursor-pointer h-1/2"
                                             />
                                         ))
 

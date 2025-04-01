@@ -49,11 +49,8 @@ const FilterSidebar = ({ selectedSizes, setSelectedSizes, setPriceRange, priceRa
     const priceRanges = [
         { label: "100 - 1000", min: 100, max: 1000 },
         { label: "1001 - 5000", min: 1001, max: 5000 },
-        { label: "100 - 100", min: 100, max: 100 },
-        { label: "1001 - 5000", min: 1001, max: 5000 },
         { label: "5001 - 10000", min: 5001, max: 10000 },
-        { label: "10001 - 15000", min: 10001, max: 15000 },
-        { label: "Above 15000", min: 15001, max: Infinity }
+        { label: "Above 10000", min: 15001, max: Infinity }
     ];
     const getFilters = async () => {
         try {

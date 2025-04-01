@@ -8,7 +8,7 @@ const AboutUs = () => {
     return (
         <>
             <Container>
-                <div className="container mx-auto px-4 py-10 space-y-32">
+                <div className="container mx-auto px-4 py-10 space-y-12">
                     {/* Story Section */}
                     <div className="relative">
                         {/* Full-width Image */}
@@ -20,30 +20,30 @@ const AboutUs = () => {
 
                         {/* Overlay Text Section */}
                         <div
-                            className="absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 flex justify-center items-center"
+                            className=" top-0 left-0 right-0 bottom-0 my-6 flex justify-center items-center"
                             style={{
-                                position: 'absolute',
+                                position: '',
                                 top: 0,
                                 left: 0,
                                 right: 0,
                                 bottom: 0,
-                                backgroundColor: 'rgba(0, 0, 0, 0.3)', // Semi-transparent overlay
+                                // backgroundColor: 'rgba(0, 0, 0, 0.3)', // Semi-transparent overlay
                             }}
                         >
 
-                            <div className="px-4 items-center mt-8 text-left" >
+                            <div className="px-4 items-center mt-6 text-left" >
                                 {/* Text Section Below the Image */}
-                                <h1 className="text-white text-4xl font-bold text-left">
+                                <h1 className="text-black text-4xl font-bold text-left">
                                     Our Story
                                 </h1>
                                 <div className="my-6">
-                                    <p className="text-white leading-relaxed mb-6">
+                                    <p className="text-black leading-relaxed mb-6">
                                         At PVCU, our unwavering dedication is ignited by a divine commitment to sculpt a superhero universe,
                                         drawing profound inspiration from the sacred tapestry of The Itihasas of Akhand Bharat. Join us at PVCU,
                                         where ancient tales seamlessly merge with modern imagination, creating a harmonious fusion that resonates
                                         with the soul of Akhand Bharat.
                                     </p>
-                                    <p className="text-white leading-relaxed">
+                                    <p className="text-black leading-relaxed">
                                         Our Mission transcends the boundaries of mere imagination; it extends a sacred call, inviting you to
                                         embark on an extraordinary odyssey into a realm. Where the mythic tales of ancient India come alive in
                                         vivid, divine, and astonishing forms.

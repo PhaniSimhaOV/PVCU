@@ -453,21 +453,28 @@ const Home = () => {
                         <section className="py-8 antialiased dark:bg-gray-900 md:py-8">
                             <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
                                 <div className="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-4 xl:grid-cols-4">
-                                    {categories?.map((product) => (
+                                    {bestSelling?.map((product) => (
                                         <div key={product.id} className="rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative">
                                             <div className="h-full w-full relative">
-                                                <a href="">
-                                                    <img
+                                                {/* <a href=""> */}
+                                                    <Link to={`/details/${product._id}`}>
+                                                        <img
+                                                            className="w-full h-full dark:hidden"
+                                                            src={`${IMAGE_URL}/${product.imageUrl}`}
+                                                            alt={product.name}
+                                                        />
+                                                        {/* <img
                                                         className="w-full h-full dark:hidden"
                                                         src={product.imageUrl}
                                                         alt={product.name}
-                                                    />
-                                                    <img
-                                                        className="w-full hidden h-full dark:block"
-                                                        src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg"
-                                                        alt={product.name}
-                                                    />
-                                                </a>
+                                                    /> */}
+                                                        <img
+                                                            className="w-full hidden h-full dark:block"
+                                                            src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg"
+                                                            alt={product.name}
+                                                        />
+                                                    </Link>
+                                                {/* </a> */}
                                                 <div className="w-full text-center absolute bottom-3">
                                                     <button
                                                         type="button"
@@ -488,7 +495,7 @@ const Home = () => {
                 </Container>
             </div>
 
-            <Container>
+            {/* <Container>
                 <div className="mt-12 my-2">
                     <div className="flex justify-between items-center">
                         <h1 className="text-3xl font-semibold">Best Selling Products</h1>
@@ -501,14 +508,12 @@ const Home = () => {
                                     <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
                                         <div className="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
                                             {skeletonCards}
-                                            {/* {skeletonCards} */}
                                         </div>
                                     </div>
                                 </section>
                             </div>
                         </div>
                     ) : bestSelling?.length === 0 ? (
-                        // <NoFound name={"Products"} />
                         <></>
                     ) : (
                         <div>
@@ -575,7 +580,6 @@ const Home = () => {
                                                         </div>
                                                     </div>
                                                     <div className="flex flex-col gap-1">
-                                                        {/* <span className="text-xs">{product.category}</span> */}
                                                         <a
                                                             href="#"
                                                             className="text-sm font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
@@ -587,9 +591,7 @@ const Home = () => {
                                                                 product.discount !== 0 && <span className="text-md text-[#8B4513]">-{product.discount}%</span>
                                                             }
                                                             <span className="text-md text-[#8B4513]">₹{product.price}</span>
-                                                            {/* <span className="text-xs">
-                                                                MRP: <span className="line-through">₹{product.original_price}</span>
-                                                            </span> */}
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
@@ -610,7 +612,7 @@ const Home = () => {
                         </div>
                     )}
                 </div>
-            </Container>
+            </Container> */}
 
             <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#3C1E09] via-[#763c13] to-[#41210A]">
                 <div className="grid lg:grid-cols-2 grid-cols-1 gap-8 items-center p-6 max-w-7xl mx-auto">
