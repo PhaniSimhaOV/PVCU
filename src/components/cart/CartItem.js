@@ -51,10 +51,10 @@ const CartItem = ({ item, updateCart, removeItem }) => {
             <div className="flex-grow">
                 <h3 className="font-medium  mb-2  text-xl">{name}</h3>
                 <div className="flex items-center space-x-2">
-                    <span className="font-normal text-sm">${price}</span>
+                    <span className="font-normal text-sm">₹ {price}</span>
                     {discount && (
                         <>
-                            <span className="line-through text-gray-400">${discount.original}</span>
+                            <span className="line-through text-gray-400">₹{discount.original}</span>
                             <div className="text-white text-sm rounded-full bg-[#E90000] px-4 my-2 py-0.5">
                                 {discount.percent}%
                             </div>

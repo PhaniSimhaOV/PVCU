@@ -5,6 +5,8 @@ import payment from "../assets/images/payment.png";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import emailjs from "@emailjs/browser";
+
 
 const CheckoutForm = () => {
   const { cartItems, subtotal, total, setCartItems } = useCart(); // Fetch cart data from context
@@ -19,6 +21,38 @@ const CheckoutForm = () => {
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const sendEmail = async (data) => {
+
+    try {
+      const serviceID = "service_42scdsw";
+      const templateID = "template_rsh28zt";
+
+      const params = {
+        sendername: "PVCU",
+        to: "sreefabrics2019@gmail.com",
+        subject: "Order Details of PVCU",
+        replyto: "venkat@pvcu.in",
+        message: `
+        Order ID: ${data?.orderId}
+        Amount: ₹${data?.amount}
+        Order Status: ${data?.orderStatus}
+        Order Name :${data?.name}
+        Email: ${data?.email}
+        Phone: ${data?.phone}
+        Zip: ${data?.zip}
+        Payment Status: ${data?.paymentStatus}
+      `,
+      };
+
+      await emailjs.send(serviceID, templateID, params, "rLi115x7NbmnZdlX-");
+      toast.success("Email sent successfully!");
+
+    } catch (error) {
+      console.error("Error sending email:", error);
+      toast.error("Failed to send email. Please try again.");
+    } finally {
+    }
+  };
 
   // Handle form input changes
   const handleInputChange = (e) => {
@@ -69,21 +103,23 @@ const CheckoutForm = () => {
         key: process.env.REACT_APP_RAZORPAY_KEY_ID,
         amount: amount,
         currency: currency,
-        name: "E-Commerce Store",
+        name: "PVCU",
         description: "Purchase Items",
         order_id: orderId,
-        handler: async (response) => {
+        handler: async (res) => {
           try {
             const paymentVerification = await axios.post(
               `${API_URL}/cart/verify-payment`,
               {
                 razorpay_order_id: orderId,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature,
+                razorpay_payment_id: res.razorpay_payment_id,
+                razorpay_signature: res.razorpay_signature,
               }
             );
 
             toast.success(paymentVerification.data.message);
+            sendEmail(response.data)
+
             setCartItems([])
             await axios.delete(`${API_URL}/cart/delete/clear-cart`, {
               headers: {
@@ -91,7 +127,7 @@ const CheckoutForm = () => {
               }
             });
             setTimeout(() => {
-              navigate("/cart"); 
+              navigate("/cart");
             }, 3000);
 
           } catch (error) {
@@ -279,11 +315,11 @@ const CheckoutForm = () => {
               <div className="border-t border-gray-300 pt-4">
                 <div className="flex justify-between mb-2">
                   <span>Subtotal</span>
-                  <span>${subtotal}</span>
+                  <span>₹{subtotal}</span>
                 </div>
                 <div className="flex justify-between mb-2 text-red-500">
                   <span>Voucher (50KDISCOUNT)</span>
-                  <span>-${50}</span>
+                  <span>-₹{50}</span>
                 </div>
                 <div className="flex justify-between mb-2">
                   <span>Shipping</span>
@@ -291,7 +327,7 @@ const CheckoutForm = () => {
                 </div>
                 <div className="flex justify-between font-bold text-lg">
                   <span>Total</span>
-                  <span>${total}</span>
+                  <span>₹{total}</span>
                 </div>
               </div>
             </div>

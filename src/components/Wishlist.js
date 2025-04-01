@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Container, Skeleton } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { API_URL, IMAGE_URL } from '../constants';
@@ -279,10 +280,12 @@ const Wishlist = () => {
                                                                 {product?.productId?.name}
                                                             </a>
                                                             <div className="flex gap-3 items-center my-2">
-                                                                <span className="text-md text-[#8B4513]">-{product?.productId?.discount}</span>
-                                                                <span className="text-md text-[#8B4513]">$ {product?.productId?.price}</span>
+                                                                {
+                                                                    product?.productId?.discount !== 0 && <span className="text-md text-[#8B4513]">-{product?.productId?.discount}%</span>
+                                                                }
+                                                                <span className="text-md text-[#8B4513]">₹ {product?.productId?.price}</span>
                                                                 <span className="text-xs">
-                                                                    MRP: <span className="line-through">$ {product?.productId?.original_price}</span>
+                                                                    MRP: <span className="line-through">₹ {product?.productId?.original_price}</span>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -427,7 +430,9 @@ const Wishlist = () => {
                                                                 {product.name}
                                                             </a>
                                                             <div className="flex gap-3 items-center my-2">
-                                                                <span className="text-md text-[#8B4513]">-{product.discount}%</span>
+                                                                {
+                                                                    product.discount !== 0 && <span className="text-md text-[#8B4513]">-{product.discount}%</span>
+                                                                }
                                                                 <span className="text-md text-[#8B4513]">{product.price}</span>
                                                                 <span className="text-xs">
                                                                     MRP: <span className="line-through">{product.original_price}</span>

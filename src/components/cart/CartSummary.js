@@ -15,11 +15,11 @@ const CartSummary = ({ subtotal, total, promoMessage,cartItems }) => {
             <div className="text-lg space-y-2">
                 <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span>{subtotal}.00</span>
+                    <span>₹{subtotal}.00</span>
                 </div>
                 <div className="flex justify-between font-semibold text-xl">
                     <span>Total</span>
-                    <span>{total}.00</span>
+                    <span>₹{total}.00</span>
                 </div>
             </div>
             <PaymentButton cartItems={cartItems} totalAmount={total} />

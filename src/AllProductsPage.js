@@ -306,10 +306,12 @@ const ProductGrid = React.memo(({ bestSelling, loading }) => {
                                                         {product.name}
                                                     </a>
                                                     <div className="flex gap-3 items-center my-2">
-                                                        <span className="text-md text-[#8B4513]">-{product.discount}%</span>
-                                                        <span className="text-md text-[#8B4513]">{product.price}</span>
+                                                        {
+                                                            product.discount !== 0 && <span className="text-md text-[#8B4513]">-{product.discount}%</span>
+                                                        }
+                                                        <span className="text-md text-[#8B4513]">₹{product.price}</span>
                                                         <span className="text-xs">
-                                                            MRP: <span className="line-through">{product.original_price}</span>
+                                                            MRP: <span className="line-through">₹{product.original_price}</span>
                                                         </span>
                                                     </div>
                                                 </div>

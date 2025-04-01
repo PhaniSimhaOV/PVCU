@@ -250,11 +250,11 @@ const ProductDetails = () => {
                                 <div className="flex flex-col gap-4 mb-4">
                                     {/* Price and Discount */}
                                     <div className='flex gap-2'>
-                                        <p className="line-through text-gray-500 text-xl">${product.price}</p>
-                                        <div className="text-white  text-sm  rounded-full bg-[#8B4513] px-2 py-0.5">{product.discount}%</div>
+                                        <p className="line-through text-gray-500 text-xl">₹ {product.price}</p>
+                                        {/* <div className="text-white  text-sm  rounded-full bg-[#8B4513] px-2 py-0.5">{product.discount}%</div> */}
                                     </div>
                                     <div>
-                                        <p className="text-2xl font-medium text-[#8B4513]">${product.original_price}</p>
+                                        <p className="text-2xl font-medium text-[#8B4513]">₹ {product.original_price}</p>
                                     </div>
                                 </div>
                                 {/* Product Description */}
