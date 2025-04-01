@@ -9,7 +9,8 @@ import c1 from "../assets/images/c1.png"
 import c2 from "../assets/images/c2.png"
 import c3 from "../assets/images/c3.png"
 import c4 from "../assets/images/c4.png"
-
+import a from "../assets/images/Map.png"
+import aBaner from "../assets/images/Map Banner.png"
 
 
 
@@ -635,11 +636,11 @@ const Home = () => {
                 </div>
             </Container> */}
 
-            {/* <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#3C1E09] via-[#763c13] to-[#41210A]">
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#3C1E09] via-[#763c13] to-[#41210A]">
                 <div className="grid lg:grid-cols-2 grid-cols-1 gap-8 items-center p-6 max-w-7xl mx-auto">
                     <div className="text-white space-y-6">
-                        <div className=" text-sm ">Categories</div>
-                        <h1 className="text-4xl lg:text-5xl font-bold ">
+                        <div className="text-sm">Categories</div>
+                        <h1 className="text-4xl lg:text-5xl font-bold">
                             Enhance Your Winter Wardrobe
                         </h1>
                         <div className="flex space-x-6 text-lg font-medium">
@@ -661,18 +662,26 @@ const Home = () => {
                             Buy Now
                         </button>
                     </div>
-                    <div className="flex justify-center lg:justify-end">
+                    <div className="relative flex justify-center lg:justify-end">
+                        {/* Background Map Image */}
                         <img
                             src={a}
+                            alt="Map Background"
+                            className="absolute w-[95%] lg:w-full opacity-50"
+                        />
+                        {/* Main Banner Image */}
+                        <img
+                            src={aBaner}
                             alt="Winter Jacket"
-                            className="max-w-full w-[90%] lg:w-full"
+                            className="relative max-w-full w-[90%] lg:w-full"
                         />
                     </div>
                 </div>
-            </div> */}
+            </div>
 
 
-           
+
+
 
             {/* <Container>
                 <div>
