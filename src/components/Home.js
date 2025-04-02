@@ -635,22 +635,27 @@ const Home = () => {
                     )}
                 </div>
             </Container> */}
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#3C1E09] via-[#763c13] to-[#41210A]">
-                <div className="relative w-[90%] lg:w-[80%] h-screen flex justify-center items-center">
-                    {/* Background Map Image */}
-                    <img
-                        src={a}
-                        alt="Map Background"
-                        className="absolute w-full h-full object-cover opacity-50"
-                    />
-                    {/* Main Banner Image */}
-                    <img
-                        src={aBaner}
-                        alt="Winter Jacket"
-                        className="relative w-full h-auto max-h-full object-contain"
-                    />
-                </div>
-            </div>
+
+            <section className="py-8 antialiased dark:bg-gray-900 md:py-12">
+                <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
+                        <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#3C1E09] via-[#763c13] to-[#41210A]">
+                            <div className="relative w-[90%] lg:w-[80%] h-screen flex justify-center items-center">
+                                {/* Background Map Image */}
+                                <img
+                                    src={a}
+                                    alt="Map Background"
+                                    className="absolute w-full h-full object-cover opacity-50"
+                                />
+                                {/* Main Banner Image */}
+                                <img
+                                    src={aBaner}
+                                    alt="Winter Jacket"
+                                    className="relative w-full h-auto max-h-full object-contain"
+                                />
+                            </div>
+                        </div>
+                    </div></section>
+
 
 
 
