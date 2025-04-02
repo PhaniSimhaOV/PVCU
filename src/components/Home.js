@@ -635,49 +635,24 @@ const Home = () => {
                     )}
                 </div>
             </Container> */}
-
             <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#3C1E09] via-[#763c13] to-[#41210A]">
-                <div className="grid lg:grid-cols-2 grid-cols-1 gap-8 items-center p-6 max-w-7xl mx-auto">
-                    <div className="text-white space-y-6">
-                        <div className="text-sm">Categories</div>
-                        <h1 className="text-4xl lg:text-5xl font-bold">
-                            Enhance Your Winter Wardrobe
-                        </h1>
-                        <div className="flex space-x-6 text-lg font-medium">
-                            {["Hours", "Days", "Minutes", "Seconds"].map((label, index, arr) => (
-                                <div
-                                    key={index}
-                                    className={`flex flex-col items-center ${index !== arr.length - 1 ? "border-r border-slate-400 pr-6" : ""
-                                        }`}
-                                >
-                                    <span className="text-xl font-normal">23</span>
-                                    <span className="text-xs">{label}</span>
-                                </div>
-                            ))}
-                        </div>
-                        <button
-                            type="button"
-                            className="rounded-md border border-gray-200 px-5 py-2 text-sm focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 text-black bg-white font-medium"
-                        >
-                            Buy Now
-                        </button>
-                    </div>
-                    <div className="relative flex justify-center lg:justify-end">
-                        {/* Background Map Image */}
-                        <img
-                            src={a}
-                            alt="Map Background"
-                            className="absolute w-[95%] lg:w-full opacity-50"
-                        />
-                        {/* Main Banner Image */}
-                        <img
-                            src={aBaner}
-                            alt="Winter Jacket"
-                            className="relative max-w-full w-[90%] lg:w-full"
-                        />
-                    </div>
+                <div className="relative w-[90%] lg:w-[80%] h-screen flex justify-center items-center">
+                    {/* Background Map Image */}
+                    <img
+                        src={a}
+                        alt="Map Background"
+                        className="absolute w-full h-full object-cover opacity-50"
+                    />
+                    {/* Main Banner Image */}
+                    <img
+                        src={aBaner}
+                        alt="Winter Jacket"
+                        className="relative w-full h-auto max-h-full object-contain"
+                    />
                 </div>
             </div>
+
+
 
 
 
