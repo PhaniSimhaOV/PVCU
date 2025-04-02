@@ -80,9 +80,9 @@ const Header = () => {
                             type='text'
                             placeholder='What are you looking for?'
                         /> */}
-                        <div className='absolute right-2 top-0 bottom-0 flex items-center'>
+                        {/* <div className='absolute right-2 top-0 bottom-0 flex items-center'>
                             <SearchOutlinedIcon sx={{ color: "grey", fontSize: "20px" }} />
-                        </div>
+                        </div> */}
                     </div>
                     <div className='flex items-center gap-4'>
                         <Link to="/wishlist">

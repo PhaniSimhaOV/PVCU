@@ -469,7 +469,7 @@ const Home = () => {
             <div className="mt-12 py-4 bg-[#F2F2F2]">
                 <Container>
                     <div>
-                        <h1 className="text-3xl font-semibold">Best Selling Products</h1>
+                        <h1 className="text-3xl font-semibold">Top Pick's</h1>
                     </div>
                     <div>
                         <section className="py-8 antialiased dark:bg-gray-900 md:py-8">
@@ -635,7 +635,7 @@ const Home = () => {
                     )}
                 </div>
             </Container> */}
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#3C1E09] via-[#763c13] to-[#41210A]">
+            <div className="min-h-screen flex items-center justify-center">
                 <div className="relative w-[90%] lg:w-[80%] h-screen flex justify-center items-center">
                     {/* Background Map Image */}
                     <img

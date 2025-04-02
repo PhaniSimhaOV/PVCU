@@ -284,9 +284,9 @@ const Wishlist = () => {
                                                                     product?.productId?.discount !== 0 && <span className="text-md text-[#8B4513]">-{product?.productId?.discount}%</span>
                                                                 }
                                                                 <span className="text-md text-[#8B4513]">₹ {product?.productId?.price}</span>
-                                                                <span className="text-xs">
+                                                                {/* <span className="text-xs">
                                                                     MRP: <span className="line-through">₹ {product?.productId?.original_price}</span>
-                                                                </span>
+                                                                </span> */}
                                                             </div>
                                                         </div>
 
