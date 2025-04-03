@@ -413,7 +413,7 @@ const Home = () => {
                                                 </div>
                                                 <div className="pt-6 p-3">
                                                     {/* Product Info */}
-                                                    <div className="absolute flex gap-1 top-2 bg-[#8B4513] px-2 py-1 items-center rounded-full">
+                                                    {/* <div className="absolute flex gap-1 top-2 bg-[#8B4513] px-2 py-1 items-center rounded-full">
                                                         <svg
                                                             className="h-3 w-3 text-yellow-400"
                                                             aria-hidden="true"
@@ -424,14 +424,14 @@ const Home = () => {
                                                             <path d="M13.8 4.2a2 2 0 0 0-3.6 0L8.4 8.4l-4.6.3a2 2 0 0 0-1.1 3.5l3.5 3-1 4.4c-.5 1.7 1.4 3 2.9 2.1l3.9-2.3 3.9 2.3c1.5 1 3.4-.4 3-2.1l-1-4.4 3.4-3a2 2 0 0 0-1.1-3.5l-4.6-.3-1.8-4.2Z" />
                                                         </svg>
                                                         <span className="text-xs text-white">{product.rating}</span>
-                                                    </div>
+                                                    </div> */}
                                                     {/* Actions */}
                                                     <div className="flex items-center justify-between gap-4">
-                                                        <div className="flex items-center flex-col justify-end gap-0 absolute top-0 left-12">
+                                                        <div className="flex items-center flex-col justify-end gap-0 absolute top-2 left-2">
                                                             <button
                                                                 onClick={() => addToWishlist(product._id)}
                                                                 type="button"
-                                                                className="rounded-lg p-2 text-white hover:text-gray-900 transition-colors duration-200 ease-in-out"
+                                                                className="bg-[#AB5A25] rounded-full p-1 text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:bg-[#91481F]"
                                                             >
                                                                 <svg
                                                                     className={`h-5 w-5 ${isProductInWishlist(product._id) ? 'text-red-500' : 'text-white'}`}
@@ -473,7 +473,10 @@ const Home = () => {
                                         <button
                                             onClick={() => navigate("/products")}
                                             type="button"
-                                            className="rounded-sm border border-gray-200 px-5 py-2 text-sm font-normal focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 text-white bg-[#8B4513]"
+                                            className="rounded-sm border border-gray-200 px-5 py-2 text-sm font-normal 
+                                            text-white bg-[#8B4513] transition-all duration-300 ease-in-out 
+                                            transform hover:scale-105 hover:bg-[#8B4513] focus:z-10 
+                                            focus:outline-none focus:ring-4 focus:ring-gray-100"
                                         >
                                             View All Products
                                         </button>
