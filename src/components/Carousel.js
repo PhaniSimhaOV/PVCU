@@ -1,60 +1,86 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { API_URL, IMAGE_URL } from '../constants';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { API_URL, IMAGE_URL } from "../constants";
+import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const Carousel = () => {
     const [banners, setBanners] = useState([]);
-    const [currentSlide, setCurrentSlide] = useState(0); // State to track the active slide
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const [loadedImages, setLoadedImages] = useState({}); // Track image load state
 
-    // Fetch banners from the API when the component mounts
     useEffect(() => {
         const fetchBanners = async () => {
             try {
-                const response = await axios.get(`${API_URL}/banners`); // Adjust the URL to match your backend
-                setBanners(response.data.banners); // Set the banners in state
+                const response = await axios.get(`${API_URL}/banners`);
+                setBanners(response.data.banners || []);
             } catch (error) {
-                console.error('Error fetching banners:', error);
+                console.error("Error fetching banners:", error);
             }
         };
-
         fetchBanners();
     }, []);
 
-    // Go to the previous slide
+    useEffect(() => {
+        // Preload images for better performance
+        banners.forEach((banner) => {
+            const img = new Image();
+            img.src = `${IMAGE_URL}${banner.imageUrl}`;
+            img.onload = () => {
+                setLoadedImages((prev) => ({ ...prev, [banner._id]: true }));
+            };
+        });
+    }, [banners]);
+
     const prevSlide = () => {
-        setCurrentSlide((prevSlide) => (prevSlide === 0 ? banners.length - 1 : prevSlide - 1));
+        setCurrentSlide((prev) => (prev === 0 ? banners.length - 1 : prev - 1));
     };
 
-    // Go to the next slide
     const nextSlide = () => {
-        setCurrentSlide((prevSlide) => (prevSlide === banners.length - 1 ? 0 : prevSlide + 1));
+        setCurrentSlide((prev) => (prev === banners.length - 1 ? 0 : prev + 1));
     };
 
-    // Go to a specific slide when a dot is clicked
     const goToSlide = (index) => {
         setCurrentSlide(index);
     };
 
+    const BANNER_URLS = {
+        "67ebcdbf5d2648edb1c2ca49": "/details/67ebd41c5d2648edb1c2cac5",
+        "67ebcdc85d2648edb1c2ca4d": "/products",
+        "67ecd0c45d2648edb1c2ce7f": "/details/67ebd4ef5d2648edb1c2cae9"
+    };
+
+    const navigate = useNavigate()
+
     return (
         <div id="custom-carousel" className="relative w-full">
-            <div className="relative h-56 overflow-hidden lg:h-96">
-                {/* Display banners */}
+            <div className="relative overflow-hidden lg:h-[700px]">
                 {banners.length > 0 && (
                     <div
-                        className="flex transition-transform duration-700"
+                        className="flex transition-transform duration-700 ease-in-out"
                         style={{
                             transform: `translateX(-${currentSlide * 100}%)`,
                         }}
                     >
                         {banners.map((banner, index) => (
-                            <div
-                                key={banner._id}
-                                className="w-full flex-shrink-0"
-                            >
+                            <div key={banner._id} className="w-full flex-shrink-0">
+                                {/* Show placeholder while loading */}
+                                {!loadedImages[banner._id] && (
+                                    <div className="w-full h-[700px]  animate-pulse flex items-center justify-center">
+                                        <span className="text-gray-400"></span>
+                                    </div>
+                                )}
                                 <img
+                                    onClick={() => {
+                                        if (BANNER_URLS[banner._id]) {
+                                            navigate(BANNER_URLS[banner._id]);
+                                        }
+                                    }}
                                     src={`${IMAGE_URL}${banner.imageUrl}`}
-                                    className="absolute block w-full h-96 object-cover"
+                                    className={`cursor-pointer block w-full h-full object-cover transition-opacity duration-700 ${loadedImages[banner._id] ? "opacity-100" : "opacity-0"
+                                        }`}
                                     alt={`Banner ${banner._id}`}
+                                    loading="lazy"
                                 />
                             </div>
                         ))}
@@ -62,29 +88,28 @@ const Carousel = () => {
                 )}
             </div>
 
-            {/* Previous button */}
+            {/* Navigation Buttons */}
             <button
-                className="absolute top-1/2 left-4 transform -translate-y-1/2 text-white text-3xl"
+                className="absolute top-1/2 left-4 transform -translate-y-1/2 text-white text-3xl bg-black/50 p-2 rounded-full hover:bg-black/70 transition"
                 onClick={prevSlide}
             >
-                &#10094;
+                <ArrowBackIos sx={{ ml: 0.7, mb: 0.8 }} fontSize="medium" />
             </button>
-
-            {/* Next button */}
             <button
-                className="absolute top-1/2 right-4 transform -translate-y-1/2 text-white text-3xl"
+                className="absolute top-1/2 right-4 transform -translate-y-1/2 text-white text-3xl bg-black/50 p-2 rounded-full hover:bg-black/70 transition"
                 onClick={nextSlide}
             >
-                &#10095;
+                <ArrowForwardIos sx={{ ml: 0.2, mb: 0.8 }} fontSize="medium" />
             </button>
 
             {/* Dots for slide indicators */}
-            <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+            <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3">
                 {banners.map((_, index) => (
                     <button
                         key={index}
                         type="button"
-                        className={`w-3 h-3 rounded-full ${index === currentSlide ? 'bg-white' : 'bg-gray-500'}`}
+                        className={`w-3 h-3 rounded-full transition-all ${index === currentSlide ? "bg-white scale-110" : "bg-gray-500"
+                            }`}
                         onClick={() => goToSlide(index)}
                     ></button>
                 ))}

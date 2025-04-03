@@ -45,19 +45,19 @@ const ProductDetails = () => {
     const addToCart = async () => {
         try {
             setLoading(true);
-    
+
             const token = localStorage.getItem('token');
             if (!token) {
                 toast.error('Please log in to add items to your cart');
                 return;
             }
-    
+
             const config = {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             };
-    
+
             // Try fetching cart details
             let cartItems = [];
             try {
@@ -72,18 +72,18 @@ const ProductDetails = () => {
                     throw error; // Re-throw the error if it’s something else (network issues, etc.)
                 }
             }
-    
+
             // Check if the product is already in the cart
             const isProductInCart = cartItems.some(
                 (item) => item.productId?._id === product._id && item.size === size
             );
-    
+
             if (isProductInCart) {
                 setIsAdded(true);
                 toast.error('This product is already in your cart');
                 return;
             }
-    
+
             // Add product to the cart
             await axios.post(
                 `${API_URL}/cart/add`,
@@ -94,7 +94,7 @@ const ProductDetails = () => {
                 },
                 config
             );
-    
+
             toast.success('Item added to cart successfully');
             setIsAdded(true); // Mark as added after successful addition
         } catch (error) {
@@ -104,7 +104,7 @@ const ProductDetails = () => {
             setLoading(false);
         }
     };
-    
+
 
 
     const handleQuantityChange = (action) => {
@@ -121,7 +121,6 @@ const ProductDetails = () => {
             {
                 !product ? (
                     <div className="container mx-auto p-4 my-6">
-                        {/* Navigation */}
                         <nav className="text-sm mb-4">
                             <Skeleton width="100px" />
                             <Skeleton width="100px" />
@@ -191,37 +190,27 @@ const ProductDetails = () => {
                     </div>
                 ) : (
                     <div className="container mx-auto p-4 my-6">
-                        {/* Navigation */}
                         <nav className="text-sm mb-4">
                             <a href="" className="text-gray-500">Home</a> /
-                            <a href="" className="text-gray-500"> Men T-Shirt</a> /
                             <span className="text-gray-800 font-semibold"> {product.name}</span>
                         </nav>
 
                         <div className="grid lg:grid-cols-2 gap-8">
                             <div>
-                                {/* <div className="border rounded-lg overflow-hidden mb-4">
-                                    <img
-                                        src={`${previewImage}`}
-                                        alt="White Casual T-Shirt"
-                                        className="w-full object-cover h-1/2"
-                                    />
-                                </div> */}
 
                                 <div className="grid grid-cols-3 lg:grid-cols-2 gap-2">
-
-                                    {
-                                        product?.slideImages?.map((sld, index) => (
+                                    {product?.slideImages?.map((sld, index) => {
+                                        const imageUrl = `${IMAGE_URL}/${sld}`;
+                                        return (
                                             <img
                                                 key={index}
-                                                src={`${IMAGE_URL}/${sld}`}
+                                                src={imageUrl}
                                                 alt="Thumbnail"
-                                                onClick={() => setPreviewImage(`${IMAGE_URL}/${sld}`)}
-                                                className="border rounded-lg w-full object-cover h-full cursor-pointer h-1/2"
+                                                onClick={() => setPreviewImage(imageUrl)}
+                                                className="border rounded-sm w-full object-cover h-full cursor-pointer  transition-transform duration-300 "
                                             />
-                                        ))
-
-                                    }
+                                        );
+                                    })}
                                 </div>
 
 
@@ -238,7 +227,7 @@ const ProductDetails = () => {
                                         <ReplayOutlinedIcon />
                                         <div className='flex flex-col'>
                                             <p className="text-sm font-semibold">Return Delivery</p>
-                                            <p className="text-sm">Free 30-day returns. <a href="#" className="underline text-[#8B4513]">Details</a></p>
+                                            <p className="text-sm">Free 30-day returns. </p>
                                         </div>
                                     </div>
                                 </div>
@@ -249,10 +238,9 @@ const ProductDetails = () => {
                                 <h1 className="text-2xl font-bold mb-2 ">{product.name}</h1>
                                 <div className="flex flex-col gap-4 mb-4">
                                     {/* Price and Discount */}
-                                    <div className='flex gap-2'>
+                                    {/* <div className='flex gap-2'>
                                         <p className="line-through text-gray-500 text-xl">₹ {product.price}</p>
-                                        {/* <div className="text-white  text-sm  rounded-full bg-[#8B4513] px-2 py-0.5">{product.discount}%</div> */}
-                                    </div>
+                                    </div> */}
                                     <div>
                                         <p className="text-2xl font-medium text-[#8B4513]">₹ {product.original_price}</p>
                                     </div>

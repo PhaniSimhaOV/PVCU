@@ -9,9 +9,9 @@ export const CartProvider = ({ children }) => {
     const calculateCart = (items) => {
         let subtotal = 0;
         items.forEach(item => {
-            const itemPrice = item.productId.discount
-                ? item.productId.original_price - (item.productId.original_price * (item.productId.discount.percent / 100))
-                : item.productId.original_price;
+            const itemPrice = item?.productId?.discount
+                ? item?.productId?.original_price - (item?.productId?.original_price * (item?.productId?.discount?.percent / 100))
+                : item?.productId?.original_price;
 
             subtotal += itemPrice * item.quantity; // Add price for the quantity of the item
         });

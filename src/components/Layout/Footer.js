@@ -2,6 +2,7 @@
 import React from "react";
 import logo from "../../assets/images/logo.png"
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
+import { Link } from "react-router-dom";
 
 const Footer = () => {
     return (
@@ -13,12 +14,12 @@ const Footer = () => {
                             <img src={logo} className="rounded-lg" />
                         </div>
 
-                        <p className="mt-4 max-w-xs text-white text-lg font-normal flex flex-col">
+                        {/* <p className="mt-4 max-w-xs text-white text-lg font-normal flex flex-col">
                             Subscribe
                             <span className="text-sm text-[#907562]">Get 10% off on your first order</span>
-                        </p>
+                        </p> */}
 
-                        <div className='relative mb-4 md:mb-0 w-full md:w-auto mt-4'>
+                        {/* <div className='relative mb-4 md:mb-0 w-full md:w-auto mt-4'>
                             <input
                                 className='w-full  outline-none border bg-transparent text-[#907562] border-slate-50 p-2.5 rounded-sm text-sm pr-12 focus:outline-none focus:border-slate-100'
                                 type='text'
@@ -27,7 +28,7 @@ const Footer = () => {
                             <div className='absolute right-3 top-0 bottom-0 flex items-center'>
                                 <ExitToAppOutlinedIcon className='text-white' />
                             </div>
-                        </div>
+                        </div> */}
 
                         {/* <ul className="mt-8 flex gap-6">
                             <li>
@@ -151,23 +152,33 @@ const Footer = () => {
                             <p className="font-medium text-white">Account</p>
 
                             <ul className="mt-6 space-y-4 text-sm">
-                                <li>
+                                {/* <li>
                                     <a href="#" className="text-[#907562] transition hover:opacity-75"> My Account </a>
+                                </li> */}
+
+                                <li>
+                                    <Link to="/login" className="text-[#907562] transition hover:opacity-75">
+                                        Login / Register
+                                    </Link>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-[#907562] transition hover:opacity-75"> Login / Register </a>
+                                    <Link to="/cart" className="text-[#907562] transition hover:opacity-75">
+                                        Cart
+                                    </Link>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-[#907562] transition hover:opacity-75"> Cart </a>
+                                    <Link to="/wishlist" className="text-[#907562] transition hover:opacity-75">
+                                        Wishlist
+                                    </Link>
                                 </li>
-                                <li>
-                                    <a href="#" className="text-[#907562] transition hover:opacity-75"> Wishlist </a>
-                                </li>
-                                <li>
-                                    <a href="#" className="text-[#907562] transition hover:opacity-75"> Shop </a>
-                                </li>
+
+                                {/* <li>
+                                    <Link to="/shop" className="text-[#907562] transition hover:opacity-75">
+                                        Shop
+                                    </Link>
+                                </li> */}
                             </ul>
                         </div>
 
@@ -184,11 +195,15 @@ const Footer = () => {
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-[#907562] transition hover:opacity-75"> FAQ </a>
+                                    <Link to="/about" className="text-[#907562] transition hover:opacity-75">
+                                        About Us
+                                    </Link>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-[#907562] transition hover:opacity-75"> Contact </a>
+                                    <Link to="/contact" className="text-[#907562] transition hover:opacity-75">
+                                        Contact Us
+                                    </Link>
                                 </li>
                             </ul>
                         </div>

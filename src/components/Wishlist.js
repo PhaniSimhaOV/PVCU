@@ -243,7 +243,7 @@ const Wishlist = () => {
                                                     key={product?.productId?.id}
                                                     className="flex-none w-64 rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative"
                                                 >
-                                                    <div className="h-72 w-full">
+                                                    <div className="w-full">
                                                         <Link to={`/details/${product.productId._id}`}>
                                                             <img
                                                                 className="w-full object-cover h-full dark:hidden"
@@ -272,14 +272,14 @@ const Wishlist = () => {
                                                         </div>
 
                                                         <div className="flex flex-col gap-1">
-                                                            <span className="text-xs">{product?.productId?.category}</span>
+                                                            {/* <span className="text-xs">{product?.productId?.category}</span> */}
                                                             <a
                                                                 href="#"
                                                                 className="text-sm font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
                                                             >
                                                                 {product?.productId?.name}
                                                             </a>
-                                                            <div className="flex gap-3 items-center my-2">
+                                                            <div className="flex gap-3 items-center">
                                                                 {
                                                                     product?.productId?.discount !== 0 && <span className="text-md text-[#8B4513]">-{product?.productId?.discount}%</span>
                                                                 }
@@ -326,7 +326,7 @@ const Wishlist = () => {
             </Container>
 
 
-            <div className='bg-[#F2F2F2]'>
+            {/* <div className='bg-[#F2F2F2]'>
                 <Container>
                     <div className="mt-12 py-6 my-2">
                         <div className="flex justify-between items-center">
@@ -348,14 +348,12 @@ const Wishlist = () => {
                                         <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
                                             <div className="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
                                                 {skeletonCards}
-                                                {/* {skeletonCards} */}
                                             </div>
                                         </div>
                                     </section>
                                 </div>
                             </div>
                         ) : bestSelling?.length === 0 ? (
-                            // <NoFound name={"Products"} />
                             <></>
                         ) : (
                             <div>
@@ -367,7 +365,7 @@ const Wishlist = () => {
                                                     key={product.id}
                                                     className="rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative"
                                                 >
-                                                    <div className="h-72 w-full">
+                                                    <div className=" w-full">
                                                         <Link to={`/details/${product._id}`}>
                                                             <img
                                                                 className="w-full object-cover h-full dark:hidden"
@@ -395,70 +393,35 @@ const Wishlist = () => {
                                                             <span className="text-xs text-white">{product.rating}</span>
                                                         </div>
                                                         <div className="flex items-center justify-between gap-4">
-                                                            {/* <div className="flex items-center flex-col justify-end gap-0 absolute top-0 right-1">
-                                                                <button
-                                                                    onClick={() => addToWishlist(product._id)}
-                                                                    type="button"
-                                                                    data-tooltip-target="tooltip-add-to-favorites"
-                                                                    className="rounded-lg p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400"
-                                                                >
-                                                                    <span className="sr-only"> Add to Favorites </span>
-                                                                    <svg
-                                                                        className="h-5 w-5"
-                                                                        aria-hidden="true"
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        fill="none"
-                                                                        viewBox="0 0 24 24"
-                                                                    >
-                                                                        <path
-                                                                            stroke="currentColor"
-                                                                            strokeLinecap="round"
-                                                                            strokeLinejoin="round"
-                                                                            strokeWidth="2"
-                                                                            d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z"
-                                                                        />
-                                                                    </svg>
-                                                                </button>
-                                                            </div> */}
+                                                            
                                                         </div>
                                                         <div className="flex flex-col gap-1">
-                                                            <span className="text-xs">{product.category}</span>
                                                             <a
                                                                 href="#"
                                                                 className="text-sm font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
                                                             >
                                                                 {product.name}
                                                             </a>
-                                                            <div className="flex gap-3 items-center my-2">
+                                                            <div className="flex gap-3 items-center">
                                                                 {
                                                                     product.discount !== 0 && <span className="text-md text-[#8B4513]">-{product.discount}%</span>
                                                                 }
                                                                 <span className="text-md text-[#8B4513]">{product.price}</span>
-                                                                <span className="text-xs">
-                                                                    MRP: <span className="line-through">{product.original_price}</span>
-                                                                </span>
+                                                                
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             ))}
                                         </div>
-                                        {/* <div className="w-full text-center">
-                                            <button
-                                                onClick={() => navigate("/products")}
-                                                type="button"
-                                                className="rounded-sm border border-gray-200 px-5 py-2 text-sm font-normal focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 text-white bg-[#8B4513]"
-                                            >
-                                                View All Products
-                                            </button>
-                                        </div> */}
+                                        
                                     </div>
                                 </section>
                             </div>
                         )}
                     </div>
                 </Container>
-            </div>
+            </div> */}
         </div>
     )
 }

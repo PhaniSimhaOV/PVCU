@@ -67,7 +67,7 @@ const Contact = () => {
           {/* Left Section */}
           <div className="space-y-6">
             {/* Call To Us */}
-            <div className="flex items-start space-x-4">
+            {/* <div className="flex items-start space-x-4">
               <div className="p-4 bg-[#DDC8B9] rounded-full">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -85,15 +85,15 @@ const Contact = () => {
                 </svg>
               </div>
               <div>
-                <h2 className="text-lg font-semibold">Call To Us</h2>
+                <h2 className="text-lg font-semibold">Email To Us</h2>
                 <p className="text-gray-600">
                   We are available 24/7, 7 days a week.
                 </p>
                 <p className="text-slate-400 font-medium">
-                  Phone: (+91) 000 000 0000
+                  Email: superhelp@pvcu.in
                 </p>
               </div>
-            </div>
+            </div> */}
             {/* Write To Us */}
             <div className="flex items-start space-x-4">
               <div className="p-4 bg-[#DDC8B9] rounded-full">
@@ -118,7 +118,7 @@ const Contact = () => {
                   Fill out the forms and we will contact you within 24 hours.
                 </p>
                 <p className="text-slate-400 font-medium">
-                  Email: customercare@thepvcu.com
+                  Email: superhelp@pvcu.in
                 </p>
               </div>
             </div>

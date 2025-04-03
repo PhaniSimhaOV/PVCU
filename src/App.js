@@ -16,6 +16,7 @@ import AboutUs from './components/About';
 import AllProductsPage from './AllProductsPage';
 import CheckoutForm from './components/CheckoutForm';
 import Orders from './components/Orders';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -23,6 +24,7 @@ function App() {
   return (
     <Router>
       <div className="App">
+      <ScrollToTop />
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />

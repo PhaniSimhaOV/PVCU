@@ -11,6 +11,8 @@ import c3 from "../assets/images/c3.png"
 import c4 from "../assets/images/c4.png"
 import a from "../assets/images/Map.png"
 import aBaner from "../assets/images/Map Banner.png"
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 
 
@@ -80,14 +82,50 @@ const Home = () => {
     const [newArrivals, setNewArrivals] = useState([])
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(false)
+    const productContainerRef = useRef(null);
 
 
     const handleForwardClick = () => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % product.length);
+        if (productContainerRef.current) {
+            const container = productContainerRef.current;
+            const scrollAmount = container.clientWidth; // Scroll by container width
+            smoothScroll(container, scrollAmount);
+        }
     };
 
     const handleBackwardClick = () => {
-        setCurrentIndex((prevIndex) => (prevIndex - 1 + product.length) % product.length);
+        if (productContainerRef.current) {
+            const container = productContainerRef.current;
+            const scrollAmount = -container.clientWidth;
+            smoothScroll(container, scrollAmount);
+        }
+    };
+
+    // Function for smooth scrolling
+    const smoothScroll = (element, amount) => {
+        let start = element.scrollLeft;
+        let currentTime = 0;
+        const increment = 5;
+        const duration = 400; // 500ms smooth scroll
+
+        const animateScroll = () => {
+            currentTime += increment;
+            const val = easeInOutQuad(currentTime, start, amount, duration);
+            element.scrollLeft = val;
+            if (currentTime < duration) {
+                requestAnimationFrame(animateScroll);
+            }
+        };
+
+        animateScroll();
+    };
+
+    // Easing function for smooth acceleration & deceleration
+    const easeInOutQuad = (t, b, c, d) => {
+        t /= d / 2;
+        if (t < 1) return (c / 2) * t * t + b;
+        t--;
+        return (-c / 2) * (t * (t - 2) - 1) + b;
     };
 
     const getProducts = async () => {
@@ -253,11 +291,16 @@ const Home = () => {
         });
     }
     const handleNavigateToKids = (value) => {
-        navigate({
-            pathname: '/products',
-            search: `?gender=${value}`, // Add more parameters as needed
-        });
+        navigate("/details/67ebd4ef5d2648edb1c2cae9")
+        // navigate({
+        //     pathname: '/products',
+        //     search: `?gender=${value}`, // Add more parameters as needed
+        // });
     }
+    const sortedProducts = bestSelling?.sort((a, b) => {
+        const order = ['Hanu-Man', 'Super-Hero', 'Michael', 'Hey Siri!'];
+        return order.indexOf(a.name) - order.indexOf(b.name);
+    });
     return (
         <div>
 
@@ -269,40 +312,34 @@ const Home = () => {
                 <div className="text-white">
                     <nav className="flex justify-between items-center p-2">
                         <div className="space-x-6 flex">
-                            {/* <div className="relative" ref={womenMenuRef}>
-                                <button
-                                    className="text-black"
-                                    onClick={() => toggleMenu('women')}
-                                >
-                                    Women's Fashion
-                                </button>
-                                {activeMenu === 'women' && (
-                                    <div className="z-50 absolute left-0 mt-2.5 bg-white text-black cursor-pointer rounded-sm w-48">
-                                        <ul className="py-2">
-                                            <li className="px-4 py-2 hover:bg-slate-100">Hoodies</li>
-                                            <li className="px-4 py-2 hover:bg-slate-100">Sweatshirts</li>
-                                            <li className="px-4 py-2 hover:bg-slate-100">Tops</li>
-                                            <li className="px-4 py-2 hover:bg-slate-100">Dresses</li>
-                                        </ul>
-                                    </div>
-                                )}
-                            </div> */}
                             <div className="relative" ref={menMenuRef}>
                                 <button
-                                    className="text-black"
+                                    className="text-black flex items-center gap-1"
                                     onClick={() => toggleMenu('men')}
                                 >
                                     Fashion & Clothing
+                                    {activeMenu === 'men' ? (
+                                        <KeyboardArrowUpIcon fontSize="small" />
+                                    ) : (
+                                        <KeyboardArrowDownIcon fontSize="small" />
+                                    )}
                                 </button>
                                 {activeMenu === 'men' && (
                                     <div className="z-50 absolute left-0 mt-2.5 bg-white text-black cursor-pointer rounded-sm w-48">
                                         <ul className="py-2">
-                                            {filters?.length > 0 && filters?.map((category) => (
-                                                category?.category === "categories" && category?.values.map((value) => (
-                                                    <li onClick={() => handleNavigate(value)} className="px-4 py-2 hover:bg-slate-100">{value}</li>
-                                                ))
-                                            ))}
-
+                                            {filters?.length > 0 &&
+                                                filters?.map((category) =>
+                                                    category?.category === "categories" &&
+                                                    category?.values.map((value) => (
+                                                        <li
+                                                            key={value}
+                                                            onClick={() => handleNavigate(value)}
+                                                            className="px-4 py-2 hover:bg-slate-100"
+                                                        >
+                                                            {value}
+                                                        </li>
+                                                    ))
+                                                )}
                                         </ul>
                                     </div>
                                 )}
@@ -319,16 +356,16 @@ const Home = () => {
                         <h1 className="text-3xl font-semibold">Our Products</h1>
                         <div className="flex gap-2">
                             <div
-                                className="border rounded-full px-2 py-1 bg-slate-100 cursor-pointer"
+                                className="border rounded-full px-2 py-1 bg-[#AC5B24] cursor-pointer"
                                 onClick={handleBackwardClick}
                             >
-                                <ArrowBackOutlinedIcon sx={{ fontSize: '18px' }} />
+                                <ArrowBackOutlinedIcon sx={{ fontSize: '18px', color: "white" }} />
                             </div>
                             <div
-                                className="border rounded-full px-2 py-1 bg-slate-100 cursor-pointer"
+                                className="border rounded-full px-2 py-1 bg-[#AC5B24] cursor-pointer"
                                 onClick={handleForwardClick}
                             >
-                                <ArrowForwardOutlinedIcon sx={{ fontSize: '18px' }} />
+                                <ArrowForwardOutlinedIcon sx={{ fontSize: '18px', color: "white" }} />
                             </div>
                         </div>
                     </div>
@@ -351,21 +388,24 @@ const Home = () => {
                         <div className="today_flash_sale">
                             <section className="py-8 antialiased md:py-12">
                                 <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-                                    <div className="mb-4 flex gap-4 overflow-x-auto">
+                                    <div ref={productContainerRef} className="mb-4 flex gap-4 overflow-x-auto scroll-smooth">
                                         {visibleProducts.map((product) => (
                                             <div
                                                 key={product.id}
-                                                className="flex-none w-64 rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative"
+                                                className="flex-none w-64 rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative 
+                        transition-all duration-300 ease-in-out "
                                             >
-                                                <div className="h-72 w-full">
+                                                <div className="w-full">
                                                     <Link to={`/details/${product._id}`}>
                                                         <img
-                                                            className="w-full object-cover h-full dark:hidden"
+                                                            className="w-full object-cover h-full dark:hidden transition-opacity duration-500 ease-in-out"
                                                             src={`${IMAGE_URL}/${product.imageUrl}`}
                                                             alt={product.name}
+                                                            loading="lazy"
+                                                            onError={(e) => (e.target.src = "https://via.placeholder.com/150")}
                                                         />
                                                         <img
-                                                            className="w-full object-cover hidden h-full dark:block"
+                                                            className="w-full object-cover hidden h-full dark:block transition-opacity duration-500 ease-in-out"
                                                             src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg"
                                                             alt={product.name}
                                                         />
@@ -387,16 +427,14 @@ const Home = () => {
                                                     </div>
                                                     {/* Actions */}
                                                     <div className="flex items-center justify-between gap-4">
-                                                        <div className="flex items-center flex-col justify-end gap-0 absolute top-0 right-1">
+                                                        <div className="flex items-center flex-col justify-end gap-0 absolute top-0 left-12">
                                                             <button
                                                                 onClick={() => addToWishlist(product._id)}
                                                                 type="button"
-                                                                data-tooltip-target="tooltip-add-to-favorites"
-                                                                className="rounded-lg p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400"
+                                                                className="rounded-lg p-2 text-white hover:text-gray-900 transition-colors duration-200 ease-in-out"
                                                             >
-                                                                <span className="sr-only"> Add to Favorites </span>
                                                                 <svg
-                                                                    className={`h-5 w-5 ${isProductInWishlist(product._id) ? 'text-red-500' : 'text-gray-500'}`}
+                                                                    className={`h-5 w-5 ${isProductInWishlist(product._id) ? 'text-red-500' : 'text-white'}`}
                                                                     aria-hidden="true"
                                                                     xmlns="http://www.w3.org/2000/svg"
                                                                     fill="none"
@@ -415,7 +453,6 @@ const Home = () => {
                                                     </div>
                                                     {/* Product Details */}
                                                     <div className="flex flex-col gap-1">
-                                                        {/* <span className="text-xs">{product.category}</span> */}
                                                         <a
                                                             href="#"
                                                             className="text-sm font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
@@ -423,19 +460,15 @@ const Home = () => {
                                                             <h6 className='text-md'>{product.name}</h6>
                                                         </a>
                                                         <div className="flex gap-3 items-center my-1">
-                                                            {
-                                                                product.discount !== 0 && <span className="text-md text-[#8B4513]">-{product.discount}%</span>
-                                                            }
+                                                            {product.discount !== 0 && <span className="text-md text-[#8B4513]">-{product.discount}%</span>}
                                                             <span className="text-md text-[#8B4513]">₹{product.price}</span>
-                                                            {/* <span className="text-xs">
-                                                                MRP: <span className="line-through">₹{product.original_price}</span>
-                                                            </span> */}
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
+
                                     <div className="w-full text-center">
                                         <button
                                             onClick={() => navigate("/products")}
@@ -475,7 +508,7 @@ const Home = () => {
                         <section className="py-8 antialiased dark:bg-gray-900 md:py-8">
                             <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
                                 <div className="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-4 xl:grid-cols-4">
-                                    {bestSelling?.map((product) => (
+                                    {sortedProducts?.map((product) => (
                                         <div key={product.id} className="rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative">
                                             <div className="h-full w-full relative">
                                                 {/* <a href=""> */}
@@ -639,15 +672,17 @@ const Home = () => {
                 <div className="relative w-[90%] lg:w-[80%] h-screen flex justify-center items-center">
                     {/* Background Map Image */}
                     <img
+                        onClick={() => navigate("details/67ebd32f5d2648edb1c2caaa")}
                         src={a}
                         alt="Map Background"
-                        className="absolute w-full h-full object-cover opacity-50"
+                        className="cursor-pointer absolute w-full h-full object-contain opacity-50"
                     />
                     {/* Main Banner Image */}
                     <img
+                        onClick={() => navigate("details/67ebd32f5d2648edb1c2caaa")}
                         src={aBaner}
                         alt="Winter Jacket"
-                        className="relative w-full h-auto max-h-full object-contain"
+                        className="cursor-pointer relative w-full h-auto max-h-full object-contain"
                     />
                 </div>
             </div>

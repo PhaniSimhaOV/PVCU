@@ -46,20 +46,20 @@ const CartItem = ({ item, updateCart, removeItem }) => {
             <img
                 src={`${IMAGE_URL}/${image}`}
                 alt={name}
-                className="w-20 h-20 rounded-lg object-cover"
+                className="w-24 h-full rounded-sm object-cover"
             />
             <div className="flex-grow">
                 <h3 className="font-medium  mb-2  text-xl">{name}</h3>
                 <div className="flex items-center space-x-2">
                     <span className="font-normal text-sm">₹ {price}</span>
-                    {discount && (
+                    {/* {discount && (
                         <>
                             <span className="line-through text-gray-400">₹{discount.original}</span>
                             <div className="text-white text-sm rounded-full bg-[#E90000] px-4 my-2 py-0.5">
                                 {discount.percent}%
                             </div>
                         </>
-                    )}
+                    )} */}
                 </div>
                 <div className="flex items-center justify-between">
                     <div className="mt-2 flex items-center border border-slate-500 w-fit space-x-2">
@@ -86,10 +86,10 @@ const CartItem = ({ item, updateCart, removeItem }) => {
                         <button onClick={handleDelete} className="text-slate-400 hover:text-red-800">Delete</button>
                     </div>
                 </div>
-                <textarea
+                {/* <textarea
                     placeholder="Eg: Please double check before packing."
                     className="w-full my-2 border rounded-sm p-2 text-sm"
-                />
+                /> */}
             </div>
         </div>
     );

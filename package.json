@@ -22,6 +22,7 @@
     "react-dom": "^19.0.0",
     "react-google-login": "^5.2.2",
     "react-hot-toast": "^2.5.1",
+    "react-image-magnify": "^2.7.4",
     "react-router-dom": "^7.1.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"

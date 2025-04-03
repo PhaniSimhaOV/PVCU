@@ -45,7 +45,7 @@ const Cart = () => {
             <div className="container mx-auto p-4 my-6">
                 <nav className="text-sm mb-6">
                     <a href="" className="text-gray-500">Home</a> /
-                    <a href="" className="text-gray-500"> Men T-Shirt</a> /
+                    {/* <a href="" className="text-gray-500"> Men T-Shirt</a> / */}
                     <span className="text-gray-800 font-semibold"> Your Cart</span>
                 </nav>
 

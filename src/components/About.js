@@ -1,24 +1,32 @@
 import { Container } from "@mui/material";
-import React from "react";
-import a1 from "../assets/images/a1.png"
-import a2 from "../assets/images/a2.png"
+import React, { useEffect, useState } from "react";
+import a1 from "../assets/images/hanuman-top-banner.mp4"
 
 
 const AboutUs = () => {
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => setIsLoaded(true), 300); // Delay effect for smooth transition
+        return () => clearTimeout(timeout);
+    }, []);
     return (
         <>
+            <div className="w-full h-screen bg-transparent relative">
+                <video
+                    className={`w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-1000 ${isLoaded ? "opacity-100" : "opacity-0"}`}
+                    loop
+                    autoPlay
+                    muted
+                    onLoadedData={() => setIsLoaded(true)} // Trigger animation when video loads
+                >
+                    <source src={a1} type="video/mp4" />
+                </video>
+            </div>
             <Container>
                 <div className="container mx-auto px-4 py-10 space-y-12">
-                    {/* Story Section */}
                     <div className="relative">
-                        {/* Full-width Image */}
-                        <img
-                            src={a1} // Replace with your image URL
-                            alt="Our Story"
-                            className="w-full h-[400px] object-cover rounded-lg" // Full-width rectangle image with fixed height
-                        />
 
-                        {/* Overlay Text Section */}
                         <div
                             className=" top-0 left-0 right-0 bottom-0 my-6 flex justify-center items-center"
                             style={{
@@ -37,17 +45,18 @@ const AboutUs = () => {
                                     Our Story
                                 </h1>
                                 <div className="my-6">
-                                    <p className="text-black leading-relaxed mb-6">
-                                        At PVCU, our unwavering dedication is ignited by a divine commitment to sculpt a superhero universe,
-                                        drawing profound inspiration from the sacred tapestry of The Itihasas of Akhand Bharat. Join us at PVCU,
-                                        where ancient tales seamlessly merge with modern imagination, creating a harmonious fusion that resonates
-                                        with the soul of Akhand Bharat.
+                                    <p className="text-black leading-relaxed mb-2">
+                                        At PVCU,  we bring legends to life.
+                                        Every piece in this collection is a tribute to the rich legacy of Indian superheroes, created with immense passion and detail.
                                     </p>
-                                    <p className="text-black leading-relaxed">
-                                        Our Mission transcends the boundaries of mere imagination; it extends a sacred call, inviting you to
-                                        embark on an extraordinary odyssey into a realm. Where the mythic tales of ancient India come alive in
-                                        vivid, divine, and astonishing forms.
+                                    <p className="text-black leading-relaxed mb-2">
+                                        From the first sketch to the final design, each artwork is hand-drawn, ensuring authenticity and originality. Every line, every shade, and every detail is carefully crafted to reflect the essence of our beloved mythological and cinematic heroes.
                                     </p>
+                                    <p className="text-black leading-relaxed mb-2">
+                                        This is more than just clothing. It’s a celebration of the unsung legends of our land, a homage to the stories that shaped us, and a way for you to wear your pride.
+                                    </p>
+                                    <p className="text-black leading-relaxed mb-2"> Join the PVCU tribe and carry the spirit of our heroes with you.</p>
+
                                 </div>
                             </div>
                         </div>

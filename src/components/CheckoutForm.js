@@ -294,7 +294,7 @@ const CheckoutForm = () => {
                     <img
                       src={`${IMAGE_URL}/${item.image}`} // Replace with actual product image
                       alt={item.productId.name}
-                      className="w-20 h-20 rounded-lg object-cover"
+                      className="w-24 h-full rounded-sm object-cover"
                     />
                     <div>
                       <h3 className="font-medium">{item.productId.name}</h3>
@@ -317,10 +317,10 @@ const CheckoutForm = () => {
                   <span>Subtotal</span>
                   <span>₹{subtotal}</span>
                 </div>
-                <div className="flex justify-between mb-2 text-red-500">
+                {/* <div className="flex justify-between mb-2 text-red-500">
                   <span>Voucher (50KDISCOUNT)</span>
                   <span>-₹{50}</span>
-                </div>
+                </div> */}
                 <div className="flex justify-between mb-2">
                   <span>Shipping</span>
                   <span>FREE</span>

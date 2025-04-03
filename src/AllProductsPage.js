@@ -240,7 +240,7 @@ const ProductGrid = React.memo(({ bestSelling, loading }) => {
                                             key={product._id}
                                             className="rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative"
                                         >
-                                            <div className="h-72 w-full">
+                                            <div className="w-full">
                                                 <Link to={`/details/${product._id}`}>
                                                     <img
                                                         className="w-full object-cover h-full dark:hidden"

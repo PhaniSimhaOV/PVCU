@@ -38,23 +38,23 @@ const Header = () => {
 
     return (
         <div>
-            <div className='bg-[#8B4513] py-2'>
+            {/* <div className='bg-[#8B4513] py-2'>
                 <p className='text-xs text-center text-white'>Discount 20% For New Member, ONLY FOR TODAY!!</p>
-            </div>
+            </div> */}
             <div className='py-4 flex flex-col md:flex-row justify-between items-center px-4 md:px-10 border-b'>
                 <div className='mb-4 md:mb-0 cursor-pointer'>
                     <img onClick={() => navigate('/')} src={logo} alt="Logo" className='w-24' />
                 </div>
                 <div className='flex justify-center mb-4 md:mb-0'>
                     <ul className='flex flex-col md:flex-row gap-4'>
-                        <li>
+                        {/* <li>
                             <Link
                                 to="/"
                                 className={`cursor-pointer ${location.pathname === '/' ? 'underline' : ''}`}
                             >
                                 Home
                             </Link>
-                        </li>
+                        </li> */}
                         <li>
                             <Link
                                 to="/contact"
@@ -68,7 +68,7 @@ const Header = () => {
                                 to="/about"
                                 className={`cursor-pointer ${location.pathname === '/about' ? 'underline' : ''}`}
                             >
-                                About
+                                About Us
                             </Link>
                         </li>
                     </ul>
