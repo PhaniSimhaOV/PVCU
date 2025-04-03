@@ -3,6 +3,7 @@ import { Container } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { API_URL, IMAGE_URL } from '../constants'
 import axios from 'axios'
+import NoFound from './common/NoFound'
 
 const Orders = () => {
     const [orders, setOrders] = useState([])
@@ -25,12 +26,16 @@ const Orders = () => {
     }, [])
     return (
         <Container>
-            <div className='container mx-auto p-4 my-6'>
+
+
+            <div className={`container mx-auto p-4 my-6 ${orders?.length === 0 ? 'h-96' : ''}`}>
                 <nav className="text-sm mb-4">
                     <a href="" className="text-gray-500">Home</a> /
                     <a href="" className="text-gray-500 font-semibold"> Your Orders </a>
                 </nav>
-                {
+                {orders?.length === 0 ? <>
+                    <NoFound name={"Orders"} />
+                </> :
                     orders?.map((order, index) => (
                         <div className='border my-4'>
                             <div class="mx-auto bg-white  rounded-lg p-6">

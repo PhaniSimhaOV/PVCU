@@ -212,7 +212,7 @@ const Wishlist = () => {
                 reverseOrder={false}
             />
             <Container>
-                <div className="mt-12 my-2">
+                <div className={`mt-12 my-2 ${wishlist?.length === 0 ? 'h-96' : ''}`}>
                     <div className="flex justify-between items-center">
                         <h1 className="text-3xl font-semibold">Wishlist ({wishlist?.length})</h1>
                         {
@@ -244,7 +244,7 @@ const Wishlist = () => {
                                                     className="flex-none w-64 rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative"
                                                 >
                                                     <div className="w-full">
-                                                        <Link to={`/details/${product.productId._id}`}>
+                                                        <Link to={`/details/${product?.productId?._id}`}>
                                                             <img
                                                                 className="w-full object-cover h-full dark:hidden"
                                                                 src={`${IMAGE_URL}/${product?.productId?.imageUrl}`}
@@ -258,7 +258,7 @@ const Wishlist = () => {
                                                         </Link>
                                                     </div>
                                                     <div className="pt-6 p-3">
-                                                        <div className="absolute flex gap-1 top-2 bg-[#8B4513] px-2 py-1 items-center rounded-full">
+                                                        {/* <div className="absolute flex gap-1 top-2 bg-[#8B4513] px-2 py-1 items-center rounded-full">
                                                             <svg
                                                                 className="h-3 w-3 text-yellow-400"
                                                                 aria-hidden="true"
@@ -269,7 +269,7 @@ const Wishlist = () => {
                                                                 <path d="M13.8 4.2a2 2 0 0 0-3.6 0L8.4 8.4l-4.6.3a2 2 0 0 0-1.1 3.5l3.5 3-1 4.4c-.5 1.7 1.4 3 2.9 2.1l3.9-2.3 3.9 2.3c1.5 1 3.4-.4 3-2.1l-1-4.4 3.4-3a2 2 0 0 0-1.1-3.5l-4.6-.3-1.8-4.2Z" />
                                                             </svg>
                                                             <span className="text-xs text-white">{product?.productId?.rating}</span>
-                                                        </div>
+                                                        </div> */}
 
                                                         <div className="flex flex-col gap-1">
                                                             {/* <span className="text-xs">{product?.productId?.category}</span> */}
@@ -291,10 +291,10 @@ const Wishlist = () => {
                                                         </div>
 
                                                         {/* Remove Icon */}
-                                                        <div className="absolute top-2 right-2">
+                                                        <div className="absolute top-2 left-2">
                                                             <button
                                                                 onClick={() => handleRemoveFromWishlist(product?.productId?._id)} // Call the remove function
-                                                                className="text-red-600 hover:text-red-800"
+                                                                className="bg-[#AB5A25] rounded-full p-1 text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:bg-[#91481F]"
                                                             >
                                                                 <svg
                                                                     className="h-5 w-5"

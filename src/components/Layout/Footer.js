@@ -208,15 +208,15 @@ const Footer = () => {
                             </ul>
                         </div>
 
-                        <div>
+                        {/* <div>
                             <p className="font-medium text-white">Download App</p>
 
 
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
-            <div className="py-3 border-t border-[#907562]"><p className="text-xs text-[#907562] text-center">&copy; 2022. Company Name. All rights reserved.</p></div>
+            {/* <div className="py-3 border-t border-[#907562]"><p className="text-xs text-[#907562] text-center">&copy; 2022. Company Name. All rights reserved.</p></div> */}
         </footer>
     );
 };

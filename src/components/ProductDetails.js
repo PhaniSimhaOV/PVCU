@@ -111,6 +111,8 @@ const ProductDetails = () => {
         setQuantity((prev) => (action === 'increase' ? prev + 1 : prev - 1 <= 0 ? 1 : prev - 1));
     };
 
+    const [isLoaded, setIsLoaded] = useState(false);
+
 
     return (
         <Container>
@@ -199,6 +201,10 @@ const ProductDetails = () => {
                             <div>
 
                                 <div className="grid grid-cols-3 lg:grid-cols-2 gap-2">
+                                    {!isLoaded && product?.slideImages?.map((sld, index) => (
+                                        <div className="w-full h-96 bg-gray-200 animate-pulse rounded-sm"></div>
+                                    ))}
+
                                     {product?.slideImages?.map((sld, index) => {
                                         const imageUrl = `${IMAGE_URL}/${sld}`;
                                         return (
@@ -206,6 +212,7 @@ const ProductDetails = () => {
                                                 key={index}
                                                 src={imageUrl}
                                                 alt="Thumbnail"
+                                                onLoad={() => setIsLoaded(true)}
                                                 onClick={() => setPreviewImage(imageUrl)}
                                                 className="border rounded-sm w-full object-cover h-full cursor-pointer  transition-transform duration-300 "
                                             />

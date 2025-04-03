@@ -47,10 +47,10 @@ const FilterSidebar = ({ selectedSizes, setSelectedSizes, setPriceRange, priceRa
     };
 
     const priceRanges = [
-        { label: "100 - 1000", min: 100, max: 1000 },
-        { label: "1001 - 5000", min: 1001, max: 5000 },
-        { label: "5001 - 10000", min: 5001, max: 10000 },
-        { label: "Above 10000", min: 15001, max: Infinity }
+        { label: "₹ 100 - ₹ 1000", min: 100, max: 1000 },
+        { label: "₹ 1001 - ₹ 5000", min: 1001, max: 5000 },
+        { label: "₹ 5001 - ₹ 10000", min: 5001, max: 10000 },
+        { label: "Above ₹ 10000", min: 15001, max: Infinity }
     ];
     const getFilters = async () => {
         try {
@@ -66,8 +66,8 @@ const FilterSidebar = ({ selectedSizes, setSelectedSizes, setPriceRange, priceRa
     return (
 
         <div className="w-64 border-r my-8 pr-2 space-y-4">
-            <h3 className="text-md bg-[#E8E1DE] p-2">CATEGORY</h3>
-            <Accordion isArrow={false}>
+            {/* <h3 className="text-md bg-[#E8E1DE] p-2">CATEGORY</h3> */}
+            <Accordion title="Gender">
                 <div className="space-y-2">
                     {filters?.length > 0 && filters?.map((category) => (
                         category?.category === "gender" && category?.values.map((value) => (
@@ -86,7 +86,7 @@ const FilterSidebar = ({ selectedSizes, setSelectedSizes, setPriceRange, priceRa
             </Accordion>
 
             <Accordion title="Categories">
-                <div className="price space-y-2 h-32 overflow-y-scroll">
+                <div className="price space-y-2 h-32">
                     {filters?.length > 0 && filters?.map((category) => (
                         category?.category === "categories" && category?.values.map((value) => (
                             <label key={value} className="flex items-center space-x-2">
@@ -104,7 +104,7 @@ const FilterSidebar = ({ selectedSizes, setSelectedSizes, setPriceRange, priceRa
             </Accordion>
 
             <Accordion title="Price">
-                <div className="price space-y-2 h-32 overflow-y-scroll">
+                <div className="price space-y-2 h-32">
                     {priceRanges.map((range) => (
                         <label
                             key={`${range.min}-${range.max}`}
@@ -189,23 +189,11 @@ const ProductGrid = React.memo(({ bestSelling, loading }) => {
             <div className="h-72 w-full">
                 <Skeleton variant="rectangular" height="100%" />
             </div>
-            <div className="pt-6 p-3">
-                <div className="absolute flex gap-1 top-2 bg-[#8B4513] px-2 py-1 items-center rounded-full">
-                    <Skeleton variant="circular" width={20} height={20} />
-                    <Skeleton variant="text" width={30} height={15} />
-                </div>
-                <div className="flex flex-col gap-1">
-                    <Skeleton variant="text" width="60%" height={20} />
-                    <Skeleton variant="text" width="80%" height={25} />
-                    <div className="flex gap-3 items-center my-2">
-                        <Skeleton variant="text" width="20%" height={20} />
-                        <Skeleton variant="text" width="30%" height={20} />
-                        <Skeleton variant="text" width="40%" height={15} />
-                    </div>
-                </div>
-            </div>
+
         </div>
     ));
+    const [isLoaded, setIsLoaded] = useState(false);
+
     return (
         <>
 
@@ -220,10 +208,7 @@ const ProductGrid = React.memo(({ bestSelling, loading }) => {
                         <div className="today_flash_sale">
                             <section className="py-4 antialiased ">
                                 <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-                                    <div className="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
-                                        {skeletonCards}
-                                        {/* {skeletonCards} */}
-                                    </div>
+                                    <div className="w-full h-96 bg-gray-200 animate-pulse rounded-sm"></div>
                                 </div>
                             </section>
                         </div>
@@ -235,6 +220,10 @@ const ProductGrid = React.memo(({ bestSelling, loading }) => {
                         <section className="py-4 antialiased dark:bg-gray-900">
                             <div className="mx-auto max-w-screen-xl 2xl:px-0">
                                 <div className="mb-4 grid gap-4 sm:grid-cols-1 md:mb-8 lg:grid-cols-3 xl:grid-cols-3">
+                                    {!isLoaded && bestSelling.slice(0, 8)?.map((sld, index) => (
+                                        <div className="w-full h-96 bg-gray-200 animate-pulse rounded-sm"></div>
+                                    ))}
+
                                     {bestSelling.slice(0, 8).map((product) => (
                                         <div
                                             key={product._id}
@@ -243,15 +232,12 @@ const ProductGrid = React.memo(({ bestSelling, loading }) => {
                                             <div className="w-full">
                                                 <Link to={`/details/${product._id}`}>
                                                     <img
+                                                        onLoad={() => setIsLoaded(true)}
                                                         className="w-full object-cover h-full dark:hidden"
                                                         src={`${IMAGE_URL}/${product.imageUrl}`}
                                                         alt={product.name}
                                                     />
-                                                    <img
-                                                        className="w-full object-cover hidden h-full dark:block"
-                                                        src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg"
-                                                        alt={product.name}
-                                                    />
+
                                                 </Link>
                                             </div>
                                             <div className="pt-6 p-3">
@@ -265,19 +251,20 @@ const ProductGrid = React.memo(({ bestSelling, loading }) => {
                                                     >
                                                         <path d="M13.8 4.2a2 2 0 0 0-3.6 0L8.4 8.4l-4.6.3a2 2 0 0 0-1.1 3.5l3.5 3-1 4.4c-.5 1.7 1.4 3 2.9 2.1l3.9-2.3 3.9 2.3c1.5 1 3.4-.4 3-2.1l-1-4.4 3.4-3a2 2 0 0 0-1.1-3.5l-4.6-.3-1.8-4.2Z" />
                                                     </svg>
-                                                    <span className="text-xs text-white">{product.rating}</span>
+                                                    {/* <span className="text-xs text-white">{product.rating}</span> */}
                                                 </div>
                                                 <div className="flex items-center justify-between gap-4">
-                                                    <div className="flex items-center flex-col justify-end gap-0 absolute top-0 right-1">
+                                                    <div className="flex items-center flex-col justify-end gap-0 absolute top-2 left-2">
                                                         <button
                                                             onClick={() => addToWishlist(product._id)}
                                                             type="button"
                                                             data-tooltip-target="tooltip-add-to-favorites"
-                                                            className="rounded-lg p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400"
+                                                            className="bg-[#AB5A25] rounded-full p-1 text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:bg-[#91481F]"
+
                                                         >
                                                             <span className="sr-only"> Add to Favorites </span>
                                                             <svg
-                                                                className={`h-5 w-5 ${isProductInWishlist(product._id) ? 'text-red-500' : 'text-gray-500'}`}
+                                                                className={`h-5 w-5 ${isProductInWishlist(product._id) ? 'text-red-500' : 'text-white'}`}
                                                                 aria-hidden="true"
                                                                 xmlns="http://www.w3.org/2000/svg"
                                                                 fill="none"
@@ -341,7 +328,7 @@ const AllProductsPage = () => {
         const gender = params.get('gender');
         if (category) {
             setSelectedCategories([category]);
-        }else if(gender){
+        } else if (gender) {
             setSelectedGender([gender]);
 
         }
@@ -376,6 +363,7 @@ const AllProductsPage = () => {
 
     const handlePageChange = (event, page) => {
         setCurrentPage(page);
+        window.scrollTo({ top: 0, behavior: "smooth" });
     };
     const handleCategoryChange = useCallback((category) => {
         setSelectedCategories((prev) =>
@@ -392,7 +380,7 @@ const AllProductsPage = () => {
         );
     }, []);
 
-    console.log("Selected",selectedGender)
+    console.log("Selected", selectedGender)
 
     return (
         <Container>

@@ -491,7 +491,7 @@ const Home = () => {
             <Container>
                 <div className="mt-12 my-2">
                     <div className="flex justify-between items-center">
-                        <h1 className="text-3xl font-semibold">Browse By Category</h1>
+                        <h1 className="text-3xl font-semibold">For The Next Generation </h1>
                     </div>
                     <div className='my-6 mb-12 cursor-pointer'>
                         <img onClick={() => handleNavigateToKids("Kids")} src={kids} />
@@ -505,7 +505,7 @@ const Home = () => {
             <div className="mt-12 py-4 bg-[#F2F2F2]">
                 <Container>
                     <div>
-                        <h1 className="text-3xl font-semibold">Top Pick's</h1>
+                        <h1 className="text-3xl font-semibold">Top Picks For You </h1>
                     </div>
                     <div>
                         <section className="py-8 antialiased dark:bg-gray-900 md:py-8">
@@ -671,6 +671,11 @@ const Home = () => {
                     )}
                 </div>
             </Container> */}
+            <Container>
+                <div className='py-8 '>
+                    <h1 className="text-3xl font-semibold">Join the PVCU Tribe</h1>
+                </div>
+            </Container>
             <div className="min-h-screen flex items-center justify-center">
                 <div className="relative w-[90%] lg:w-[80%] h-screen flex justify-center items-center">
                     {/* Background Map Image */}
