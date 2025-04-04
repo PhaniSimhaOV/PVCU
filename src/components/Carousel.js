@@ -50,11 +50,10 @@ const Carousel = () => {
         "67ecd0c45d2648edb1c2ce7f": "/details/67ebd4ef5d2648edb1c2cae9"
     };
 
-    const navigate = useNavigate()
 
     return (
         <div id="custom-carousel" className="relative w-full">
-            <div className="relative overflow-hidden lg:h-[700px]">
+            <div className="relative overflow-hidden">
                 {banners.length > 0 && (
                     <div
                         className="flex transition-transform duration-700 ease-in-out"
