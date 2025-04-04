@@ -423,8 +423,8 @@ const Home = () => {
                         <></>
                     ) : (
                         <div className="today_flash_sale">
-                            <section className="py-8 antialiased md:py-12">
-                                <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
+                            <section className="py-8 antialiased md:py-6">
+                                <div className="mx-auto max-w-screen-xl px-1 2xl:px-0">
                                     <div ref={productContainerRef} className="mb-4 flex gap-4 overflow-x-auto scroll-smooth">
                                         {visibleProducts.map((product) => (
                                             <div
