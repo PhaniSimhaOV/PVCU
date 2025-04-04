@@ -1,25 +1,25 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useContext, useState } from 'react';
 import { Visibility } from '@mui/icons-material';
-import { Container, CircularProgress } from '@mui/material';
-import loginImage from "../../assets/images/login.png";
-import { Link, useNavigate } from 'react-router-dom';
+import { CircularProgress } from '@mui/material';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { API_URL } from '../../constants';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 
-const Login = () => {
+const Login = ({ isDialog = false, Link }) => {
+    // Use the provided Link component or the React Router Link
+    const LinkComponent = isDialog ? Link : RouterLink;
+    
     const [formData, setFormData] = useState({
         emailOrPhone: '',
         password: ''
     });
 
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const { setToken } = useContext(AuthContext);
-
 
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -59,24 +59,26 @@ const Login = () => {
         }
     };
 
-    return (
-        <Container>
-            <Toaster
-                position="top-right"
-                reverseOrder={false}
-            />
-            <div className="flex flex-col md:flex-row lg:items-center h-screen container mx-auto lg:p-4 my-6">
-                <div className="hidden md:block md:w-1/2 h-full">
-                    <img
-                        src={loginImage}
-                        alt="Nature"
-                        className="object-cover w-full h-full"
-                    />
-                </div>
+    // Dialog-specific styles
+    const dialogStyles = isDialog ? {
+        container: "w-full max-w-md",
+        wrapper: "flex flex-col",
+        title: "text-2xl font-semibold text-[#3E3E3E] mb-4",
+        formPadding: "p-0",
+    } : {
+        container: "container mx-auto",
+        wrapper: "flex flex-col md:flex-row lg:items-center h-screen container mx-auto lg:p-4 my-6",
+        title: "text-4xl font-semibold text-[#3E3E3E] mb-6",
+        formPadding: "p-8 md:p-16",
+    };
 
-                <div className="flex flex-col justify-center md:w-1/2 p-8 md:p-16">
-                    <h1 className="text-4xl font-semibold text-[#3E3E3E]  mb-6">SIGN IN</h1>
-                    <form className="space-y-6" onSubmit={handleSubmit}>
+    return (
+        <div className={dialogStyles.container}>
+            <Toaster position="top-right" reverseOrder={false} />
+            <div className={dialogStyles.wrapper}>
+                <div className={`flex flex-col justify-center ${isDialog ? 'w-full' : 'md:w-1/2'} ${dialogStyles.formPadding}`}>
+                    <h1 className={dialogStyles.title}>SIGN IN</h1>
+                    <form className="space-y-4" onSubmit={handleSubmit}>
                         <div>
                             <label
                                 htmlFor="emailOrPhone"
@@ -124,7 +126,7 @@ const Login = () => {
                         </button>
                     </form>
 
-                    <div className="flex justify-between items-center my-6">
+                    <div className="flex justify-between items-center my-4">
                         <a
                             href="#"
                             className="text-sm w-full text-right text-[#8B4513] font-medium underline"
@@ -133,45 +135,32 @@ const Login = () => {
                         </a>
                     </div>
 
-                    <div className="flex items-center my-4">
+                    <div className="flex items-center my-3">
                         <hr className="w-full border-gray-300" />
-                        <span className="px-4 text-gray-500">or</span>
+                        <span className="px-4 text-gray-500 text-sm">or</span>
                         <hr className="w-full border-gray-300" />
                     </div>
 
-                    {/* <button
-                        type="button"
-                        className="flex items-center justify-center w-full px-4 py-2 text-xs font-normal text-[#8B4513] bg-white border border-[#8B4513] rounded-sm"
-                    >
-                        <img
-                            src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
-                            alt="Google logo"
-                            className="w-7 h-7 mr-2"
-                        />
-                        SIGN IN WITH GOOGLE
-                    </button> */}
-
                     <GoogleOAuthProvider clientId="6871043980-ql7icu6dkt4imqn2g555j9l58gr81hrj.apps.googleusercontent.com">
-                        <div>
-                            <Toaster position="top-right" reverseOrder={false} />
+                        <div className="flex justify-center">
                             <GoogleLogin
                                 onSuccess={handleGoogleLogin}
                                 onError={() => toast.error('Google login failed')}
                                 useOneTap
+                                size={isDialog ? "medium" : "large"}
                             />
-                            {/* Your form here */}
                         </div>
                     </GoogleOAuthProvider>
 
-                    <p className="text-sm text-center font-normal mt-6">
-                        Don’t have an account?{' '}
-                        <Link to="/register" className="text-[#8B4513] font-medium underline">
+                    <p className="text-sm text-center font-normal mt-4">
+                        Don't have an account?{' '}
+                        <LinkComponent to="/register" className="text-[#8B4513] font-medium underline">
                             Sign Up
-                        </Link>
+                        </LinkComponent>
                     </p>
                 </div>
             </div>
-        </Container>
+        </div>
     );
 };
 

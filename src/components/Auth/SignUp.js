@@ -1,16 +1,17 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import { Visibility } from '@mui/icons-material';
-import { Container, CircularProgress } from '@mui/material';
-import loginImage from "../../assets/images/login.png";
-import { Link, useNavigate } from 'react-router-dom';
+import { CircularProgress } from '@mui/material';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { API_URL } from '../../constants';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import loginImage from "../../assets/images/login.png";
 
-
-const SignUp = () => {
+const SignUp = ({ isDialog = false, Link }) => {
+    // Use the provided Link component or the React Router Link
+    const LinkComponent = isDialog ? Link : RouterLink;
+    
     const [formData, setFormData] = useState({
         name: '',
         emailOrPhone: '',
@@ -18,8 +19,7 @@ const SignUp = () => {
     });
 
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate()
-
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -37,7 +37,10 @@ const SignUp = () => {
                 name: '',
                 emailOrPhone: '',
                 password: ''
-            })
+            });
+            if (isDialog) {
+                // Optionally close dialog or redirect
+            }
         } catch (error) {
             toast.error(error.response?.data?.error || 'An unexpected error occurred.');
         } finally {
@@ -60,27 +63,40 @@ const SignUp = () => {
         }
     };
 
+    // Dialog-specific styles
+    const dialogStyles = isDialog ? {
+        container: "w-full max-w-md",
+        wrapper: "flex flex-col",
+        title: "text-2xl font-semibold text-[#3E3E3E] mb-4",
+        formPadding: "p-0",
+        spacing: "space-y-4"
+    } : {
+        container: "container mx-auto",
+        wrapper: "flex flex-col md:flex-row lg:items-center h-screen container mx-auto lg:p-4 my-6",
+        title: "text-4xl font-semibold text-[#3E3E3E] mb-6",
+        formPadding: "p-8 md:p-16",
+        spacing: "space-y-6"
+    };
 
     return (
-        <Container>
-            <Toaster
-                position="top-right"
-                reverseOrder={false}
-            />
-            <div className="flex flex-col md:flex-row lg:items-center h-screen container mx-auto lg:p-4 my-6">
-                {/* Left Image Section */}
-                <div className="hidden md:block md:w-1/2 h-full">
-                    <img
-                        src={loginImage}
-                        alt="Nature"
-                        className="object-cover w-full h-full"
-                    />
-                </div>
+        <div className={dialogStyles.container}>
+            <Toaster position="top-right" reverseOrder={false} />
+            <div className={dialogStyles.wrapper}>
+                {/* Left Image Section - Only show when not in dialog */}
+                {!isDialog && (
+                    <div className="hidden md:block md:w-1/2 h-full">
+                        <img
+                            src={loginImage}
+                            alt="Nature"
+                            className="object-cover w-full h-full"
+                        />
+                    </div>
+                )}
 
                 {/* Right Form Section */}
-                <div className="flex flex-col justify-center md:w-1/2  p-8 md:p-16">
-                    <h1 className="text-4xl font-semibold text-[#3E3E3E]  mb-6">SIGN UP</h1>
-                    <form className="space-y-6" onSubmit={handleSubmit}>
+                <div className={`flex flex-col justify-center ${isDialog ? 'w-full' : 'md:w-1/2'} ${dialogStyles.formPadding}`}>
+                    <h1 className={dialogStyles.title}>SIGN UP</h1>
+                    <form className={dialogStyles.spacing} onSubmit={handleSubmit}>
                         <div>
                             <label
                                 htmlFor="name"
@@ -145,45 +161,32 @@ const SignUp = () => {
                         </button>
                     </form>
 
-                    <div className="flex items-center my-4">
+                    <div className="flex items-center my-3">
                         <hr className="w-full border-gray-300" />
-                        <span className="px-4 text-gray-500">or</span>
+                        <span className="px-4 text-gray-500 text-sm">or</span>
                         <hr className="w-full border-gray-300" />
                     </div>
 
-                    {/* <button
-                        type="button"
-                        className="flex items-center justify-center w-full px-4 py-2 text-xs font-normal text-[#8B4513] bg-white border border-[#8B4513] rounded-sm "
-                    >
-                        <img
-                            src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
-                            alt="Google logo"
-                            className="w-7 h-7 mr-2"
-                        />
-                        SIGN UP WITH GOOGLE
-                    </button> */}
                     <GoogleOAuthProvider clientId="6871043980-ql7icu6dkt4imqn2g555j9l58gr81hrj.apps.googleusercontent.com">
-                        <div>
-                            <Toaster position="top-right" reverseOrder={false} />
+                        <div className="flex justify-center">
                             <GoogleLogin
                                 onSuccess={handleGoogleLogin}
                                 onError={() => toast.error('Google login failed')}
                                 useOneTap
+                                size={isDialog ? "medium" : "large"}
                             />
-                            {/* Your form here */}
                         </div>
                     </GoogleOAuthProvider>
 
-
-                    <p className="text-sm text-center font-normal mt-6">
+                    <p className="text-sm text-center font-normal mt-4">
                         Already have an account?{' '}
-                        <Link to="/login" className="text-[#8B4513] font-medium underline">
+                        <LinkComponent to="/login" className="text-[#8B4513] font-medium underline">
                             Sign In
-                        </Link>
+                        </LinkComponent>
                     </p>
                 </div>
             </div>
-        </Container>
+        </div>
     );
 };
 

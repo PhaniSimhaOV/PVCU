@@ -739,35 +739,39 @@ const Home = () => {
                 </div>
             </Container>
             <div className="flex flex-col items-center justify-center px-4">
-                <div className="relative w-full max-w-6xl  flex justify-center items-center">
+                <div className="relative w-full max-w-6xl flex justify-center items-center">
+                    {/* Background Image */}
                     <img
                         src={a}
                         alt="Map Background"
                         className="cursor-pointer w-full h-full object-cover opacity-50"
                     />
 
+                    {/* Foreground Banner Image */}
                     <img
                         src={aBaner}
                         alt="Winter Jacket"
                         className="absolute cursor-pointer w-full max-w-[500px] h-auto md:max-w-[700px] lg:max-w-[900px] object-contain"
                     />
-                </div>
 
-                {/* View All Products Button */}
-                <div className="w-full text-center mt-6">
-                    <a href="/details/67ebd32f5d2648edb1c2caaa">
+                    {/* Join Button Positioned Over Image at Left */}
+                    <a
+                        href="/details/67ebd32f5d2648edb1c2caaa"
+                        className="absolute left-[14%] bottom-[42%]" // tweak these %
+                    >
                         <button
                             type="button"
                             className="rounded-sm border border-gray-200 px-6 py-3 text-sm font-medium 
-                    text-white bg-[#8B4513] transition-all duration-300 ease-in-out 
-                    transform hover:scale-105 hover:bg-[#8B4513] focus:z-10 
-                    focus:outline-none focus:ring-4 focus:ring-gray-100"
+    text-white bg-[#8B4513] transition-all duration-300 ease-in-out 
+    transform hover:scale-105 hover:bg-[#8B4513] focus:z-10 
+    focus:outline-none focus:ring-4 focus:ring-gray-100"
                         >
                             Join
                         </button>
                     </a>
                 </div>
             </div>
+
 
 
 

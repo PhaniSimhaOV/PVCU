@@ -1,125 +1,131 @@
 import React, { useContext, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import logo from "../../assets/images/logo.png";
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { AuthContext } from '../../context/AuthContext'; // Import the AuthContext
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import { AuthContext } from '../../context/AuthContext';
+import Login from '../Auth/Login';
+import SignUp from '../Auth/SignUp';
 
 const Header = () => {
     const location = useLocation();
-    const { isAuthenticated, logout } = useContext(AuthContext);
     const navigate = useNavigate();
+    const { isAuthenticated, logout } = useContext(AuthContext);
 
     const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
+    const [authDialogOpen, setAuthDialogOpen] = useState(false);
+    const [showLogin, setShowLogin] = useState(true); // true for login, false for signup
 
-    const handleMenuOpen = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleMenuClose = () => {
-        setAnchorEl(null);
-    };
+    const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
+    const handleMenuClose = () => setAnchorEl(null);
 
     const handleLogout = () => {
         logout();
+        handleMenuClose();
         navigate('/login');
-        handleMenuClose()
     };
-    const handleNavigateOrders = () => {
-        navigate('/orders');
-        handleMenuClose()
-    }
+
+    // Toggle between login and signup forms
+    const toggleAuthForm = () => {
+        setShowLogin(!showLogin);
+    };
+
+    // Custom Link component that handles dialog navigation
+    const DialogLink = ({ to, children }) => {
+        const handleClick = (e) => {
+            e.preventDefault();
+            toggleAuthForm();
+        };
+
+        return (
+            <a href="#" onClick={handleClick} className="text-[#8B4513] font-medium underline">
+                {children}
+            </a>
+        );
+    };
 
     return (
         <div>
-            {/* <div className='bg-[#8B4513] py-2'>
-                <p className='text-xs text-center text-white'>Discount 20% For New Member, ONLY FOR TODAY!!</p>
-            </div> */}
             <div className='py-4 flex flex-col md:flex-row justify-between items-center px-4 md:px-10 border-b'>
                 <div className='mb-4 md:mb-0 cursor-pointer'>
                     <a href="/">
                         <img src={logo} alt="Logo" className='w-24' />
                     </a>
                 </div>
+
                 <div className='flex justify-center mb-4 md:mb-0'>
                     <ul className='flex flex-col md:flex-row gap-4'>
-                        {/* <li>
-                            <Link
-                                to="/"
-                                className={`cursor-pointer ${location.pathname === '/' ? 'underline' : ''}`}
-                            >
-                                Home
-                            </Link>
-                        </li> */}
                         <li>
-                            <a
-                                href="/contact"
-                                className={`cursor-pointer ${location.pathname === '/contact' ? 'underline' : ''}`}
-                            >
-                                Contact
-                            </a>
+                            <a href="/contact" className={`cursor-pointer ${location.pathname === '/contact' ? 'underline' : ''}`}>Contact</a>
                         </li>
                         <li>
-                            <a
-                                href="/about"
-                                className={`cursor-pointer ${location.pathname === '/about' ? 'underline' : ''}`}
-                            >
-                                About Us
-                            </a>
+                            <a href="/about" className={`cursor-pointer ${location.pathname === '/about' ? 'underline' : ''}`}>About Us</a>
                         </li>
                     </ul>
                 </div>
+
                 <div className='flex flex-col md:flex-row items-center gap-4 md:gap-8'>
-                    <div className='relative mb-4 md:mb-0 w-full md:w-auto'>
-                        {/* <input
-                            className='w-full md:w-64 outline-none border border-slate-100 p-2.5 rounded-sm text-sm pr-10 focus:outline-none focus:border-slate-100'
-                            type='text'
-                            placeholder='What are you looking for?'
-                        /> */}
-                        {/* <div className='absolute right-2 top-0 bottom-0 flex items-center'>
-                            <SearchOutlinedIcon sx={{ color: "grey", fontSize: "20px" }} />
-                        </div> */}
-                    </div>
                     <div className='flex items-center gap-4'>
-                        <a href="/wishlist">
-                            <FavoriteBorderOutlinedIcon sx={{ color: "grey", fontSize: "20px", cursor: "pointer" }} />
-                        </a>
-                        <a href="/cart">
-                            <ShoppingCartOutlinedIcon sx={{ color: "grey", fontSize: "20px", cursor: "pointer" }} />
-                        </a>
+                        <a href="/wishlist"><FavoriteBorderOutlinedIcon sx={{ color: "grey", fontSize: "20px", cursor: "pointer" }} /></a>
+                        <a href="/cart"><ShoppingCartOutlinedIcon sx={{ color: "grey", fontSize: "20px", cursor: "pointer" }} /></a>
 
                         {isAuthenticated ? (
-                            <div>
-                                <Avatar
-                                    sx={{ cursor: 'pointer' }}
-                                    onClick={handleMenuOpen}
-                                />
-                                <Menu
-                                    anchorEl={anchorEl}
-                                    open={open}
-                                    onClose={handleMenuClose}
-                                    MenuListProps={{
-                                        'aria-labelledby': 'basic-button',
-                                    }}
-                                >
-                                    <MenuItem component="a" href="/login" onClick={handleLogout}>Logout</MenuItem>
-                                    <MenuItem component="a" href="/orders">Orders</MenuItem>
+                            <>
+                                <Avatar sx={{ cursor: 'pointer' }} onClick={handleMenuOpen} />
+                                <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
+                                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                    <MenuItem onClick={() => navigate('/orders')}>Orders</MenuItem>
                                 </Menu>
-                            </div>
+                            </>
                         ) : (
-                            <a href="/login">
-                                <PersonOutlineOutlinedIcon sx={{ color: "grey", fontSize: "23px", cursor: "pointer" }} />
-                            </a>
+                            <>
+                                <PersonOutlineOutlinedIcon
+                                    sx={{ color: "grey", fontSize: "23px", cursor: "pointer" }}
+                                    onClick={() => setAuthDialogOpen(true)}
+                                />
+                            </>
                         )}
                     </div>
                 </div>
             </div>
+
+            {/* Authentication Dialog */}
+            <Dialog
+                open={authDialogOpen}
+                onClose={() => setAuthDialogOpen(false)}
+                maxWidth="sm"
+                PaperProps={{
+                    sx: {
+                        minWidth: '500px',
+                        backgroundImage: 'url("https://tse4.mm.bing.net/th?id=OIP.uYlL7M4onZIOrVXvy1G2OQHaEK&pid=Api&P=0&h=180")',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
+                    },
+                }}
+            >
+                <DialogContent
+                    // sx={{
+                    //     backgroundColor: 'transparent', // Optional: translucent white overlay for better form readability
+                    //     backdropFilter: 'blur(2px)', // Optional: adds blur behind form
+                    //     borderRadius: 1,
+                    // }}
+                >
+                    {showLogin ? (
+                        <Login isDialog={true} Link={DialogLink} />
+                    ) : (
+                        <SignUp isDialog={true} Link={DialogLink} />
+                    )}
+                </DialogContent>
+            </Dialog>
+
         </div>
     );
 };
