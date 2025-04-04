@@ -157,27 +157,27 @@ const Footer = () => {
                                 </li> */}
 
                                 <li>
-                                    <Link to="/login" className="text-[#907562] transition hover:opacity-75">
+                                    <a href="/login" className="text-[#907562] transition hover:opacity-75">
                                         Login / Register
-                                    </Link>
+                                    </a>
                                 </li>
 
                                 <li>
-                                    <Link to="/cart" className="text-[#907562] transition hover:opacity-75">
+                                    <a href="/cart" className="text-[#907562] transition hover:opacity-75">
                                         Cart
-                                    </Link>
+                                    </a>
                                 </li>
 
                                 <li>
-                                    <Link to="/wishlist" className="text-[#907562] transition hover:opacity-75">
+                                    <a href="/wishlist" className="text-[#907562] transition hover:opacity-75">
                                         Wishlist
-                                    </Link>
+                                    </a>
                                 </li>
 
                                 {/* <li>
                                     <Link to="/shop" className="text-[#907562] transition hover:opacity-75">
                                         Shop
-                                    </Link>
+                                    </a>
                                 </li> */}
                             </ul>
                         </div>
@@ -195,15 +195,15 @@ const Footer = () => {
                                 </li>
 
                                 <li>
-                                    <Link to="/about" className="text-[#907562] transition hover:opacity-75">
+                                    <a href="/about" className="text-[#907562] transition hover:opacity-75">
                                         About Us
-                                    </Link>
+                                    </a>
                                 </li>
 
                                 <li>
-                                    <Link to="/contact" className="text-[#907562] transition hover:opacity-75">
+                                    <a href="/contact" className="text-[#907562] transition hover:opacity-75">
                                         Contact Us
-                                    </Link>
+                                    </a>
                                 </li>
                             </ul>
                         </div>

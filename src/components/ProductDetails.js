@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { CircularProgress, Container, Skeleton } from '@mui/material'
+import { Accordion, AccordionDetails, AccordionSummary, CircularProgress, Container, Skeleton } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import ReplayOutlinedIcon from '@mui/icons-material/ReplayOutlined';
@@ -7,6 +7,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL, IMAGE_URL } from '../constants';
 import toast, { Toaster } from 'react-hot-toast';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -113,6 +114,21 @@ const ProductDetails = () => {
 
     const [isLoaded, setIsLoaded] = useState(false);
 
+    const productSize = {
+        sizes: [
+            { size: 'S' },
+            { size: 'M' },
+            { size: 'L' },
+            { size: 'XL' },
+            { size: 'XXL' }
+        ]
+    };
+
+    const [expandedPanel, setExpandedPanel] = useState("panel1"); // Default expanded
+
+    const handleAccordionToggle = (panel) => (event, isExpanded) => {
+        setExpandedPanel(isExpanded ? panel : false); // Toggle based on the clicked panel
+    };
 
     return (
         <Container>
@@ -200,7 +216,7 @@ const ProductDetails = () => {
                         <div className="grid lg:grid-cols-2 gap-8">
                             <div>
 
-                                <div className="grid grid-cols-3 lg:grid-cols-2 gap-2">
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
                                     {!isLoaded && product?.slideImages?.map((sld, index) => (
                                         <div className="w-full h-96 bg-gray-200 animate-pulse rounded-sm"></div>
                                     ))}
@@ -242,24 +258,22 @@ const ProductDetails = () => {
 
                             <div>
                                 {/* Product name */}
-                                <h1 className="text-2xl font-bold mb-2 ">{product.name}</h1>
+                                <h1 className="text-2xl font-semibold">{product.name}</h1>
+                                <span className='text-xs text-gray-400'>T-Shirt</span>
                                 <div className="flex flex-col gap-4 mb-4">
-                                    {/* Price and Discount */}
-                                    {/* <div className='flex gap-2'>
-                                        <p className="line-through text-gray-500 text-xl">₹ {product.price}</p>
-                                    </div> */}
-                                    <div>
-                                        <p className="text-2xl font-medium text-[#8B4513]">₹ {product.original_price}</p>
+
+                                    <div className='mt-2'>
+                                        <p className="text-xl font-medium text-[#8B4513]">₹ {product.original_price}</p>
                                     </div>
                                 </div>
                                 {/* Product Description */}
-                                <p className="text-gray-600 mb-4">{product.description}</p>
+                                {/* <p className="text-gray-600 mb-4">{product.description}</p> */}
                                 {/* Size Selection */}
                                 {
-                                    product.sizes?.length > 0 && <>
-                                        <p className="text-gray-600 mb-2">Size:</p>
-                                        <div className="grid grid-cols-4 lg:grid-cols-6 items-center gap-4">
-                                            {product.sizes.map((sizeOption) => (
+                                    productSize.sizes?.length > 0 && <>
+                                        <p className="text-gray-800 mb-2 font-semibold">Please select a size:</p>
+                                        <div className="grid grid-cols-4 lg:grid-cols-6 items-center gap-4 mt-4">
+                                            {productSize.sizes.map((sizeOption) => (
                                                 <button
                                                     key={sizeOption.size}
                                                     className={`px-4 py-2 border rounded-lg ${size === sizeOption.size ? 'bg-[#8B4513] text-white' : 'hover:bg-gray-100'}`}
@@ -273,7 +287,51 @@ const ProductDetails = () => {
                                 }
 
                                 {/* Quantity */}
-                                <p className="text-gray-600 my-4">Quantity:</p>
+
+
+                                <div className="mt-12">
+                                    <Accordion
+                                        expanded={expandedPanel === "panel1"}
+                                        onChange={handleAccordionToggle("panel1")}
+                                        elevation={0}
+                                        sx={{ boxShadow: "none", border: "1px solid #ddd" }}
+                                    >
+                                        <AccordionSummary sx={{ fontWeight: "bold" }} expandIcon={<ExpandMoreIcon />}>
+                                            Product Description
+                                        </AccordionSummary>
+                                        <AccordionDetails>
+                                        <div className="text-gray-800 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: product.description }} />
+                                        </AccordionDetails>
+                                    </Accordion>
+
+                                    <Accordion
+                                        expanded={expandedPanel === "panel2"}
+                                        onChange={handleAccordionToggle("panel2")}
+                                        elevation={0}
+                                        sx={{ boxShadow: "none", border: "1px solid #ddd" }}
+                                    >
+                                        <AccordionSummary sx={{ fontWeight: "bold" }} expandIcon={<ExpandMoreIcon />}>
+                                            Product Details
+                                        </AccordionSummary>
+                                        <AccordionDetails>
+                                            <ul className="list-disc pl-5 text-gray-800">
+                                                <li>100% Cotton Premium Exclusive of Decoration</li>
+                                                <li>Made in India</li>
+                                                <li>Machine wash cold with like colors</li>
+                                                <li>Do not bleach</li>
+                                                <li>Tumble dry low</li>
+                                                <li>Warm iron</li>
+                                                <li>Do not dry clean</li>
+                                                <li>Use mild detergent</li>
+                                                <li>Dry immediately after wash</li>
+                                                <li>Do not iron on print, tapes & emblems</li>
+                                            </ul>
+
+                                        </AccordionDetails>
+                                    </Accordion>
+                                </div>
+
+                                <p className="text-gray-800 my-4 font-semibold">Quantity:</p>
                                 <div className='flex gap-4 my-2 items-center'>
                                     <div>
                                         <div className="flex items-center gap-4">
@@ -290,6 +348,7 @@ const ProductDetails = () => {
                                         )}
                                     </button>
                                 </div>
+
                             </div>
                         </div>
                     </div>

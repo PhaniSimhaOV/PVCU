@@ -206,6 +206,44 @@ const Home = () => {
             throw error;
         }
     };
+    const removeFromWishlist = async (productId) => {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${API_URL}/wishlist/remove`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ productId }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to remove product from wishlist');
+        }
+
+        return response.json(); // Assuming the response will be in JSON format
+    };
+    const handleRemoveFromWishlist = async (productId) => {
+        try {
+            await removeFromWishlist(productId);
+            toast.success("Product removed from wishlist");
+
+            // Update local storage
+            const currentWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+            const updatedWishlist = currentWishlist.filter(
+                (product) => product?.id !== productId
+            );
+            localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+
+            // Update state
+            setWishlist((prev) =>
+                prev.filter((product) => product?.productId?._id !== productId)
+            );
+        } catch (error) {
+            console.error("Error removing from wishlist", error);
+        }
+    };
+
     const skeletonCards = Array.from({ length: 5 }).map((_, index) => (
         <div
             key={index}
@@ -331,16 +369,15 @@ const Home = () => {
                                                 filters?.map((category) =>
                                                     category?.category === "categories" &&
                                                     category?.values.map((value) => (
-                                                        <li
-                                                            key={value}
-                                                            onClick={() => handleNavigate(value)}
-                                                            className="px-4 py-2 hover:bg-slate-100"
-                                                        >
-                                                            {value}
+                                                        <li key={value} className="px-4 py-2 hover:bg-slate-100">
+                                                            <a href={`/products?category=${encodeURIComponent(value)}`} className="block w-full h-full">
+                                                                {value}
+                                                            </a>
                                                         </li>
                                                     ))
                                                 )}
                                         </ul>
+
                                     </div>
                                 )}
                             </div>
@@ -396,7 +433,7 @@ const Home = () => {
                         transition-all duration-300 ease-in-out "
                                             >
                                                 <div className="w-full">
-                                                    <Link to={`/details/${product._id}`}>
+                                                    <a href={`/details/${product._id}`}>
                                                         <img
                                                             className="w-full object-cover h-full dark:hidden transition-opacity duration-500 ease-in-out"
                                                             src={`${IMAGE_URL}/${product.imageUrl}`}
@@ -404,12 +441,8 @@ const Home = () => {
                                                             loading="lazy"
                                                             onError={(e) => (e.target.src = "https://via.placeholder.com/150")}
                                                         />
-                                                        <img
-                                                            className="w-full object-cover hidden h-full dark:block transition-opacity duration-500 ease-in-out"
-                                                            src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg"
-                                                            alt={product.name}
-                                                        />
-                                                    </Link>
+
+                                                    </a>
                                                 </div>
                                                 <div className="pt-6 p-3">
                                                     {/* Product Info */}
@@ -429,28 +462,53 @@ const Home = () => {
                                                     <div className="flex items-center justify-between gap-4">
                                                         <div className="flex items-center flex-col justify-end gap-0 absolute top-2 left-2">
                                                             <button
-                                                                onClick={() => addToWishlist(product._id)}
+                                                                onClick={() =>
+                                                                    isProductInWishlist(product._id)
+                                                                        ? handleRemoveFromWishlist(product._id)
+                                                                        : addToWishlist(product._id)
+                                                                }
                                                                 type="button"
                                                                 className="bg-[#AB5A25] rounded-full p-1 text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:bg-[#91481F]"
                                                             >
-                                                                <svg
-                                                                    className={`h-5 w-5 ${isProductInWishlist(product._id) ? 'text-red-500' : 'text-white'}`}
-                                                                    aria-hidden="true"
-                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                    fill="none"
-                                                                    viewBox="0 0 24 24"
-                                                                >
-                                                                    <path
-                                                                        stroke="currentColor"
-                                                                        strokeLinecap="round"
-                                                                        strokeLinejoin="round"
-                                                                        strokeWidth="2"
-                                                                        d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z"
-                                                                    />
-                                                                </svg>
+                                                                {isProductInWishlist(product._id) ? (
+                                                                    // Cross icon for "Remove from Wishlist"
+                                                                    <svg
+                                                                        className="h-5 w-5 text-white"
+                                                                        aria-hidden="true"
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        fill="none"
+                                                                        viewBox="0 0 24 24"
+                                                                    >
+                                                                        <path
+                                                                            stroke="currentColor"
+                                                                            strokeLinecap="round"
+                                                                            strokeLinejoin="round"
+                                                                            strokeWidth="2"
+                                                                            d="M6 6l12 12M18 6l-12 12"
+                                                                        />
+                                                                    </svg>
+                                                                ) : (
+                                                                    // Heart icon for "Add to Wishlist"
+                                                                    <svg
+                                                                        className="h-5 w-5 text-white"
+                                                                        aria-hidden="true"
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        fill="none"
+                                                                        viewBox="0 0 24 24"
+                                                                    >
+                                                                        <path
+                                                                            stroke="currentColor"
+                                                                            strokeLinecap="round"
+                                                                            strokeLinejoin="round"
+                                                                            strokeWidth="2"
+                                                                            d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z"
+                                                                        />
+                                                                    </svg>
+                                                                )}
                                                             </button>
                                                         </div>
                                                     </div>
+
                                                     {/* Product Details */}
                                                     <div className="flex flex-col gap-1">
                                                         <a
@@ -470,16 +528,19 @@ const Home = () => {
                                     </div>
 
                                     <div className="w-full text-center">
-                                        <button
-                                            onClick={() => navigate("/products")}
-                                            type="button"
-                                            className="rounded-sm border border-gray-200 px-5 py-2 text-sm font-normal 
+                                        <a href="/products">
+
+                                            <button
+                                                // onClick={() => navigate("/products")}
+                                                type="button"
+                                                className="rounded-sm border border-gray-200 px-5 py-2 text-sm font-normal 
                                             text-white bg-[#8B4513] transition-all duration-300 ease-in-out 
                                             transform hover:scale-105 hover:bg-[#8B4513] focus:z-10 
                                             focus:outline-none focus:ring-4 focus:ring-gray-100"
-                                        >
-                                            View All Products
-                                        </button>
+                                            >
+                                                View All Products
+                                            </button>
+                                        </a>
                                     </div>
                                 </div>
                             </section>
@@ -494,7 +555,8 @@ const Home = () => {
                         <h1 className="text-3xl font-semibold">For The Next Generation </h1>
                     </div>
                     <div className='my-6 mb-12 cursor-pointer'>
-                        <img onClick={() => handleNavigateToKids("Kids")} src={kids} />
+                        <a href={`/details/67ebd4ef5d2648edb1c2cae9`}> <img src={kids} /></a>
+
                     </div>
 
                 </div>
@@ -515,7 +577,7 @@ const Home = () => {
                                         <div key={product.id} className="rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative">
                                             <div className="h-full w-full relative">
                                                 {/* <a href=""> */}
-                                                <Link to={`/details/${product._id}`}>
+                                                <a href={`/details/${product._id}`}>
                                                     <img
                                                         className="w-full h-full dark:hidden"
                                                         src={`${IMAGE_URL}/${product.imageUrl}`}
@@ -531,7 +593,7 @@ const Home = () => {
                                                         src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg"
                                                         alt={product.name}
                                                     />
-                                                </Link>
+                                                </a>
                                                 {/* </a> */}
                                                 <div className="w-full text-center absolute bottom-3">
                                                     <button
@@ -676,24 +738,41 @@ const Home = () => {
                     <h1 className="text-3xl font-semibold">Join the PVCU Tribe</h1>
                 </div>
             </Container>
-            <div className="min-h-screen flex items-center justify-center">
-                <div className="relative w-[90%] lg:w-[80%] h-screen flex justify-center items-center">
+            <div className="min-h-screen flex flex-col items-center justify-center px-4">
+                <div className="relative w-full max-w-6xl h-[60vh] md:h-[80vh] flex justify-center items-center">
                     {/* Background Map Image */}
                     <img
-                        onClick={() => navigate("details/67ebd32f5d2648edb1c2caaa")}
                         src={a}
                         alt="Map Background"
-                        className="cursor-pointer absolute w-full h-full object-contain opacity-50"
+                        className="cursor-pointer absolute w-full h-full object-cover opacity-50"
                     />
+
                     {/* Main Banner Image */}
+
                     <img
-                        onClick={() => navigate("details/67ebd32f5d2648edb1c2caaa")}
                         src={aBaner}
                         alt="Winter Jacket"
-                        className="cursor-pointer relative w-full h-auto max-h-full object-contain"
+                        className="cursor-pointer relative w-full max-w-[500px] h-auto md:max-w-[700px] lg:max-w-[900px] object-contain"
                     />
                 </div>
+
+                {/* View All Products Button */}
+                <div className="w-full text-center mt-6">
+                    <a href="/details/67ebd32f5d2648edb1c2caaa">
+                        <button
+                            type="button"
+                            className="rounded-sm border border-gray-200 px-6 py-3 text-sm font-medium 
+                    text-white bg-[#8B4513] transition-all duration-300 ease-in-out 
+                    transform hover:scale-105 hover:bg-[#8B4513] focus:z-10 
+                    focus:outline-none focus:ring-4 focus:ring-gray-100"
+                        >
+                            Join
+                        </button>
+                    </a>
+                </div>
             </div>
+
+
 
 
 

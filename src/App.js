@@ -22,7 +22,6 @@ function App() {
   const { isAuthenticated } = useContext(AuthContext);
 
   return (
-    <Router>
       <div className="App">
       <ScrollToTop />
         <Header />
@@ -53,7 +52,6 @@ function App() {
         </Routes>
         <Footer />
       </div>
-    </Router>
   );
 }
 

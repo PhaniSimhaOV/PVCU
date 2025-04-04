@@ -180,6 +180,43 @@ const ProductGrid = React.memo(({ bestSelling, loading }) => {
 
         }
     };
+    const removeFromWishlist = async (productId) => {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${API_URL}/wishlist/remove`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ productId }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to remove product from wishlist');
+        }
+
+        return response.json(); // Assuming the response will be in JSON format
+    };
+    const handleRemoveFromWishlist = async (productId) => {
+        try {
+            await removeFromWishlist(productId);
+            toast.success("Product removed from wishlist");
+
+            // Update local storage
+            const currentWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+            const updatedWishlist = currentWishlist.filter(
+                (product) => product?.id !== productId
+            );
+            localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+
+            // Update state
+            setWishlist((prev) =>
+                prev.filter((product) => product?.productId?._id !== productId)
+            );
+        } catch (error) {
+            console.error("Error removing from wishlist", error);
+        }
+    };
 
     const skeletonCards = Array.from({ length: 5 }).map((_, index) => (
         <div
@@ -230,7 +267,7 @@ const ProductGrid = React.memo(({ bestSelling, loading }) => {
                                             className="rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative"
                                         >
                                             <div className="w-full">
-                                                <Link to={`/details/${product._id}`}>
+                                                <a href={`/details/${product._id}`}>
                                                     <img
                                                         onLoad={() => setIsLoaded(true)}
                                                         className="w-full object-cover h-full dark:hidden"
@@ -238,7 +275,7 @@ const ProductGrid = React.memo(({ bestSelling, loading }) => {
                                                         alt={product.name}
                                                     />
 
-                                                </Link>
+                                                </a>
                                             </div>
                                             <div className="pt-6 p-3">
                                                 <div className="absolute flex gap-1 top-2 bg-[#8B4513] px-2 py-1 items-center rounded-full">
@@ -256,31 +293,62 @@ const ProductGrid = React.memo(({ bestSelling, loading }) => {
                                                 <div className="flex items-center justify-between gap-4">
                                                     <div className="flex items-center flex-col justify-end gap-0 absolute top-2 left-2">
                                                         <button
-                                                            onClick={() => addToWishlist(product._id)}
+                                                            onClick={() =>
+                                                                isProductInWishlist(product._id)
+                                                                    ? handleRemoveFromWishlist(product._id)
+                                                                    : addToWishlist(product._id)
+                                                            }
                                                             type="button"
-                                                            data-tooltip-target="tooltip-add-to-favorites"
                                                             className="bg-[#AB5A25] rounded-full p-1 text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:bg-[#91481F]"
-
                                                         >
-                                                            <span className="sr-only"> Add to Favorites </span>
-                                                            <svg
-                                                                className={`h-5 w-5 ${isProductInWishlist(product._id) ? 'text-red-500' : 'text-white'}`}
-                                                                aria-hidden="true"
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                fill="none"
-                                                                viewBox="0 0 24 24"
-                                                            >
-                                                                <path
-                                                                    stroke="currentColor"
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                    strokeWidth="2"
-                                                                    d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z"
-                                                                />
-                                                            </svg>
+                                                            <span className="sr-only">
+                                                                {isProductInWishlist(product._id) ? "Remove from Favorites" : "Add to Favorites"}
+                                                            </span>
+
+                                                            {isProductInWishlist(product._id) ? (
+                                                                // Cross icon for "Remove from Wishlist"
+                                                                <svg
+                                                                    className="h-5 w-5 text-white"
+                                                                    aria-hidden="true"
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    fill="none"
+                                                                    viewBox="0 0 24 24"
+                                                                >
+                                                                    <path
+                                                                        stroke="currentColor"
+                                                                        strokeLinecap="round"
+                                                                        strokeLinejoin="round"
+                                                                        strokeWidth="2"
+                                                                        d="M6 6l12 12M18 6l-12 12"
+                                                                    />
+                                                                </svg>
+                                                            ) : (
+                                                                // Heart icon for "Add to Wishlist"
+                                                                <svg
+                                                                    className="h-5 w-5 text-white"
+                                                                    aria-hidden="true"
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    fill="none"
+                                                                    viewBox="0 0 24 24"
+                                                                >
+                                                                    <path
+                                                                        stroke="currentColor"
+                                                                        strokeLinecap="round"
+                                                                        strokeLinejoin="round"
+                                                                        strokeWidth="2"
+                                                                        d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z"
+                                                                    />
+                                                                </svg>
+                                                            )}
                                                         </button>
+
+                                                        {/* Tooltip */}
+                                                        <span className="absolute top-10 bg-black text-white text-xs rounded px-2 py-1 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                                                            {isProductInWishlist(product._id) ? "Remove from Wishlist" : "Add to Wishlist"}
+                                                        </span>
                                                     </div>
                                                 </div>
+
                                                 <div className="flex flex-col gap-1">
                                                     {/* <span className="text-xs">{product.category}</span> */}
                                                     <a

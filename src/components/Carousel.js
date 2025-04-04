@@ -70,18 +70,15 @@ const Carousel = () => {
                                         <span className="text-gray-400"></span>
                                     </div>
                                 )}
-                                <img
-                                    onClick={() => {
-                                        if (BANNER_URLS[banner._id]) {
-                                            navigate(BANNER_URLS[banner._id]);
-                                        }
-                                    }}
-                                    src={`${IMAGE_URL}${banner.imageUrl}`}
-                                    className={`cursor-pointer block w-full h-full object-cover transition-opacity duration-700 ${loadedImages[banner._id] ? "opacity-100" : "opacity-0"
-                                        }`}
-                                    alt={`Banner ${banner._id}`}
-                                    loading="lazy"
-                                />
+                                <a href={BANNER_URLS[banner._id] || "#"}>
+                                    <img
+                                        src={`${IMAGE_URL}${banner.imageUrl}`}
+                                        className={`cursor-pointer block w-full h-full object-cover transition-opacity duration-700 ${loadedImages[banner._id] ? "opacity-100" : "opacity-0"
+                                            }`}
+                                        alt={`Banner ${banner._id}`}
+                                        loading="lazy"
+                                    />
+                                </a>
                             </div>
                         ))}
                     </div>

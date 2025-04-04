@@ -43,7 +43,9 @@ const Header = () => {
             </div> */}
             <div className='py-4 flex flex-col md:flex-row justify-between items-center px-4 md:px-10 border-b'>
                 <div className='mb-4 md:mb-0 cursor-pointer'>
-                    <img onClick={() => navigate('/')} src={logo} alt="Logo" className='w-24' />
+                    <a href="/">
+                        <img src={logo} alt="Logo" className='w-24' />
+                    </a>
                 </div>
                 <div className='flex justify-center mb-4 md:mb-0'>
                     <ul className='flex flex-col md:flex-row gap-4'>
@@ -56,20 +58,20 @@ const Header = () => {
                             </Link>
                         </li> */}
                         <li>
-                            <Link
-                                to="/contact"
+                            <a
+                                href="/contact"
                                 className={`cursor-pointer ${location.pathname === '/contact' ? 'underline' : ''}`}
                             >
                                 Contact
-                            </Link>
+                            </a>
                         </li>
                         <li>
-                            <Link
-                                to="/about"
+                            <a
+                                href="/about"
                                 className={`cursor-pointer ${location.pathname === '/about' ? 'underline' : ''}`}
                             >
                                 About Us
-                            </Link>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -85,12 +87,12 @@ const Header = () => {
                         </div> */}
                     </div>
                     <div className='flex items-center gap-4'>
-                        <Link to="/wishlist">
+                        <a href="/wishlist">
                             <FavoriteBorderOutlinedIcon sx={{ color: "grey", fontSize: "20px", cursor: "pointer" }} />
-                        </Link>
-                        <Link to="/cart">
+                        </a>
+                        <a href="/cart">
                             <ShoppingCartOutlinedIcon sx={{ color: "grey", fontSize: "20px", cursor: "pointer" }} />
-                        </Link>
+                        </a>
 
                         {isAuthenticated ? (
                             <div>
@@ -106,14 +108,14 @@ const Header = () => {
                                         'aria-labelledby': 'basic-button',
                                     }}
                                 >
-                                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                                    <MenuItem onClick={handleNavigateOrders}>Orders</MenuItem>
+                                    <MenuItem component="a" href="/login" onClick={handleLogout}>Logout</MenuItem>
+                                    <MenuItem component="a" href="/orders">Orders</MenuItem>
                                 </Menu>
                             </div>
                         ) : (
-                            <Link to="/login">
+                            <a href="/login">
                                 <PersonOutlineOutlinedIcon sx={{ color: "grey", fontSize: "23px", cursor: "pointer" }} />
-                            </Link>
+                            </a>
                         )}
                     </div>
                 </div>
