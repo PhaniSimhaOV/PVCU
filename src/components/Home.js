@@ -172,7 +172,7 @@ const Home = () => {
             const data = JSON.parse(wishlistedData)
             setWishlist(data)
         }
-    }, [wishlist])
+    }, [wishlist?.length])
 
     const isProductInWishlist = (productId) => {
         return wishlist.some((item) => item.id === productId);

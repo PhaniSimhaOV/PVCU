@@ -17,41 +17,50 @@ import AllProductsPage from './AllProductsPage';
 import CheckoutForm from './components/CheckoutForm';
 import Orders from './components/Orders';
 import ScrollToTop from './components/ScrollToTop';
+import Privacy from './components/Privacy';
+import Terms from './components/Terms';
 
 function App() {
   const { isAuthenticated } = useContext(AuthContext);
 
   return (
-      <div className="App">
+    <div className="App">
       <ScrollToTop />
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/login"
-            element={isAuthenticated ? <Navigate to="/" /> : <Login />}
-          />
-          <Route
-            path="/register"
-            element={isAuthenticated ? <Navigate to="/" /> : <SignUp />}
-          />
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/login"
+          element={isAuthenticated ? <Navigate to="/" /> : <Login />}
+        />
+        <Route
+          path="/register"
+          element={isAuthenticated ? <Navigate to="/" /> : <SignUp />}
+        />
 
-          <Route path="/wishlist" element={<Wishlist />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/checkout" element={<CheckoutForm />} />
-          <Route path="/products" element={<AllProductsPage />} />
+        <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/termsofuse" element={<Terms />} />
+        <Route path="/shippingpolicy" element={<Privacy />} />
+        <Route path="/cancellation&refunds" element={<Privacy />} />
 
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/orders" element={<Orders />} />
 
-          <Route path="/details/:id" element={<ProductDetails />} />
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <Footer />
-      </div>
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/checkout" element={<CheckoutForm />} />
+        <Route path="/products" element={<AllProductsPage />} />
+
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/orders" element={<Orders />} />
+
+        <Route path="/details/:id" element={<ProductDetails />} />
+
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Footer />
+    </div>
   );
 }
 

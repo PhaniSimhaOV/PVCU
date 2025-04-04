@@ -13,7 +13,8 @@ import DialogContent from '@mui/material/DialogContent';
 import { AuthContext } from '../../context/AuthContext';
 import Login from '../Auth/Login';
 import SignUp from '../Auth/SignUp';
-
+import CloseIcon from '@mui/icons-material/Close';
+import { IconButton } from '@mui/material';
 const Header = () => {
     const location = useLocation();
     const navigate = useNavigate();
@@ -29,7 +30,7 @@ const Header = () => {
     const handleLogout = () => {
         logout();
         handleMenuClose();
-        navigate('/login');
+        // navigate('/login');
     };
 
     // Toggle between login and signup forms
@@ -80,14 +81,14 @@ const Header = () => {
                             <>
                                 <Avatar sx={{ cursor: 'pointer' }} onClick={handleMenuOpen} />
                                 <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
-                                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                                    <MenuItem onClick={() => navigate('/orders')}>Orders</MenuItem>
+                                    <MenuItem component="a" href="/" onClick={handleLogout}>Logout</MenuItem>
+                                    <MenuItem component="a" href="/orders">Orders</MenuItem>
                                 </Menu>
                             </>
                         ) : (
                             <>
                                 <PersonOutlineOutlinedIcon
-                                    sx={{ color: "grey", fontSize: "23px", cursor: "pointer" }}
+                                    sx={{ color: "grey", fontSize: "23px", cursor: "pointer",mt:0.8 }}
                                     onClick={() => setAuthDialogOpen(true)}
                                 />
                             </>
@@ -104,24 +105,33 @@ const Header = () => {
                 PaperProps={{
                     sx: {
                         minWidth: '500px',
-                        backgroundImage: 'url("https://tse4.mm.bing.net/th?id=OIP.uYlL7M4onZIOrVXvy1G2OQHaEK&pid=Api&P=0&h=180")',
+                        backgroundImage: 'url("/loginimage.jpg")',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         backgroundRepeat: 'no-repeat',
                     },
                 }}
             >
-                <DialogContent
-                    // sx={{
-                    //     backgroundColor: 'transparent', // Optional: translucent white overlay for better form readability
-                    //     backdropFilter: 'blur(2px)', // Optional: adds blur behind form
-                    //     borderRadius: 1,
-                    // }}
-                >
+                {/* Title with Close Button */}
+                <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2 }}>
+                    Authentication
+                    <IconButton
+                        edge="end"
+                        color="inherit"
+                        onClick={() => setAuthDialogOpen(false)}
+                        aria-label="close"
+                        sx={{ color: 'white' }} // Adjust color for visibility
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                </DialogTitle>
+
+                {/* Dialog Content */}
+                <DialogContent>
                     {showLogin ? (
-                        <Login isDialog={true} Link={DialogLink} />
+                        <Login setAuthDialogOpen={setAuthDialogOpen} isDialog={true} Link={DialogLink} />
                     ) : (
-                        <SignUp isDialog={true} Link={DialogLink} />
+                        <SignUp setAuthDialogOpen={setAuthDialogOpen} isDialog={true} Link={DialogLink} />
                     )}
                 </DialogContent>
             </Dialog>

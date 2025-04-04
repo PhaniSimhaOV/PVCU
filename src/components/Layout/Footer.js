@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import logo from "../../assets/images/logo.png"
@@ -132,18 +133,18 @@ const Footer = () => {
 
                             <ul className="mt-6 space-y-4 text-sm">
                                 <li>
-                                    <a href="#" className="text-[#907562] transition hover:opacity-75"> Plot No H45, Road No 9C, <br />
-                                        Panchavati Colony, Manikonda, <br />
-                                        Hyderabad, Telangana 500089 </a>
+                                    <a href="#" className="text-[#907562] transition hover:opacity-75"> PVCU Private Limited, <br />
+                                    Plot No. B 34&35, Chitrapuri Hills Road, Khajaguda, <br />
+                                    Hyderabad- 500104. </a>
                                 </li>
 
-                                <li>
-                                    <a href="#" className="text-[#907562] transition hover:opacity-75"> connect@thepvcu.com</a>
-                                </li>
+                                {/* <li>
+                                    <a href="" className="text-[#907562] transition hover:opacity-75"> connect@thepvcu.com</a>
+                                </li> */}
 
-                                <li>
+                                {/* <li>
                                     <a href="#" className="text-[#907562] transition hover:opacity-75"> (+91) 000-0000-000 </a>
-                                </li>
+                                </li> */}
 
                             </ul>
                         </div>
@@ -187,11 +188,19 @@ const Footer = () => {
 
                             <ul className="mt-6 space-y-4 text-sm">
                                 <li>
-                                    <a href="#" className="text-[#907562] transition hover:opacity-75"> Privacy Policy </a>
+                                    <a href="/privacy" className="text-[#907562] transition hover:opacity-75"> Privacy Policy </a>
                                 </li>
 
                                 <li>
-                                    <a href="#" className="text-[#907562] transition hover:opacity-75"> Terms Of Use </a>
+                                    <a href="/termsofuse" className="text-[#907562] transition hover:opacity-75"> Terms & Conditions </a>
+                                </li>
+
+                                <li>
+                                    <a href="/privacy" className="text-[#907562] transition hover:opacity-75"> Shipping Policy </a>
+                                </li>
+
+                                <li>
+                                    <a href="/privacy" className="text-[#907562] transition hover:opacity-75"> Cancellation & Refunds </a>
                                 </li>
 
                                 <li>

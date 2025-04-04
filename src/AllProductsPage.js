@@ -103,7 +103,7 @@ const FilterSidebar = ({ selectedSizes, setSelectedSizes, setPriceRange, priceRa
                 </div>
             </Accordion>
 
-            <Accordion title="Price">
+            {/* <Accordion title="Price">
                 <div className="price space-y-2 h-32">
                     {priceRanges.map((range) => (
                         <label
@@ -116,7 +116,7 @@ const FilterSidebar = ({ selectedSizes, setSelectedSizes, setPriceRange, priceRa
                         </label>
                     ))}
                 </div>
-            </Accordion>
+            </Accordion> */}
 
             <Accordion title="Size">
                 <div className="grid grid-cols-3 gap-2">

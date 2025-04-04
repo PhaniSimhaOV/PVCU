@@ -8,10 +8,10 @@ import { AuthContext } from '../../context/AuthContext';
 import { API_URL } from '../../constants';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 
-const Login = ({ isDialog = false, Link }) => {
+const Login = ({ isDialog = false, Link, setAuthDialogOpen }) => {
     // Use the provided Link component or the React Router Link
     const LinkComponent = isDialog ? Link : RouterLink;
-    
+
     const [formData, setFormData] = useState({
         emailOrPhone: '',
         password: ''
@@ -34,9 +34,10 @@ const Login = ({ isDialog = false, Link }) => {
             const response = await axios.post(`${API_URL}/auth/signin`, formData);
             toast.success(response.data.message);
             setToken(response.data.token);
-            setTimeout(() => {
-                navigate('/');
-            }, 2000);
+            // setTimeout(() => {
+            //     navigate('/');
+            // }, 2000);
+        setAuthDialogOpen(false)
         } catch (error) {
             toast.error(error.response?.data?.error || 'An unexpected error occurred.');
         } finally {
@@ -52,6 +53,8 @@ const Login = ({ isDialog = false, Link }) => {
                 window.scrollTo(0, 0);
                 window.location.reload();
                 localStorage.setItem('token', data.token);
+                setAuthDialogOpen(false)
+
                 // navigate('/');
             } catch (error) {
                 toast.error(error.response?.data?.error || 'Google sign-in failed.');
