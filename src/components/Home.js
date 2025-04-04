@@ -743,13 +743,13 @@ const Home = () => {
                     <img
                         src={a}
                         alt="Map Background"
-                        className="w-full h-full object-cover opacity-50"
+                        className="cursor-pointer w-full h-full object-cover opacity-50"
                     />
 
                     <img
                         src={aBaner}
                         alt="Winter Jacket"
-                        className="absolutew-full max-w-[500px] h-auto md:max-w-[700px] lg:max-w-[900px] object-contain"
+                        className="absolute cursor-pointer w-full max-w-[500px] h-auto md:max-w-[700px] lg:max-w-[900px] object-contain"
                     />
                 </div>
 
