@@ -738,21 +738,18 @@ const Home = () => {
                     <h1 className="text-3xl font-semibold">Join the PVCU Tribe</h1>
                 </div>
             </Container>
-            <div className="min-h-screen flex flex-col items-center justify-center px-4">
-                <div className="relative w-full max-w-6xl h-[60vh] md:h-[80vh] flex justify-center items-center">
-                    {/* Background Map Image */}
+            <div className="flex flex-col items-center justify-center px-4">
+                <div className="relative w-full max-w-6xl  flex justify-center items-center">
                     <img
                         src={a}
                         alt="Map Background"
-                        className="cursor-pointer absolute w-full h-full object-cover opacity-50"
+                        className="cursor-pointer  w-full h-full object-cover opacity-50"
                     />
-
-                    {/* Main Banner Image */}
 
                     <img
                         src={aBaner}
                         alt="Winter Jacket"
-                        className="cursor-pointer relative w-full max-w-[500px] h-auto md:max-w-[700px] lg:max-w-[900px] object-contain"
+                        className="absolute cursor-pointer  w-full max-w-[500px] h-auto md:max-w-[700px] lg:max-w-[900px] object-contain"
                     />
                 </div>
 
