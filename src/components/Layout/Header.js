@@ -114,13 +114,13 @@ const Header = () => {
             >
                 {/* Title with Close Button */}
                 <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2 }}>
-                    Authentication
+                   
                     <IconButton
                         edge="end"
                         color="inherit"
                         onClick={() => setAuthDialogOpen(false)}
                         aria-label="close"
-                        sx={{ color: 'white' }} // Adjust color for visibility
+                        sx={{ color: 'black' }} // Adjust color for visibility
                     >
                         <CloseIcon />
                     </IconButton>
