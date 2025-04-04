@@ -163,7 +163,7 @@ const Home = () => {
     useEffect(() => {
         getProducts()
         getBestSellingProducts()
-        // getNewArrivals()
+        getNewArrivals()
     }, [])
     const [wishlist, setWishlist] = useState([]);
     useEffect(() => {
