@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Accordion, AccordionDetails, AccordionSummary, CircularProgress, Container, Skeleton } from '@mui/material'
+import { Accordion, AccordionDetails, AccordionSummary, CircularProgress, Container } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import ReplayOutlinedIcon from '@mui/icons-material/ReplayOutlined';
@@ -17,9 +17,11 @@ const ProductDetails = () => {
     const location = useLocation();
     const [previewImage, setPreviewImage] = useState('');
     const [loading, setLoading] = useState(false);
+    const [dataLoading, setDataLoading] = useState(true); // State for initial data loading
 
     const getProductsById = async () => {
         if (id) {
+            setDataLoading(true); // Start loading
             try {
                 const response = await axios.get(`${API_URL}/products/get/${id}`)
                 const fetchedProduct = response.data.product;
@@ -27,13 +29,16 @@ const ProductDetails = () => {
                 setPreviewImage(`${IMAGE_URL}/${fetchedProduct.imageUrl}`);
             } catch (err) {
                 console.log(err);
+                toast.error('Failed to load product details');
+            } finally {
+                setDataLoading(false); // End loading regardless of success/failure
             }
         }
     }
 
     useEffect(() => {
         getProductsById()
-    }, [])
+    }, [id])
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -70,7 +75,7 @@ const ProductDetails = () => {
                     console.log('Cart not found. Creating a new cart...');
                     cartItems = []; // No items, create a new cart
                 } else {
-                    throw error; // Re-throw the error if it’s something else (network issues, etc.)
+                    throw error; // Re-throw the error if it's something else (network issues, etc.)
                 }
             }
 
@@ -129,7 +134,6 @@ const ProductDetails = () => {
     const handleAccordionToggle = (panel) => (event, isExpanded) => {
         setExpandedPanel(isExpanded ? panel : false); // Toggle based on the clicked panel
     };
-
     return (
         <Container>
             <Toaster
@@ -137,74 +141,15 @@ const ProductDetails = () => {
                 reverseOrder={false}
             />
             {
-                !product ? (
-                    <div className="container mx-auto p-4 my-6">
-                        <nav className="text-sm mb-4">
-                            <Skeleton width="100px" />
-                            <Skeleton width="100px" />
-                            <Skeleton width="150px" />
-                        </nav>
-
-                        <div className="grid lg:grid-cols-2 gap-8">
-                            <div>
-                                <div className="border rounded-lg overflow-hidden mb-4">
-                                    <Skeleton variant="rectangular" width="100%" height="300px" />
-                                </div>
-
-                                <div className="grid grid-cols-3 lg:grid-cols-5 gap-2">
-                                    <Skeleton variant="rectangular" width="100%" height="120px" />
-                                    <Skeleton variant="rectangular" width="100%" height="120px" />
-                                    <Skeleton variant="rectangular" width="100%" height="120px" />
-                                    <Skeleton variant="rectangular" width="100%" height="120px" />
-                                    <Skeleton variant="rectangular" width="100%" height="120px" />
-                                </div>
-
-                                <div className="mt-4">
-                                    <div className="flex items-center gap-3 px-2 py-3 border bg-[#F2F2F2]">
-                                        <Skeleton variant="circular" width={24} height={24} />
-                                        <div className='flex flex-col'>
-                                            <Skeleton width="100px" height="20px" />
-                                            <Skeleton width="100px" height="14px" />
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-3 px-2 py-3 border bg-[#F2F2F2]">
-                                        <Skeleton variant="circular" width={24} height={24} />
-                                        <div className='flex flex-col'>
-                                            <Skeleton width="100px" height="20px" />
-                                            <Skeleton width="200px" height="14px" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <Skeleton width="300px" height="30px" />
-                                <div className="flex flex-col gap-4 mb-4">
-                                    <div className='flex gap-2'>
-                                        <Skeleton width="80px" height="30px" />
-                                        <Skeleton variant="rectangular" width={50} height={30} />
-                                    </div>
-                                    <div>
-                                        <Skeleton width="120px" height="30px" />
-                                    </div>
-                                </div>
-                                <Skeleton width="300px" height="20px" />
-                                <Skeleton width="400px" height="50px" />
-                                <Skeleton width="100px" height="20px" />
-                                <div className="grid grid-cols-4 lg:grid-cols-6 items-center gap-4">
-                                    <Skeleton variant="rectangular" width={60} height={40} />
-                                    <Skeleton variant="rectangular" width={60} height={40} />
-                                    <Skeleton variant="rectangular" width={60} height={40} />
-                                    <Skeleton variant="rectangular" width={60} height={40} />
-                                    <Skeleton variant="rectangular" width={60} height={40} />
-                                    <Skeleton variant="rectangular" width={60} height={40} />
-                                </div>
-
-                                {/* Quantity */}
-                                <Skeleton width="100px" height="20px" />
-                                <Skeleton width="200px" height="40px" />
-                            </div>
-                        </div>
+                dataLoading ? (
+                    // Custom loader using the provided image
+                    <div className="flex flex-col items-center justify-center h-screen">
+                        <img 
+                            src="https://up.yimg.com/ib/th?id=OIP.r5Ebw7k_mrU6PK5l5cALuQHaHa&pid=Api&rs=1&c=1&qlt=95&w=111&h=111" 
+                            alt="Loading..." 
+                            className="w-20 h-20"
+                        />
+                        <p className="mt-4 text-gray-600 font-medium">Loading product details...</p>
                     </div>
                 ) : (
                     <div className="container mx-auto p-4 my-6">
@@ -218,7 +163,7 @@ const ProductDetails = () => {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
                                     {!isLoaded && product?.slideImages?.map((sld, index) => (
-                                        <div className="w-full h-96 bg-gray-200 animate-pulse rounded-sm"></div>
+                                        <div key={`loading-${index}`} className="w-full h-96 bg-gray-200 animate-pulse rounded-sm"></div>
                                     ))}
 
                                     {product?.slideImages?.map((sld, index) => {
@@ -230,7 +175,8 @@ const ProductDetails = () => {
                                                 alt="Thumbnail"
                                                 onLoad={() => setIsLoaded(true)}
                                                 onClick={() => setPreviewImage(imageUrl)}
-                                                className="border rounded-sm w-full object-cover h-full cursor-pointer  transition-transform duration-300 "
+                                                className="border rounded-sm w-full object-cover h-full cursor-pointer transition-transform duration-300"
+                                                style={{ display: isLoaded ? 'block' : 'none' }}
                                             />
                                         );
                                     })}
@@ -246,13 +192,6 @@ const ProductDetails = () => {
                                             <p className='text-xs'>Enter your postal code</p>
                                         </div>
                                     </div>
-                                    {/* <div className="flex items-center gap-3 px-2 py-3 border bg-[#F2F2F2]">
-                                        <ReplayOutlinedIcon />
-                                        <div className='flex flex-col'>
-                                            <p className="text-sm font-semibold">Return Delivery</p>
-                                            <p className="text-sm">Free 30-day returns. </p>
-                                        </div>
-                                    </div> */}
                                 </div>
                             </div>
 
@@ -266,8 +205,6 @@ const ProductDetails = () => {
                                         <p className="text-xl font-medium text-[#8B4513]">₹ {product.original_price}</p>
                                     </div>
                                 </div>
-                                {/* Product Description */}
-                                {/* <p className="text-gray-600 mb-4">{product.description}</p> */}
                                 {/* Size Selection */}
                                 {
                                     productSize.sizes?.length > 0 && <>
@@ -285,9 +222,6 @@ const ProductDetails = () => {
                                         </div>
                                     </>
                                 }
-
-                                {/* Quantity */}
-
 
                                 <div className="mt-12">
                                     <Accordion
@@ -329,7 +263,6 @@ const ProductDetails = () => {
                                                 <li>Dry immediately after wash</li>
                                                 <li>Do not iron on print, tapes & emblems</li>
                                             </ul>
-
                                         </AccordionDetails>
                                     </Accordion>
                                 </div>
@@ -351,7 +284,6 @@ const ProductDetails = () => {
                                         )}
                                     </button>
                                 </div>
-
                             </div>
                         </div>
                     </div>
