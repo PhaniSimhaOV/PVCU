@@ -301,6 +301,9 @@ const ProductDetails = () => {
                                         </AccordionSummary>
                                         <AccordionDetails>
                                         <div className="text-gray-800 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: product.description }} />
+                                        <div className='mt-2 text-sm'>
+                                        <span className='font-semibold'>Note - </span><span>The shades of this T-shirt might slightly vary from the picture.</span>
+                                        </div>
                                         </AccordionDetails>
                                     </Accordion>
 

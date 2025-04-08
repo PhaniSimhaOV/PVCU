@@ -50,7 +50,7 @@ function App() {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/checkout" element={<CheckoutForm />} />
-        <Route path="/products" element={<AllProductsPage />} />
+        {/* <Route path="/products" element={<AllProductsPage />} /> */}
 
         <Route path="/cart" element={<Cart />} />
         <Route path="/orders" element={<Orders />} />

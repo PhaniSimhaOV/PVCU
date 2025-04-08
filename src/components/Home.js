@@ -351,7 +351,7 @@ const Home = () => {
                     <nav className="flex justify-between items-center p-2">
                         <div className="space-x-6 flex">
                             <div className="relative" ref={menMenuRef}>
-                                <button
+                                {/* <button
                                     className="text-black flex items-center gap-1"
                                     onClick={() => toggleMenu('men')}
                                 >
@@ -361,7 +361,7 @@ const Home = () => {
                                     ) : (
                                         <KeyboardArrowDownIcon fontSize="small" />
                                     )}
-                                </button>
+                                </button> */}
                                 {activeMenu === 'men' && (
                                     <div className="z-50 absolute left-0 mt-2.5 bg-white text-black cursor-pointer rounded-sm w-48">
                                         <ul className="py-2">
@@ -391,7 +391,7 @@ const Home = () => {
                 <div className="mt-12 my-2">
                     <div className="flex justify-between items-center">
                         <h1 className="text-3xl font-semibold">Our Products</h1>
-                        <div className="flex gap-2">
+                        {/* <div className="flex gap-2">
                             <div
                                 className="border rounded-full px-2 py-1 bg-[#AC5B24] cursor-pointer"
                                 onClick={handleBackwardClick}
@@ -404,7 +404,7 @@ const Home = () => {
                             >
                                 <ArrowForwardOutlinedIcon sx={{ fontSize: '18px', color: "white" }} />
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     {loading ? (
                         <div className="text-center mt-8">
@@ -425,8 +425,8 @@ const Home = () => {
                         <div className="today_flash_sale">
                             <section className="py-8 antialiased md:py-6">
                                 <div className="mx-auto max-w-screen-xl px-1 2xl:px-0">
-                                    <div ref={productContainerRef} className="mb-4 flex gap-4 overflow-x-auto scroll-smooth">
-                                        {visibleProducts.map((product) => (
+                                    <div ref={productContainerRef} className="mb-4 grid grid-cols-4 gap-4  scroll-smooth">
+                                        {product.map((product) => (
                                             <div
                                                 key={product.id}
                                                 className="flex-none w-64 rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative 
@@ -527,7 +527,7 @@ const Home = () => {
                                         ))}
                                     </div>
 
-                                    <div className="w-full text-center">
+                                    {/* <div className="w-full text-center">
                                         <a href="/products">
 
                                             <button
@@ -541,7 +541,7 @@ const Home = () => {
                                                 View All Products
                                             </button>
                                         </a>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </section>
                         </div>
@@ -741,21 +741,27 @@ const Home = () => {
             <div className="flex flex-col items-center justify-center px-4">
                 <div className="relative w-full max-w-6xl flex justify-center items-center">
                     {/* Background Image */}
-                    <img
-                        src={a}
-                        alt="Map Background"
-                        className="cursor-pointer w-full h-full object-cover opacity-50"
-                    />
+                    <a href="/details/67ebd32f5d2648edb1c2caaa">
+                        <img
+                            src={a}
+                            alt="Map Background"
+                            className=" w-full h-full object-cover opacity-50"
+                        />
+                    </a>
+                    <a href="/details/67ebd32f5d2648edb1c2caaa">
+                        <img
+                            src={aBaner}
+                            alt="Winter Jacket"
+                            className="absolute left-0 top-60 w-full max-w-[500px] h-auto md:max-w-[700px] lg:max-w-[900px] object-contain"
+                        />
+                    </a>
+
 
                     {/* Foreground Banner Image */}
-                    <img
-                        src={aBaner}
-                        alt="Winter Jacket"
-                        className="absolute cursor-pointer w-full max-w-[500px] h-auto md:max-w-[700px] lg:max-w-[900px] object-contain"
-                    />
+
 
                     {/* Join Button Positioned Over Image at Left */}
-                    <a
+                    {/* <a
                         href="/details/67ebd32f5d2648edb1c2caaa"
                         className="absolute left-[14%] bottom-[42%]" // tweak these %
                     >
@@ -768,7 +774,7 @@ const Home = () => {
                         >
                             Join
                         </button>
-                    </a>
+                    </a> */}
                 </div>
             </div>
 
