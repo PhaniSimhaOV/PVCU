@@ -237,7 +237,7 @@ const Home = () => {
 
             // Update state
             setWishlist((prev) =>
-                prev.filter((product) => product?.productId?._id !== productId)
+                prev.filter((product) => product?.id !== productId)
             );
         } catch (error) {
             console.error("Error removing from wishlist", error);
@@ -391,20 +391,7 @@ const Home = () => {
                 <div className="mt-12 my-2">
                     <div className="flex justify-between items-center">
                         <h1 className="text-3xl font-semibold">Our Products</h1>
-                        {/* <div className="flex gap-2">
-                            <div
-                                className="border rounded-full px-2 py-1 bg-[#AC5B24] cursor-pointer"
-                                onClick={handleBackwardClick}
-                            >
-                                <ArrowBackOutlinedIcon sx={{ fontSize: '18px', color: "white" }} />
-                            </div>
-                            <div
-                                className="border rounded-full px-2 py-1 bg-[#AC5B24] cursor-pointer"
-                                onClick={handleForwardClick}
-                            >
-                                <ArrowForwardOutlinedIcon sx={{ fontSize: '18px', color: "white" }} />
-                            </div>
-                        </div> */}
+
                     </div>
                     {loading ? (
                         <div className="text-center mt-8">
@@ -426,7 +413,7 @@ const Home = () => {
                             <section className="py-8 antialiased md:py-6">
                                 <div className="mx-auto max-w-screen-xl px-1 2xl:px-0">
                                     <div ref={productContainerRef} className="mb-4 grid grid-cols-4 gap-4  scroll-smooth">
-                                        {product.map((product) => (
+                                        {product.slice().reverse().map((product) => (
                                             <div
                                                 key={product.id}
                                                 className="flex-none w-64 rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative 
@@ -445,20 +432,7 @@ const Home = () => {
                                                     </a>
                                                 </div>
                                                 <div className="pt-6 p-3">
-                                                    {/* Product Info */}
-                                                    {/* <div className="absolute flex gap-1 top-2 bg-[#8B4513] px-2 py-1 items-center rounded-full">
-                                                        <svg
-                                                            className="h-3 w-3 text-yellow-400"
-                                                            aria-hidden="true"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="currentColor"
-                                                            viewBox="0 0 24 24"
-                                                        >
-                                                            <path d="M13.8 4.2a2 2 0 0 0-3.6 0L8.4 8.4l-4.6.3a2 2 0 0 0-1.1 3.5l3.5 3-1 4.4c-.5 1.7 1.4 3 2.9 2.1l3.9-2.3 3.9 2.3c1.5 1 3.4-.4 3-2.1l-1-4.4 3.4-3a2 2 0 0 0-1.1-3.5l-4.6-.3-1.8-4.2Z" />
-                                                        </svg>
-                                                        <span className="text-xs text-white">{product.rating}</span>
-                                                    </div> */}
-                                                    {/* Actions */}
+
                                                     <div className="flex items-center justify-between gap-4">
                                                         <div className="flex items-center flex-col justify-end gap-0 absolute top-2 left-2">
                                                             <button
@@ -594,6 +568,55 @@ const Home = () => {
                                                         alt={product.name}
                                                     />
                                                 </a>
+                                                <div className="flex items-center justify-between gap-4">
+                                                    <div className="flex items-center flex-col justify-end gap-0 absolute top-2 left-2">
+                                                        <button
+                                                            onClick={() =>
+                                                                isProductInWishlist(product._id)
+                                                                    ? handleRemoveFromWishlist(product._id)
+                                                                    : addToWishlist(product._id)
+                                                            }
+                                                            type="button"
+                                                            className="bg-[#AB5A25] rounded-full p-1 text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:bg-[#91481F]"
+                                                        >
+                                                            {isProductInWishlist(product._id) ? (
+                                                                // Cross icon for "Remove from Wishlist"
+                                                                <svg
+                                                                    className="h-5 w-5 text-white"
+                                                                    aria-hidden="true"
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    fill="none"
+                                                                    viewBox="0 0 24 24"
+                                                                >
+                                                                    <path
+                                                                        stroke="currentColor"
+                                                                        strokeLinecap="round"
+                                                                        strokeLinejoin="round"
+                                                                        strokeWidth="2"
+                                                                        d="M6 6l12 12M18 6l-12 12"
+                                                                    />
+                                                                </svg>
+                                                            ) : (
+                                                                // Heart icon for "Add to Wishlist"
+                                                                <svg
+                                                                    className="h-5 w-5 text-white"
+                                                                    aria-hidden="true"
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    fill="none"
+                                                                    viewBox="0 0 24 24"
+                                                                >
+                                                                    <path
+                                                                        stroke="currentColor"
+                                                                        strokeLinecap="round"
+                                                                        strokeLinejoin="round"
+                                                                        strokeWidth="2"
+                                                                        d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z"
+                                                                    />
+                                                                </svg>
+                                                            )}
+                                                        </button>
+                                                    </div>
+                                                </div>
                                                 {/* </a> */}
                                                 <div className="w-full text-center absolute bottom-3">
                                                     <button
@@ -739,44 +762,42 @@ const Home = () => {
                 </div>
             </Container>
             <div className="flex flex-col items-center justify-center px-4">
-                <div className="relative w-full max-w-6xl flex justify-center items-center">
+                <div className="relative w-full max-w-6xl flex justify-center items-center group">
                     {/* Background Image */}
-                    <a href="/details/67ebd32f5d2648edb1c2caaa">
-                        <img
-                            src={a}
-                            alt="Map Background"
-                            className=" w-full h-full object-cover opacity-50"
-                        />
-                    </a>
-                    <a href="/details/67ebd32f5d2648edb1c2caaa">
-                        <img
-                            src={aBaner}
-                            alt="Winter Jacket"
-                            className="absolute left-0 top-60 w-full max-w-[500px] h-auto md:max-w-[700px] lg:max-w-[900px] object-contain"
-                        />
-                    </a>
-
+                    {/* <a href="/details/67ebd32f5d2648edb1c2caaa"> */}
+                    <img
+                        src={a}
+                        alt="Map Background"
+                        className="w-full h-full object-cover opacity-50"
+                    />
+                    {/* </a> */}
 
                     {/* Foreground Banner Image */}
+                    {/* <a href="/details/67ebd32f5d2648edb1c2caaa"> */}
+                    <img
+                        src={aBaner}
+                        alt="Winter Jacket"
+                        className="absolute left-0 top-60 w-full max-w-[500px] h-auto md:max-w-[700px] lg:max-w-[900px] object-contain"
+                    />
+                    {/* </a> */}
 
-
-                    {/* Join Button Positioned Over Image at Left */}
-                    {/* <a
+                    <a
                         href="/details/67ebd32f5d2648edb1c2caaa"
-                        className="absolute left-[14%] bottom-[42%]" // tweak these %
+                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+                       opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out"
                     >
                         <button
                             type="button"
-                            className="rounded-sm border border-gray-200 px-6 py-3 text-sm font-medium 
-    text-white bg-[#8B4513] transition-all duration-300 ease-in-out 
-    transform hover:scale-105 hover:bg-[#8B4513] focus:z-10 
-    focus:outline-none focus:ring-4 focus:ring-gray-100"
+                            className="rounded-sm   px-6 py-3 text-sm font-medium 
+                text-white bg-[#8B4513] transition-transform duration-300 ease-in-out 
+                hover:scale-105 hover:bg-[#8B4513] "
                         >
                             Join
                         </button>
-                    </a> */}
+                    </a>
                 </div>
             </div>
+
 
 
 

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import logo from "../../assets/images/logo.png"
+import logo from "../../assets/images/3.png"
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import { Link } from "react-router-dom";
 
@@ -12,7 +12,7 @@ const Footer = () => {
                 <div className="grid grid-cols-1 gap-4 md:gap-16 lg:gap-16 lg:grid-cols-3">
                     <div>
                         <div className="text-teal-600">
-                            <img src={logo} className="rounded-lg" />
+                            <img src={logo} className="rounded-lg h-36 -ml-8 -mt-8" />
                         </div>
 
                         {/* <p className="mt-4 max-w-xs text-white text-lg font-normal flex flex-col">
@@ -128,26 +128,7 @@ const Footer = () => {
                     </div>
 
                     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4">
-                        <div>
-                            <p className="font-medium text-white">Support</p>
-
-                            <ul className="mt-6 space-y-4 text-sm">
-                                <li>
-                                    <a href="#" className="text-[#907562] transition hover:opacity-75"> PVCU Private Limited, <br />
-                                    Plot No. B 34&35, Chitrapuri Hills Road, Khajaguda, <br />
-                                    Hyderabad- 500104. </a>
-                                </li>
-
-                                {/* <li>
-                                    <a href="" className="text-[#907562] transition hover:opacity-75"> connect@thepvcu.com</a>
-                                </li> */}
-
-                                {/* <li>
-                                    <a href="#" className="text-[#907562] transition hover:opacity-75"> (+91) 000-0000-000 </a>
-                                </li> */}
-
-                            </ul>
-                        </div>
+                        
 
                         <div>
                             <p className="font-medium text-white">Account</p>

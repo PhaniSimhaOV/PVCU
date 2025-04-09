@@ -15,18 +15,24 @@ import Login from '../Auth/Login';
 import SignUp from '../Auth/SignUp';
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton } from '@mui/material';
+import { MenuOutlined, MoreVertOutlined } from '@mui/icons-material';
 
 const Header = () => {
     const location = useLocation();
     const { isAuthenticated, logout } = useContext(AuthContext);
 
     const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorEls, setAnchorEls] = useState(null);
+
     const [authDialogOpen, setAuthDialogOpen] = useState(false);
     const [showLogin, setShowLogin] = useState(true);
     const [isSticky, setIsSticky] = useState(false);
 
     const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
     const handleMenuClose = () => setAnchorEl(null);
+
+    const handleGuestMenuOpen = (event) => setAnchorEls(event.currentTarget);
+    const handleGuestMenuClose = () => setAnchorEls(null);
 
     const handleLogout = () => {
         logout();
@@ -55,6 +61,8 @@ const Header = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+
+
     return (
         <>
             {/* Placeholder for height to avoid layout shift */}
@@ -71,16 +79,7 @@ const Header = () => {
                         </a>
                     </div>
 
-                    <div className='flex justify-center mb-4 md:mb-0'>
-                        <ul className='flex flex-col md:flex-row gap-4'>
-                            <li>
-                                <a href="/contact" className={`cursor-pointer ${location.pathname === '/contact' ? 'underline' : ''}`}>Contact</a>
-                            </li>
-                            <li>
-                                <a href="/about" className={`cursor-pointer ${location.pathname === '/about' ? 'underline' : ''}`}>About Us</a>
-                            </li>
-                        </ul>
-                    </div>
+
 
                     <div className='flex flex-col md:flex-row items-center gap-4 md:gap-8'>
                         <div className='flex items-center gap-4'>
@@ -101,6 +100,14 @@ const Header = () => {
                                     onClick={() => setAuthDialogOpen(true)}
                                 />
                             )}
+                            <MoreVertOutlined
+                                sx={{ color: "grey", fontSize: "23px", cursor: "pointer", mt: 0.8 }}
+                                onClick={handleGuestMenuOpen}
+                            />
+                            <Menu anchorEl={anchorEls} open={Boolean(anchorEls)} onClose={handleGuestMenuClose}>
+                                <MenuItem component="a" href="/contact" onClick={handleGuestMenuClose}>Contact Us</MenuItem>
+                                <MenuItem component="a" href="/about" onClick={handleGuestMenuClose}>About Us</MenuItem>
+                            </Menu>
                         </div>
                     </div>
                 </div>

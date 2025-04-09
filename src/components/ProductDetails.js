@@ -1,8 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Accordion, AccordionDetails, AccordionSummary, CircularProgress, Container } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
-import ReplayOutlinedIcon from '@mui/icons-material/ReplayOutlined';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL, IMAGE_URL } from '../constants';
@@ -128,11 +126,16 @@ const ProductDetails = () => {
             { size: 'XXL' }
         ]
     };
-
-    const [expandedPanel, setExpandedPanel] = useState("panel1"); // Default expanded
+    const [expandedPanels, setExpandedPanels] = useState({
+        panel1: true,
+        panel2: false,
+    });
 
     const handleAccordionToggle = (panel) => (event, isExpanded) => {
-        setExpandedPanel(isExpanded ? panel : false); // Toggle based on the clicked panel
+        setExpandedPanels((prev) => ({
+            ...prev,
+            [panel]: isExpanded,
+        }));
     };
     return (
         <Container>
@@ -215,7 +218,7 @@ const ProductDetails = () => {
 
                                 <div className="mt-12">
                                     <Accordion
-                                        expanded={expandedPanel === "panel1"}
+                                        expanded={expandedPanels.panel1}
                                         onChange={handleAccordionToggle("panel1")}
                                         elevation={0}
                                         sx={{ boxShadow: "none", border: "1px solid #ddd" }}
@@ -232,7 +235,7 @@ const ProductDetails = () => {
                                     </Accordion>
 
                                     <Accordion
-                                        expanded={expandedPanel === "panel2"}
+                                        expanded={expandedPanels.panel2}
                                         onChange={handleAccordionToggle("panel2")}
                                         elevation={0}
                                         sx={{ boxShadow: "none", border: "1px solid #ddd" }}
