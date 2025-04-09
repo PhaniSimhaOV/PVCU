@@ -238,7 +238,7 @@ const ProductDetails = () => {
 
 
                                 {/* Shipping & Return info */}
-                                <div className="mt-4">
+                                {/* <div className="mt-4">
                                     <div className="flex items-center gap-3 px-2 py-3 border bg-[#F2F2F2]">
                                         <LocalShippingOutlinedIcon />
                                         <div className='flex flex-col'>
@@ -246,14 +246,14 @@ const ProductDetails = () => {
                                             <p className='text-xs'>Enter your postal code</p>
                                         </div>
                                     </div>
-                                    {/* <div className="flex items-center gap-3 px-2 py-3 border bg-[#F2F2F2]">
+                                    <div className="flex items-center gap-3 px-2 py-3 border bg-[#F2F2F2]">
                                         <ReplayOutlinedIcon />
                                         <div className='flex flex-col'>
                                             <p className="text-sm font-semibold">Return Delivery</p>
                                             <p className="text-sm">Free 30-day returns. </p>
                                         </div>
-                                    </div> */}
-                                </div>
+                                    </div>
+                                </div> */}
                             </div>
 
                             <div>

@@ -58,7 +58,7 @@ const Header = () => {
     return (
         <>
             {/* Placeholder for height to avoid layout shift */}
-            <div className="h-[105px] md:h-[100px]"></div>
+            <div className="h-[105px] md:h-[84px]"></div>
             <div className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isSticky ? 'shadow-md bg-white' : 'bg-white'}`}>
                 <div className='w-full py-1 bg-[#AC5B24]'>
                     <p className='text-sm text-white text-center'>Exclusive Hanuman Merch is Live</p>
