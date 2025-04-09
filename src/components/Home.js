@@ -412,7 +412,7 @@ const Home = () => {
                         <div className="today_flash_sale">
                             <section className="py-8 antialiased md:py-6">
                                 <div className="mx-auto max-w-screen-xl px-1 2xl:px-0">
-                                    <div ref={productContainerRef} className="mb-4 grid grid-cols-4 gap-4  scroll-smooth">
+                                    <div ref={productContainerRef} className="mb-4 flex lg:grid  lg:grid-cols-4 gap-4 overflow-x-auto scroll-smooth">
                                         {product.slice().reverse().map((product) => (
                                             <div
                                                 key={product.id}
@@ -777,7 +777,7 @@ const Home = () => {
                     <img
                         src={aBaner}
                         alt="Winter Jacket"
-                        className="absolute left-0 top-60 w-full max-w-[500px] h-auto md:max-w-[700px] lg:max-w-[900px] object-contain"
+                        className="absolute left-0 top-20 md:top-30 lg:top-60 w-full max-w-[500px] h-auto md:max-w-[700px] lg:max-w-[900px] object-contain"
                     />
                     {/* </a> */}
 

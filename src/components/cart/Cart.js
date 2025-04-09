@@ -6,6 +6,8 @@ import { useCart } from "../../context/CartContext";  // Import the custom hook 
 import emptyCartLogo from "../../assets/images/empty-cart.png";
 import axios from "axios";
 import { API_URL } from "../../constants";
+import loadingImage from "../../assets/images/2.png"
+
 
 const Cart = () => {
     const { cartItems, subtotal, total, removeItem, updateCart, setCartItems } = useCart();  // Access cart data and actions from context
@@ -22,7 +24,7 @@ const Cart = () => {
                     setIsLoading(false);
                     return;
                 }
-                
+
                 const config = {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -48,12 +50,11 @@ const Cart = () => {
         return (
             <Container>
                 <div className="flex flex-col items-center justify-center h-screen">
-                    <img 
-                        src="https://up.yimg.com/ib/th?id=OIP.r5Ebw7k_mrU6PK5l5cALuQHaHa&pid=Api&rs=1&c=1&qlt=95&w=111&h=111" 
-                        alt="Loading..." 
-                        className="w-20 h-20"
+                    <img
+                        src={loadingImage}
+                        alt="Loading..."
+                        className="w-42 h-20 animate-bounce"
                     />
-                    <p className="mt-4 text-gray-600 font-medium">Loading your cart...</p>
                 </div>
             </Container>
         );

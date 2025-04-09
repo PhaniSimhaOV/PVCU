@@ -6,6 +6,7 @@ import axios from 'axios';
 import { API_URL, IMAGE_URL } from '../constants';
 import toast, { Toaster } from 'react-hot-toast';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import loadingImage from "../assets/images/2.png"
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -137,6 +138,7 @@ const ProductDetails = () => {
             [panel]: isExpanded,
         }));
     };
+    console.log("Data load", dataLoading)
     return (
         <Container>
             <Toaster
@@ -145,20 +147,19 @@ const ProductDetails = () => {
             />
             {
                 dataLoading ? (
-                    // Custom loader using the provided image
                     <div className="flex flex-col items-center justify-center h-screen">
                         <img
-                            src="https://up.yimg.com/ib/th?id=OIP.r5Ebw7k_mrU6PK5l5cALuQHaHa&pid=Api&rs=1&c=1&qlt=95&w=111&h=111"
+                            src={loadingImage}
                             alt="Loading..."
-                            className="w-20 h-20"
+                            className="w-42 h-20 animate-bounce"
                         />
-                        <p className="mt-4 text-gray-600 font-medium">Loading product details...</p>
                     </div>
+
                 ) : (
                     <div className="container mx-auto p-4 my-6">
                         <nav className="text-sm mb-4">
                             <a href="" className="text-gray-500">Home</a> /
-                            <span className="text-gray-800 font-semibold"> {product.name}</span>
+                            <span className="text-gray-800 font-semibold"> {product?.name}</span>
                         </nav>
 
                         <div className="grid lg:grid-cols-2 gap-8">
@@ -190,12 +191,12 @@ const ProductDetails = () => {
 
                             </div>
                             <div>
-                                <h1 className="text-2xl font-semibold">{product.name}</h1>
+                                <h1 className="text-2xl font-semibold">{product?.name}</h1>
                                 <span className='text-xs text-gray-400'>T-Shirt</span>
                                 <div className="flex flex-col gap-4 mb-4">
 
                                     <div className='mt-2'>
-                                        <p className="text-xl font-medium text-[#8B4513]">₹ {product.original_price}</p>
+                                        <p className="text-xl font-medium text-[#8B4513]">₹ {product?.original_price}</p>
                                     </div>
                                 </div>
                                 {/* Size Selection */}

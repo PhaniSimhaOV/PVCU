@@ -6,6 +6,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import NoFound from "../components/common/NoFound"
 import { Link, useNavigate } from 'react-router-dom';
+import loadingImage from "../assets/images/2.png"
 
 const Wishlist = () => {
     const [wishlist, setWishlist] = useState([]);
@@ -40,11 +41,11 @@ const Wishlist = () => {
             </div>
         </div>
     ));
-    
+
     const getWishlistData = async () => {
         setPageLoading(true); // Start loading
         const token = localStorage.getItem('token');
-        
+
         try {
             const response = await fetch(`${API_URL}/wishlist`, {
                 method: 'GET',
@@ -132,7 +133,7 @@ const Wishlist = () => {
             setLoading(false);
         }
     };
-    
+
     const getBestSellingProducts = async () => {
         setBestLoading(true)
 
@@ -155,12 +156,11 @@ const Wishlist = () => {
         return (
             <Container>
                 <div className="flex flex-col items-center justify-center h-screen">
-                    <img 
-                        src="https://up.yimg.com/ib/th?id=OIP.r5Ebw7k_mrU6PK5l5cALuQHaHa&pid=Api&rs=1&c=1&qlt=95&w=111&h=111" 
-                        alt="Loading..." 
-                        className="w-20 h-20"
+                    <img
+                        src={loadingImage}
+                        alt="Loading..."
+                        className="w-42 h-20 animate-bounce"
                     />
-                    <p className="mt-4 text-gray-600 font-medium">Loading your wishlist...</p>
                 </div>
             </Container>
         );
@@ -219,7 +219,7 @@ const Wishlist = () => {
                                                         </Link>
                                                     </div>
                                                     <div className="pt-6 p-3">
-                                                        
+
                                                         <div className="flex flex-col gap-1">
                                                             <a
                                                                 href="#"
@@ -232,7 +232,7 @@ const Wishlist = () => {
                                                                     product?.productId?.discount !== 0 && <span className="text-md text-[#8B4513]">-{product?.productId?.discount}%</span>
                                                                 }
                                                                 <span className="text-md text-[#8B4513]">₹ {product?.productId?.price}</span>
-                                                              
+
                                                             </div>
                                                         </div>
 
