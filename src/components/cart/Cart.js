@@ -17,6 +17,12 @@ const Cart = () => {
             setIsLoading(true);
             try {
                 const token = localStorage.getItem('token');
+                if (!token) {
+                    // Handle case where user is not logged in
+                    setIsLoading(false);
+                    return;
+                }
+                
                 const config = {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -28,6 +34,8 @@ const Cart = () => {
                 setCartItems(fetchedCartItems);  // Pass fetched items to context
             } catch (error) {
                 console.error('Error fetching cart:', error);
+                // Handle error appropriately, maybe set empty cart
+                setCartItems([]);
             } finally {
                 setIsLoading(false);
             }
@@ -37,7 +45,18 @@ const Cart = () => {
     }, [setCartItems]);  // Only run once when component mounts
 
     if (isLoading) {
-        return <p>Loading your cart...</p>;  // Loading indicator
+        return (
+            <Container>
+                <div className="flex flex-col items-center justify-center h-screen">
+                    <img 
+                        src="https://up.yimg.com/ib/th?id=OIP.r5Ebw7k_mrU6PK5l5cALuQHaHa&pid=Api&rs=1&c=1&qlt=95&w=111&h=111" 
+                        alt="Loading..." 
+                        className="w-20 h-20"
+                    />
+                    <p className="mt-4 text-gray-600 font-medium">Loading your cart...</p>
+                </div>
+            </Container>
+        );
     }
 
     return (
@@ -45,7 +64,6 @@ const Cart = () => {
             <div className="container mx-auto p-4 my-6">
                 <nav className="text-sm mb-6">
                     <a href="" className="text-gray-500">Home</a> /
-                    {/* <a href="" className="text-gray-500"> Men T-Shirt</a> / */}
                     <span className="text-gray-800 font-semibold"> Your Cart</span>
                 </nav>
 
