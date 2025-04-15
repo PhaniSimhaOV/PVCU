@@ -1,13 +1,66 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../assets/images/3.png"
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import { Link } from "react-router-dom";
+import { Dialog, DialogContent, DialogTitle, IconButton } from "@mui/material";
+import Login from "../Auth/Login";
+import SignUp from "../Auth/SignUp";
+import CloseIcon from '@mui/icons-material/Close';
+
 
 const Footer = () => {
+    const [authDialogOpen, setAuthDialogOpen] = useState(false);
+    const [showLogin, setShowLogin] = useState(true);
+    const toggleAuthForm = () => setShowLogin(!showLogin);
+
+    const DialogLink = ({ children }) => {
+        const handleClick = (e) => {
+            e.preventDefault();
+            toggleAuthForm();
+        };
+        return (
+            <a href="#" onClick={handleClick} className="text-[#8B4513] font-medium underline">
+                {children}
+            </a>
+        );
+    };
     return (
         <footer className="bg-[#53290B]">
+            <Dialog
+                open={authDialogOpen}
+                onClose={() => setAuthDialogOpen(false)}
+                maxWidth="sm"
+                PaperProps={{
+                    sx: {
+                        minWidth: '500px',
+                        backgroundImage: 'url("/loginimage.jpg")',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
+                    },
+                }}
+            >
+                <DialogTitle sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
+                    <IconButton
+                        edge="end"
+                        color="inherit"
+                        onClick={() => setAuthDialogOpen(false)}
+                        aria-label="close"
+                        sx={{ color: 'black' }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                </DialogTitle>
+                <DialogContent>
+                    {showLogin ? (
+                        <Login setAuthDialogOpen={setAuthDialogOpen} isDialog={true} Link={DialogLink} />
+                    ) : (
+                        <SignUp setAuthDialogOpen={setAuthDialogOpen} isDialog={true} Link={DialogLink} />
+                    )}
+                </DialogContent>
+            </Dialog>
             <div className="mx-auto max-w-screen-xl space-y-8 px-4 py-16 sm:px-6 lg:space-y-16 lg:px-8">
                 <div className="grid grid-cols-1 gap-4 md:gap-16 lg:gap-16 lg:grid-cols-3">
                     <div>
@@ -128,7 +181,7 @@ const Footer = () => {
                     </div>
 
                     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-4">
-                        
+
 
                         <div>
                             <p className="font-medium text-white">Account</p>
@@ -139,7 +192,7 @@ const Footer = () => {
                                 </li> */}
 
                                 <li>
-                                    <a href="/login" className="text-[#907562] transition hover:opacity-75">
+                                    <a  onClick={() => setAuthDialogOpen(true)}className="cursor-pointer text-[#907562] transition hover:opacity-75">
                                         Login / Register
                                     </a>
                                 </li>

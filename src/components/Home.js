@@ -413,7 +413,7 @@ const Home = () => {
                             <section className="py-8 antialiased md:py-6">
                                 <div className="mx-auto max-w-screen-xl px-1 2xl:px-0">
                                     <div ref={productContainerRef} className="mb-4 flex lg:grid  lg:grid-cols-4 gap-4 overflow-x-auto scroll-smooth">
-                                        {product.slice().reverse().map((product) => (
+                                        {product.slice().reverse().filter((product) => !product.name.toLowerCase().includes("hanuman")).map((product) => (
                                             <div
                                                 key={product.id}
                                                 className="flex-none w-64 rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative 
@@ -762,41 +762,28 @@ const Home = () => {
                 </div>
             </Container>
             <div className="flex flex-col items-center justify-center px-4">
-                <div className="relative w-full max-w-6xl flex justify-center items-center group">
+                <div className="relative w-full max-w-6xl flex justify-center items-center group overflow-hidden">
                     {/* Background Image */}
-                    {/* <a href="/details/67ebd32f5d2648edb1c2caaa"> */}
-                    <img
-                        src={a}
-                        alt="Map Background"
-                        className="w-full h-full object-cover opacity-50"
-                    />
-                    {/* </a> */}
+                    <a href="/details/67ebd32f5d2648edb1c2caaa">
+                        <img
+                            src={a}
+                            alt="Map Background"
+                            className="w-full h-full object-cover opacity-50 transition-transform duration-500 ease-in-out group-hover:scale-105"
+                        />
+                    </a>
 
                     {/* Foreground Banner Image */}
-                    {/* <a href="/details/67ebd32f5d2648edb1c2caaa"> */}
-                    <img
-                        src={aBaner}
-                        alt="Winter Jacket"
-                        className="absolute left-0 top-20 md:top-30 lg:top-60 w-full max-w-[500px] h-auto md:max-w-[700px] lg:max-w-[900px] object-contain"
-                    />
-                    {/* </a> */}
+                    <a href="/details/67ebd32f5d2648edb1c2caaa">
 
-                    <a
-                        href="/details/67ebd32f5d2648edb1c2caaa"
-                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
-                       opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out"
-                    >
-                        <button
-                            type="button"
-                            className="rounded-sm   px-6 py-3 text-sm font-medium 
-                text-white bg-[#8B4513] transition-transform duration-300 ease-in-out 
-                hover:scale-105 hover:bg-[#8B4513] "
-                        >
-                            Join
-                        </button>
+                        <img
+                            src={aBaner}
+                            alt="Winter Jacket"
+                            className="absolute left-0 top-20 md:top-30 lg:top-60 w-full max-w-[500px] h-auto md:max-w-[700px] lg:max-w-[900px] object-contain transition-transform duration-700 ease-in-out group-hover:scale-110"
+                        />
                     </a>
                 </div>
             </div>
+
 
 
 

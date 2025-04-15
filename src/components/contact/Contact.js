@@ -28,7 +28,7 @@ const Contact = () => {
 
       const params = {
         sendername: formData.name,
-        to: "shahraj135421@gmail.com",
+        to: "superhelp@pvcu.in",
         subject: "Enquiry Form Details",
         replyto: formData.email,
         message: `
