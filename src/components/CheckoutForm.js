@@ -212,7 +212,7 @@ const CheckoutForm = () => {
       />
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-extrabold text-center text-gray-900 mb-8">Checkout</h1>
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className="bg-white rounded-lg overflow-hidden">
           <div className="px-4 py-5 sm:p-6">
             <form onSubmit={handlePayment} className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
