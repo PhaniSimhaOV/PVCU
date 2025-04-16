@@ -7,6 +7,12 @@ import { API_URL, IMAGE_URL } from '../constants';
 import toast, { Toaster } from 'react-hot-toast';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import loadingImage from "../assets/images/2.png"
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import UpdateDisabledRoundedIcon from '@mui/icons-material/UpdateDisabledRounded';
+import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -34,6 +40,85 @@ const ProductDetails = () => {
             }
         }
     }
+
+    const [wishlist, setWishlist] = useState([]);
+        useEffect(() => {
+            const wishlistedData = localStorage.getItem("wishlist")
+            if (wishlistedData) {
+                const data = JSON.parse(wishlistedData)
+                setWishlist(data)
+            }
+        }, [wishlist?.length])
+
+        const isProductInWishlist = (productId) => {
+            return wishlist.some((item) => item.id === productId);
+        };
+
+         const removeFromWishlist = async (productId) => {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`${API_URL}/wishlist/remove`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({ productId }),
+                });
+        
+                if (!response.ok) {
+                    throw new Error('Failed to remove product from wishlist');
+                }
+        
+                return response.json(); // Assuming the response will be in JSON format
+            };
+            const handleRemoveFromWishlist = async (productId) => {
+                try {
+                    await removeFromWishlist(productId);
+                    toast.success("Product removed from wishlist");
+        
+                    // Update local storage
+                    const currentWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+                    const updatedWishlist = currentWishlist.filter(
+                        (product) => product?.id !== productId
+                    );
+                    localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+        
+                    // Update state
+                    setWishlist((prev) =>
+                        prev.filter((product) => product?.id !== productId)
+                    );
+                } catch (error) {
+                    console.error("Error removing from wishlist", error);
+                }
+            };
+
+            const addToWishlist = async (productId) => {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    toast.error('Please log in to add items to your wishlist');
+                    return;
+                }
+                try {
+                    const response = await axios.post(
+                        `${API_URL}/wishlist/add`,
+                        { productId },
+                        { headers: { Authorization: `Bearer ${token}` } }
+                    );
+                    toast.success("Products added successfully to Wishlist")
+                    const prev = JSON.parse(localStorage.getItem("wishlist")) || [];
+                    const newWishlist = [...wishlist, { id: productId, isWishlisted: true }];
+                    setWishlist(newWishlist);
+                    if (Array.isArray(prev)) {
+                        localStorage.setItem("wishlist", JSON.stringify([...prev, { id: productId, isWishlisted: true }]));
+                    } else {
+                        localStorage.setItem("wishlist", JSON.stringify([{ id: productId, isWishlisted: true }]));
+                    }
+                    return response.data;
+                } catch (error) {
+                    console.error('Error adding to wishlist', error);
+                    throw error;
+                }
+            };
 
     useEffect(() => {
         getProductsById()
@@ -193,11 +278,20 @@ const ProductDetails = () => {
                             <div>
                                 <h1 className="text-2xl font-semibold">{product?.name}</h1>
                                 <span className='text-xs text-gray-400'>T-Shirt</span>
-                                <div className="flex flex-col gap-4 mb-4">
+                                <hr />
+                                {/* <div className="flex flex-col gap-4 mb-4">
 
                                     <div className='mt-2'>
                                         <p className="text-xl font-medium text-[#8B4513]">₹ {product?.original_price}</p>
                                     </div>
+                                </div> */}
+                                <div className="flex flex-col gap-4 mb-6">
+                                    <div className="flex items-center gap-2">
+                                        <p className="text-xl font-medium text-[#8B4513]">₹ {product.original_price}</p>
+                                        <p className="text-sm text-gray-500 line-through">₹{product.original_price + 100}</p>
+                                        <p className="text-sm text-red-500">₹100 OFF</p>
+                                    </div>
+                                    <p className="text-xs text-gray-500">MRP incl. of all taxes</p>
                                 </div>
                                 {/* Size Selection */}
                                 {
@@ -217,7 +311,91 @@ const ProductDetails = () => {
                                     </>
                                 }
 
-                                <div className="mt-12">
+                                <div className="flex items-center gap-2 mt-8">
+                                    <p className="text-sm text-gray-800">Quantity:</p>
+                                    <select
+                                        value={quantity}
+                                        onChange={(e) => setQuantity(parseInt(e.target.value))}
+                                        className="border border-[#148c8d] rounded-md px-2 py-1"
+                                    >
+                                        {[...Array(10).keys()].map(i => (
+                                            <option key={i + 1} value={i + 1}>{i + 1}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div className="flex gap-2 mt-4">
+                                    <button onClick={addToCart} className="px-8 bg-[#8B4513] text-white py-3">
+                                        {loading ? (
+                                            <CircularProgress size={24} color="inherit" />
+                                        ) : (
+                                            'ADD TO CART'
+                                        )}
+                                    </button>
+                                    <button
+                                        className="px-4 py-3 border border-[#148c8d] text-[#148c8d] flex items-center gap-2"
+                                        onClick={() =>
+                                            isProductInWishlist(product._id)
+                                                ? handleRemoveFromWishlist(product._id)
+                                                : addToWishlist(product._id)
+                                        }
+                                    >
+                                        <FavoriteBorderRoundedIcon fontSize="small" />
+                                        ADD TO WISHLIST
+                                    </button>
+                                </div>
+
+                                <div className="mb-6 mt-4 flex items-center gap-4">
+                                    <p className="text-sm text-gray-800 mb-0">Share</p>
+                                    <div className="flex gap-2">
+                                        <button className="p-2 text-gray-600 hover:text-gray-900">
+                                            <span><WhatsAppIcon /></span>
+                                        </button>
+                                        <button className="p-2 text-gray-600 hover:text-gray-900">
+                                            <span><FacebookIcon /></span>
+                                        </button>
+                                        <button className="p-2 text-gray-600 hover:text-gray-900">
+                                            <span><TwitterIcon /></span>
+                                        </button>
+                                        <button className="p-2 text-gray-600 hover:text-gray-900">
+                                            <span><InstagramIcon /></span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* <div className="mb-6">
+                                    <p className="text-sm font-medium text-gray-800 mb-2">Delivery Details</p>
+                                    <div className="relative w-full max-w-xl">
+                                        <input
+                                            type="text"
+                                            placeholder="Enter Pincode"
+                                            className="w-full border border-gray-300 rounded-md px-3 py-2 pr-20 text-sm"
+                                        />
+                                        <button className="absolute right-1 top-1 bottom-1 px-4 text-sm bg-white text-[#148c8d] font-medium rounded-md">
+                                            CHECK
+                                        </button>
+                                    </div>
+                                </div> */}
+
+                                <div className="flex items-start gap-2 p-3 border rounded-md mb-6">
+                                    <div className="mt-1"><UpdateDisabledRoundedIcon /></div>
+                                    <div>
+                                        <p className="text-sm text-gray-800">This product is eligible for return or exchange under our 30-day return or exchange policy.</p>
+                                        <p className="text-xs text-gray-500">No questions asked!</p>
+                                    </div>
+                                </div>
+
+
+
+                                {/* <button onClick={addToCart} className="w-full bg-[#8B4513] text-white py-3 rounded-lg ">
+                                        {loading ? (
+                                            <CircularProgress size={24} color="inherit" />
+                                        ) : (
+                                            'ADD TO CART'
+                                        )}
+                                    </button> */}
+
+                                <div className="mt-8">
                                     <Accordion
                                         expanded={expandedPanels.panel1}
                                         onChange={handleAccordionToggle("panel1")}
@@ -261,7 +439,7 @@ const ProductDetails = () => {
                                     </Accordion>
                                 </div>
 
-                                <p className="text-gray-800 my-4 font-semibold">Quantity:</p>
+                                {/* <p className="text-gray-800 my-4 font-semibold">Quantity:</p>
                                 <div className='flex gap-4 my-2 items-center'>
                                     <div>
                                         <div className="flex items-center gap-4">
@@ -270,14 +448,8 @@ const ProductDetails = () => {
                                             <button onClick={() => handleQuantityChange('increase')} className="px-4 py-2 border rounded-lg hover:bg-gray-100">+</button>
                                         </div>
                                     </div>
-                                    <button onClick={addToCart} className="w-full bg-[#8B4513] text-white py-3 rounded-lg ">
-                                        {loading ? (
-                                            <CircularProgress size={24} color="inherit" />
-                                        ) : (
-                                            'ADD TO CART'
-                                        )}
-                                    </button>
-                                </div>
+
+                                </div> */}
                             </div>
                         </div>
                     </div>

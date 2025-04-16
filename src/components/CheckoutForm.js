@@ -161,220 +161,227 @@ const CheckoutForm = () => {
         position="top-right"
         reverseOrder={false}
       />
-      <div className="">
-        <form onSubmit={handlePayment} className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-3xl font-extrabold text-center text-gray-900 mb-8">Checkout</h1>
+        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+          <div className="px-4 py-5 sm:p-6">
+            <form onSubmit={handlePayment} className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-          <div className=" space-y-5">
-            <h1 className="text-2xl font-bold mb-6">Checkout Form</h1>
-            <div>
-              <label className="block text-sm font-medium mb-1" htmlFor="name">
-                NAME
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                required
-                value={formData.name}
-                onChange={handleInputChange}
-                placeholder="Eg: John Doe"
-                className="w-full border border-black rounded- px-3 py-3"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1" htmlFor="phone">
-                PHONE NUMBER
-              </label>
-              <div className="flex gap-2">
-                <select
-                  className="border border-black px-3 py-2"
-                  value={formData.country}
-                  name="country"
-                  required
+              <div className="lg:col-span-7 space-y-6">
+                <div className="border-b border-gray-200 pb-4">
+                  <h2 className="text-xl font-semibold text-gray-800">Customer Information</h2>
+                </div>
 
-                  onChange={handleInputChange}
-                >
-                  <option>+91</option>
-                  <option>+1</option>
-                </select>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  required
-
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  placeholder="111-222-3333"
-                  className="flex-grow border border-black rounded- px-3 py-3"
-                />
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1" htmlFor="email">
-                EMAIL
-              </label>
-              <input
-                type="email"
-                id="email"
-                required
-
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="email@gmail.com"
-                className="w-full border border-black rounded- px-3 py-3"
-              />
-            </div>
-            <div>
-              <label
-                className="block text-sm font-medium mb-1"
-                htmlFor="address"
-              >
-                ADDRESS
-              </label>
-              <input
-                type="text"
-                id="address"
-                required
-
-                name="address"
-                value={formData.address}
-                onChange={handleInputChange}
-                placeholder="Eg: ABC Street 12A, Jubilee Hills, Hyderabad"
-                className="w-full border border-black rounded- px-3 py-3"
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label
-                  className="block text-sm font-medium mb-1"
-                  htmlFor="province"
-                >
-                  STATE/PROVINCE
-                </label>
-                <input
-                  type="text"
-                  id="province"
-                  name="province"
-                  required
-
-                  value={formData.province}
-                  onChange={handleInputChange}
-                  placeholder="Choose Province"
-                  className="w-full border border-black rounded- px-3 py-3"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1" htmlFor="zip">
-                  ZIP CODE
-                </label>
-                <input
-                  type="text"
-                  id="zip"
-                  name="zip"
-                  required
-
-                  value={formData.zip}
-                  onChange={handleInputChange}
-                  placeholder="Choose ZIP Code"
-                  className="w-full border border-black rounded- px-3 py-3"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Order Summary */}
-          <div>
-            <h2 className="text-xl font-bold mb-6">ORDER SUMMARY</h2>
-            <div className="bg-gray-100 p-4 rounded-lg">
-              {cartItems.length > 0 ? (
-                cartItems.map((item, index) => (
-                  <div key={index} className="flex items-start gap-4 mb-4">
-                    <img
-                      src={`${IMAGE_URL}/${item.image}`} // Replace with actual product image
-                      alt={item.productId.name}
-                      className="w-24 h-full rounded-sm object-cover"
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="col-span-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="name">
+                      Full Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      placeholder="John Doe"
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent transition"
                     />
-                    <div>
-                      <h3 className="font-medium">{item.productId.name}</h3>
-                      <p className="text-gray-500">
-                        {item.quantity} × {item.productId.original_price}
-                      </p>
-                      <p className="text-sm text-gray-400">
-                        {item.productId.description || "No description available"}
-                      </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="email">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="you@example.com"
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent transition"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="phone">
+                      Phone Number
+                    </label>
+                    <div className="flex">
+                      <select
+                        className="border border-gray-300 rounded-l-md px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                        value={formData.country}
+                        name="country"
+                        required
+                        onChange={handleInputChange}
+                      >
+                        <option value="+91">+91 (India)</option>
+                        <option value="+1">+1 (USA)</option>
+                      </select>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        required
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        placeholder="9876543210"
+                        className="flex-grow border border-gray-300 rounded-r-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent transition"
+                      />
                     </div>
                   </div>
-                ))
-              ) : (
-                <p className="text-gray-500">Your cart is empty.</p>
-              )}
-
-              {/* Totals */}
-              <div className="border-t border-gray-300 pt-4">
-                <div className="flex justify-between mb-2">
-                  <span>Subtotal</span>
-                  <span>₹{subtotal}</span>
                 </div>
-                {/* <div className="flex justify-between mb-2 text-red-500">
+
+                <div className="border-t border-b border-gray-200 py-4">
+                  <h2 className="text-xl font-semibold text-gray-800">Shipping Address</h2>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="col-span-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="address">
+                      Address
+                    </label>
+                    <input
+                      type="text"
+                      id="address"
+                      name="address"
+                      required
+                      value={formData.address}
+                      onChange={handleInputChange}
+                      placeholder="123 Main Street, Apt 4B"
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent transition"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="province">
+                      State/Province
+                    </label>
+                    <input
+                      type="text"
+                      id="province"
+                      name="province"
+                      required
+                      value={formData.province}
+                      onChange={handleInputChange}
+                      placeholder="Maharashtra"
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent transition"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="zip">
+                      PIN Code
+                    </label>
+                    <input
+                      type="text"
+                      id="zip"
+                      name="zip"
+                      required
+                      value={formData.zip}
+                      onChange={handleInputChange}
+                      placeholder="400001"
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent transition"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Order Summary */}
+              <div className="lg:col-span-5 bg-gray-50 p-6 rounded-lg">
+                <h2 className="text-xl font-bold mb-6">ORDER SUMMARY</h2>
+                <div className="bg-gray-100 p-4 rounded-lg">
+                  {cartItems.length > 0 ? (
+                    cartItems.map((item, index) => (
+                      <div key={index} className="flex items-start gap-4 mb-4">
+                        <img
+                          src={`${IMAGE_URL}/${item.image}`} // Replace with actual product image
+                          alt={item.productId.name}
+                          className="w-24 h-full rounded-sm object-cover"
+                        />
+                        <div>
+                          <h3 className="font-medium">{item.productId.name}</h3>
+                          <p className="text-gray-500">
+                            {item.quantity} × {item.productId.original_price}
+                          </p>
+                          <p className="text-sm text-gray-400">
+                            {item.productId.description || "No description available"}
+                          </p>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-gray-500">Your cart is empty.</p>
+                  )}
+
+                  {/* Totals */}
+                  <div className="border-t border-gray-300 pt-4">
+                    <div className="flex justify-between mb-2">
+                      <span>Subtotal</span>
+                      <span>₹{subtotal}</span>
+                    </div>
+                    {/* <div className="flex justify-between mb-2 text-red-500">
                   <span>Voucher (50KDISCOUNT)</span>
                   <span>-₹{50}</span>
                 </div> */}
-                <div className="flex justify-between mb-2">
-                  <span>Shipping</span>
-                  <span>FREE</span>
-                </div>
-                <div className="flex justify-between font-bold text-lg">
-                  <span>Total</span>
-                  <span>₹{total}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Payment */}
-            <div className="mt-6">
-              <h3 className="text-lg font-bold mb-4 w-full">PAYMENT</h3>
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center gap-2 border border-[#8B4513] py-3 px-2">
-                  <div className="w-full flex gap-2 items-center">
-                    <input
-                      type="radio"
-                      id="bank"
-                      name="payment"
-                      className="h-4 w-4"
-                    />
-                    <span htmlFor="bank" className="text-sm text-black">
-                      Bank
-                    </span>
-                  </div>
-                  <img src={payment} alt="Payment Methods" className="h-6" />
-                </div>
-                <div className="flex items-center gap-2 border border-[#8B4513] py-3 px-2">
-                  <div className="w-full flex gap-2 items-center">
-                    <input
-                      type="radio"
-                      id="bank"
-                      name="payment"
-                      className="h-4 w-4"
-                    />
-                    <span htmlFor="bank" className="text-sm text-black">
-                      Cash on Delivery
-                    </span>
+                    <div className="flex justify-between mb-2">
+                      <span>Shipping</span>
+                      <span>FREE</span>
+                    </div>
+                    <div className="flex justify-between font-bold text-lg">
+                      <span>Total</span>
+                      <span>₹{total}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <button
-                className="w-full bg-[#8B4513] text-white py-2 rounded my-4"
-                disabled={loading}
 
-              >
-                {loading ? "Placing order" : "Place Order"}
-              </button>
-            </div>
+                {/* Payment */}
+                <div className="mt-6">
+                  <h3 className="text-lg font-bold mb-4 w-full">PAYMENT</h3>
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center gap-2 border border-[#8B4513] py-3 px-2">
+                      <div className="w-full flex gap-2 items-center">
+                        <input
+                          type="radio"
+                          id="bank"
+                          name="payment"
+                          className="h-4 w-4"
+                        />
+                        <span htmlFor="bank" className="text-sm text-black">
+                          Bank
+                        </span>
+                      </div>
+                      <img src={payment} alt="Payment Methods" className="h-6" />
+                    </div>
+                    <div className="flex items-center gap-2 border border-[#8B4513] py-3 px-2">
+                      <div className="w-full flex gap-2 items-center">
+                        <input
+                          type="radio"
+                          id="bank"
+                          name="payment"
+                          className="h-4 w-4"
+                        />
+                        <span htmlFor="bank" className="text-sm text-black">
+                          Cash on Delivery
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    className="w-full bg-[#8B4513] text-white py-2 rounded my-4"
+                    disabled={loading}
+
+                  >
+                    {loading ? "Placing order" : "Place Order"}
+                  </button>
+                </div>
+              </div>
+            </form>
+
           </div>
-        </form>
-
+        </div>
       </div>
     </div>
   );
