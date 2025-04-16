@@ -22,25 +22,72 @@ const CheckoutForm = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const sendEmail = async (data) => {
-
     try {
       const serviceID = "service_42scdsw";
       const templateID = "template_rsh28zt";
 
+      const itemList = data.items
+      ?.map((item) => `- ${item.name} - ${item.quantity} - ${item.size}`)
+      .join("\n") || "- No items";
+
       const params = {
         sendername: "PVCU",
         to: "sreefabrics2019@gmail.com",
+        // to: "raj.shah@budhanatech.com",
         subject: "Order Details of PVCU",
         replyto: "venkat@pvcu.in",
+        // replyto:"raj.shah@budhanatech.com",
         message: `
         Order ID: ${data?.orderId}
         Amount: ₹${data?.amount}
+        Address:${data?.address}
         Order Status: ${data?.orderStatus}
         Order Name :${data?.name}
         Email: ${data?.email}
         Phone: ${data?.phone}
         Zip: ${data?.zip}
         Payment Status: ${data?.paymentStatus}
+        Items:${itemList},
+      `,
+      };
+
+      await emailjs.send(serviceID, templateID, params, "rLi115x7NbmnZdlX-");
+      toast.success("Email sent successfully!");
+
+    } catch (error) {
+      console.error("Error sending email:", error);
+      toast.error("Failed to send email. Please try again.");
+    } finally {
+    }
+  };
+
+  const sendEmailToCustomer = async (data) => {
+    try {
+      const serviceID = "service_42scdsw";
+      const templateID = "template_rsh28zt";
+
+      const itemList = data.items
+      ?.map((item) => `- ${item.name} - ${item.quantity} - ${item.size}`)
+      .join("\n") || "- No items";
+
+      const params = {
+        sendername: "PVCU",
+        // to: "sreefabrics2019@gmail.com",
+        to: data.email,
+        subject: "Order Details of PVCU",
+        replyto: "venkat@pvcu.in",
+        // replyto:"raj.shah@budhanatech.com",
+        message: `
+        Order ID: ${data?.orderId}
+        Amount: ₹${data?.amount}
+        Address:${data?.address}
+        Order Status: ${data?.orderStatus}
+        Order Name :${data?.name}
+        Email: ${data?.email}
+        Phone: ${data?.phone}
+        Zip: ${data?.zip}
+        Payment Status: ${data?.paymentStatus}
+        Items:${itemList},
       `,
       };
 
@@ -98,6 +145,9 @@ const CheckoutForm = () => {
       );
 
       const { orderId, amount, currency } = response.data;
+      sendEmail(response.data)
+      sendEmailToCustomer(response.data)
+
 
       const options = {
         key: process.env.REACT_APP_RAZORPAY_KEY_ID,
@@ -118,8 +168,7 @@ const CheckoutForm = () => {
             );
 
             toast.success(paymentVerification.data.message);
-            sendEmail(response.data)
-
+          
             setCartItems([])
             await axios.delete(`${API_URL}/cart/delete/clear-cart`, {
               headers: {
