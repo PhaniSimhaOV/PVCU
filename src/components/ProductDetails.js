@@ -13,6 +13,8 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import UpdateDisabledRoundedIcon from '@mui/icons-material/UpdateDisabledRounded';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -42,83 +44,83 @@ const ProductDetails = () => {
     }
 
     const [wishlist, setWishlist] = useState([]);
-        useEffect(() => {
-            const wishlistedData = localStorage.getItem("wishlist")
-            if (wishlistedData) {
-                const data = JSON.parse(wishlistedData)
-                setWishlist(data)
+    useEffect(() => {
+        const wishlistedData = localStorage.getItem("wishlist")
+        if (wishlistedData) {
+            const data = JSON.parse(wishlistedData)
+            setWishlist(data)
+        }
+    }, [wishlist?.length])
+
+    const isProductInWishlist = (productId) => {
+        return wishlist.some((item) => item.id === productId);
+    };
+
+    const removeFromWishlist = async (productId) => {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${API_URL}/wishlist/remove`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ productId }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to remove product from wishlist');
+        }
+
+        return response.json(); // Assuming the response will be in JSON format
+    };
+    const handleRemoveFromWishlist = async (productId) => {
+        try {
+            await removeFromWishlist(productId);
+            toast.success("Product removed from wishlist");
+
+            // Update local storage
+            const currentWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+            const updatedWishlist = currentWishlist.filter(
+                (product) => product?.id !== productId
+            );
+            localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+
+            // Update state
+            setWishlist((prev) =>
+                prev.filter((product) => product?.id !== productId)
+            );
+        } catch (error) {
+            console.error("Error removing from wishlist", error);
+        }
+    };
+
+    const addToWishlist = async (productId) => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            toast.error('Please log in to add items to your wishlist');
+            return;
+        }
+        try {
+            const response = await axios.post(
+                `${API_URL}/wishlist/add`,
+                { productId },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            toast.success("Products added successfully to Wishlist")
+            const prev = JSON.parse(localStorage.getItem("wishlist")) || [];
+            const newWishlist = [...wishlist, { id: productId, isWishlisted: true }];
+            setWishlist(newWishlist);
+            if (Array.isArray(prev)) {
+                localStorage.setItem("wishlist", JSON.stringify([...prev, { id: productId, isWishlisted: true }]));
+            } else {
+                localStorage.setItem("wishlist", JSON.stringify([{ id: productId, isWishlisted: true }]));
             }
-        }, [wishlist?.length])
-
-        const isProductInWishlist = (productId) => {
-            return wishlist.some((item) => item.id === productId);
-        };
-
-         const removeFromWishlist = async (productId) => {
-                const token = localStorage.getItem('token');
-                const response = await fetch(`${API_URL}/wishlist/remove`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`,
-                    },
-                    body: JSON.stringify({ productId }),
-                });
-        
-                if (!response.ok) {
-                    throw new Error('Failed to remove product from wishlist');
-                }
-        
-                return response.json(); // Assuming the response will be in JSON format
-            };
-            const handleRemoveFromWishlist = async (productId) => {
-                try {
-                    await removeFromWishlist(productId);
-                    toast.success("Product removed from wishlist");
-        
-                    // Update local storage
-                    const currentWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-                    const updatedWishlist = currentWishlist.filter(
-                        (product) => product?.id !== productId
-                    );
-                    localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
-        
-                    // Update state
-                    setWishlist((prev) =>
-                        prev.filter((product) => product?.id !== productId)
-                    );
-                } catch (error) {
-                    console.error("Error removing from wishlist", error);
-                }
-            };
-
-            const addToWishlist = async (productId) => {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    toast.error('Please log in to add items to your wishlist');
-                    return;
-                }
-                try {
-                    const response = await axios.post(
-                        `${API_URL}/wishlist/add`,
-                        { productId },
-                        { headers: { Authorization: `Bearer ${token}` } }
-                    );
-                    toast.success("Products added successfully to Wishlist")
-                    const prev = JSON.parse(localStorage.getItem("wishlist")) || [];
-                    const newWishlist = [...wishlist, { id: productId, isWishlisted: true }];
-                    setWishlist(newWishlist);
-                    if (Array.isArray(prev)) {
-                        localStorage.setItem("wishlist", JSON.stringify([...prev, { id: productId, isWishlisted: true }]));
-                    } else {
-                        localStorage.setItem("wishlist", JSON.stringify([{ id: productId, isWishlisted: true }]));
-                    }
-                    return response.data;
-                } catch (error) {
-                    console.error('Error adding to wishlist', error);
-                    throw error;
-                }
-            };
+            return response.data;
+        } catch (error) {
+            console.error('Error adding to wishlist', error);
+            throw error;
+        }
+    };
 
     useEffect(() => {
         getProductsById()
@@ -288,8 +290,8 @@ const ProductDetails = () => {
                                 <div className="flex flex-col gap-4 mb-6">
                                     <div className="flex items-center gap-2">
                                         <p className="text-xl font-medium text-[#8B4513]">₹ {product.original_price}</p>
-                                        <p className="text-sm text-gray-500 line-through">₹{product.original_price + 100}</p>
-                                        <p className="text-sm text-red-500">₹100 OFF</p>
+                                        {/* <p className="text-sm text-gray-500 line-through">₹{product.original_price + 100}</p> */}
+                                        {/* <p className="text-sm text-red-500">₹100 OFF</p> */}
                                     </div>
                                     <p className="text-xs text-gray-500">MRP incl. of all taxes</p>
                                 </div>
@@ -340,7 +342,12 @@ const ProductDetails = () => {
                                                 : addToWishlist(product._id)
                                         }
                                     >
-                                        <FavoriteBorderRoundedIcon fontSize="small" />
+                                        {
+                                            isProductInWishlist(product._id) ?
+                                                <FavoriteIcon fontSize="small" />
+                                                : <FavoriteBorderRoundedIcon fontSize="small" />
+                                        }
+
                                         ADD TO WISHLIST
                                     </button>
                                 </div>
@@ -348,17 +355,29 @@ const ProductDetails = () => {
                                 <div className="mb-6 mt-4 flex items-center gap-4">
                                     <p className="text-sm text-gray-800 mb-0">Share</p>
                                     <div className="flex gap-2">
-                                        <button className="p-2 text-gray-600 hover:text-gray-900">
-                                            <span><WhatsAppIcon /></span>
+                                        <button
+                                            className="p-2 text-gray-600 hover:text-gray-900"
+                                            onClick={() => window.open('https://youtube.com/@thepvcu?si=VFLyQROR_UfUWfJl', '_blank')}
+                                        >
+                                            <YouTubeIcon />
                                         </button>
-                                        <button className="p-2 text-gray-600 hover:text-gray-900">
-                                            <span><FacebookIcon /></span>
+                                        <button
+                                            className="p-2 text-gray-600 hover:text-gray-900"
+                                            onClick={() => window.open('https://www.facebook.com/ThePVCU', '_blank')}
+                                        >
+                                            <FacebookIcon />
                                         </button>
-                                        <button className="p-2 text-gray-600 hover:text-gray-900">
-                                            <span><TwitterIcon /></span>
+                                        <button
+                                            className="p-2 text-gray-600 hover:text-gray-900"
+                                            onClick={() => window.open('https://twitter.com/ThePVCU', '_blank')}
+                                        >
+                                            <TwitterIcon />
                                         </button>
-                                        <button className="p-2 text-gray-600 hover:text-gray-900">
-                                            <span><InstagramIcon /></span>
+                                        <button
+                                            className="p-2 text-gray-600 hover:text-gray-900"
+                                            onClick={() => window.open('https://www.instagram.com/thepvcu', '_blank')}
+                                        >
+                                            <InstagramIcon />
                                         </button>
                                     </div>
                                 </div>
