@@ -25,81 +25,103 @@ const CheckoutForm = () => {
     try {
       const serviceID = "service_42scdsw";
       const templateID = "template_rsh28zt";
-
+  
       const itemList = data.items
-      ?.map((item) => `- ${item.name} - ${item.quantity} - ${item.size}`)
-      .join("\n") || "- No items";
-
+        ?.map((item) => `- ${item.name} - Quantity: ${item.quantity} - Size: ${item.size}`)
+        .join("\n") || "- No items";
+  
+      const message = `
+  Dear ${data?.name},
+  
+  Thank you for your order with PVCU! Please find your order details below:
+  
+  ----------------------------------------
+  🧾 Order ID: ${data?.orderId}
+  💰 Amount: ₹${data?.amount}
+  🏠 Address: ${data?.address}
+  📦 Order Status: ${data?.orderStatus}
+  👤 Name: ${data?.name}
+  📧 Email: ${data?.email}
+  📞 Phone: ${data?.phone}
+  📮 ZIP Code: ${data?.zip}
+  💳 Payment Status: ${data?.paymentStatus}
+  🛒 Items:
+  ${itemList}
+  ----------------------------------------
+  
+  If you have any questions or need assistance, feel free to contact us at venkat@pvcu.in.
+  
+  Warm regards,  
+  PVCU Team
+  `;
+  
       const params = {
         sendername: "PVCU",
         to: "sreefabrics2019@gmail.com",
-        // to: "raj.shah@budhanatech.com",
         subject: "Order Details of PVCU",
         replyto: "venkat@pvcu.in",
-        // replyto:"raj.shah@budhanatech.com",
-        message: `
-        Order ID: ${data?.orderId}
-        Amount: ₹${data?.amount}
-        Address:${data?.address}
-        Order Status: ${data?.orderStatus}
-        Order Name :${data?.name}
-        Email: ${data?.email}
-        Phone: ${data?.phone}
-        Zip: ${data?.zip}
-        Payment Status: ${data?.paymentStatus}
-        Items:${itemList},
-      `,
+        message: message,
       };
-
+  
       await emailjs.send(serviceID, templateID, params, "rLi115x7NbmnZdlX-");
       toast.success("Email sent successfully!");
-
     } catch (error) {
       console.error("Error sending email:", error);
       toast.error("Failed to send email. Please try again.");
-    } finally {
     }
   };
-
+  
   const sendEmailToCustomer = async (data) => {
     try {
       const serviceID = "service_42scdsw";
       const templateID = "template_rsh28zt";
-
+  
       const itemList = data.items
-      ?.map((item) => `- ${item.name} - ${item.quantity} - ${item.size}`)
-      .join("\n") || "- No items";
-
+        ?.map((item) => `- ${item.name} - Quantity: ${item.quantity} - Size: ${item.size}`)
+        .join("\n") || "- No items";
+  
+      const message = `
+  Dear ${data?.name},
+  
+  Thank you for your order with PVCU! Please find your order details below:
+  
+  ----------------------------------------
+  🧾 Order ID: ${data?.orderId}
+  💰 Amount: ₹${data?.amount}
+  🏠 Address: ${data?.address}
+  📦 Order Status: ${data?.orderStatus}
+  👤 Name: ${data?.name}
+  📧 Email: ${data?.email}
+  📞 Phone: ${data?.phone}
+  📮 ZIP Code: ${data?.zip}
+  💳 Payment Status: ${data?.paymentStatus}
+  🛒 Items:
+  ${itemList}
+  ----------------------------------------
+  
+  If you have any questions or need assistance, feel free to contact us at venkat@pvcu.in.
+  
+  Warm regards,  
+  PVCU Team
+  `;
+  
       const params = {
         sendername: "PVCU",
-        // to: "sreefabrics2019@gmail.com",
         to: data.email,
         subject: "Order Details of PVCU",
         replyto: "venkat@pvcu.in",
-        // replyto:"raj.shah@budhanatech.com",
-        message: `
-        Order ID: ${data?.orderId}
-        Amount: ₹${data?.amount}
-        Address:${data?.address}
-        Order Status: ${data?.orderStatus}
-        Order Name :${data?.name}
-        Email: ${data?.email}
-        Phone: ${data?.phone}
-        Zip: ${data?.zip}
-        Payment Status: ${data?.paymentStatus}
-        Items:${itemList},
-      `,
+        message: message,
       };
-
+  
       await emailjs.send(serviceID, templateID, params, "rLi115x7NbmnZdlX-");
       toast.success("Email sent successfully!");
-
     } catch (error) {
       console.error("Error sending email:", error);
       toast.error("Failed to send email. Please try again.");
-    } finally {
     }
   };
+  
+  const DELIVERY_CHARGE = 100;
 
   // Handle form input changes
   const handleInputChange = (e) => {
@@ -126,7 +148,7 @@ const CheckoutForm = () => {
       orderFormData.append("country", formData.country);
       orderFormData.append("province", formData.province);
       orderFormData.append("zip", formData.zip);
-      orderFormData.append("amount", total);
+      orderFormData.append("amount", total + DELIVERY_CHARGE);
 
       // Append cart items to form data
       cartItems.forEach((item) => {
@@ -145,13 +167,12 @@ const CheckoutForm = () => {
       );
 
       const { orderId, amount, currency } = response.data;
-      sendEmail(response.data)
-      sendEmailToCustomer(response.data)
+     
 
 
       const options = {
         key: process.env.REACT_APP_RAZORPAY_KEY_ID,
-        amount: amount,
+        amount: amount * DELIVERY_CHARGE,
         currency: currency,
         name: "PVCU",
         description: "Purchase Items",
@@ -168,7 +189,8 @@ const CheckoutForm = () => {
             );
 
             toast.success(paymentVerification.data.message);
-          
+            sendEmail(response.data)
+            sendEmailToCustomer(response.data)
             setCartItems([])
             await axios.delete(`${API_URL}/cart/delete/clear-cart`, {
               headers: {
@@ -203,6 +225,7 @@ const CheckoutForm = () => {
 
     setLoading(false);
   };
+  
 
   return (
     <div className="min-h-screen p-8">
@@ -376,12 +399,12 @@ const CheckoutForm = () => {
                   <span>-₹{50}</span>
                 </div> */}
                     <div className="flex justify-between mb-2">
-                      <span>Shipping</span>
-                      <span>FREE</span>
+                      <span>Delivery Charges</span>
+                      <span>₹{DELIVERY_CHARGE}</span>
                     </div>
                     <div className="flex justify-between font-bold text-lg">
                       <span>Total</span>
-                      <span>₹{total}</span>
+                      <span>₹{total + DELIVERY_CHARGE}</span>
                     </div>
                   </div>
                 </div>
