@@ -7,6 +7,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { API_URL } from '../../constants';
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const Login = ({ isDialog = false, Link, setAuthDialogOpen }) => {
     // Use the provided Link component or the React Router Link
@@ -16,6 +17,11 @@ const Login = ({ isDialog = false, Link, setAuthDialogOpen }) => {
         emailOrPhone: '',
         password: ''
     });
+
+    const [passwordVisibility, setPasswordVisibility] = useState(true)
+    const handleEyeClick = () => {
+        setPasswordVisibility(!passwordVisibility)
+    }
 
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -37,7 +43,7 @@ const Login = ({ isDialog = false, Link, setAuthDialogOpen }) => {
             // setTimeout(() => {
             //     navigate('/');
             // }, 2000);
-        setAuthDialogOpen(false)
+            setAuthDialogOpen(false)
         } catch (error) {
             toast.error(error.response?.data?.error || 'An unexpected error occurred.');
         } finally {
@@ -108,7 +114,7 @@ const Login = ({ isDialog = false, Link, setAuthDialogOpen }) => {
                             </label>
                             <div className="relative">
                                 <input
-                                    type="password"
+                                    type={passwordVisibility ? "password" : "text"}
                                     id="password"
                                     value={formData.password}
                                     onChange={handleChange}
@@ -116,7 +122,12 @@ const Login = ({ isDialog = false, Link, setAuthDialogOpen }) => {
                                     className="mt-2 block w-full px-4 py-2 text-gray-700 bg-gray-100 border border-gray-300 rounded-sm outline-none"
                                     required
                                 />
-                                <Visibility className="absolute top-2 right-3 text-gray-400 cursor-pointer" />
+                                {
+                                    passwordVisibility ? <Visibility onClick={handleEyeClick} className="absolute top-2 right-3 text-gray-400 cursor-pointer" /> : <VisibilityOffIcon onClick={handleEyeClick} className="absolute top-2 right-3 text-gray-400 cursor-pointer" />
+
+                                }
+
+
                             </div>
                         </div>
 

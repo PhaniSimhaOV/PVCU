@@ -296,9 +296,11 @@ const ProductDetails = () => {
                                     <p className="text-xs text-gray-500">MRP incl. of all taxes</p>
                                 </div>
                                 {/* Size Selection */}
+
+
                                 {
                                     productSize.sizes?.length > 0 && <>
-                                        <p className="text-gray-800 mb-2 font-semibold">Please select a size:</p>
+                                        <p className="text-gray-800 mb-2 font-semibold">Please select a size : Size Chart</p>
                                         <div className="grid grid-cols-4 lg:grid-cols-6 items-center gap-4 mt-4">
                                             {productSize.sizes.map((sizeOption) => (
                                                 <button
@@ -396,13 +398,13 @@ const ProductDetails = () => {
                                     </div>
                                 </div> */}
 
-                                <div className="flex items-start gap-2 p-3 border rounded-md mb-6">
+                                {/* <div className="flex items-start gap-2 p-3 border rounded-md mb-6">
                                     <div className="mt-1"><UpdateDisabledRoundedIcon /></div>
                                     <div>
                                         <p className="text-sm text-gray-800">This product is eligible for return or exchange under our 30-day return or exchange policy.</p>
                                         <p className="text-xs text-gray-500">No questions asked!</p>
                                     </div>
-                                </div>
+                                </div> */}
 
 
 

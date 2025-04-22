@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { useCart } from "../context/CartContext"; // Import the custom hook from CartContext
+import React, { useState, useEffect } from "react";
+import { useCart } from "../context/CartContext"; 
 import { API_URL, IMAGE_URL } from "../constants";
 import payment from "../assets/images/payment.png";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import emailjs from "@emailjs/browser";
-
+import { states } from "./Constants";
 
 const CheckoutForm = () => {
-  const { cartItems, subtotal, total, setCartItems } = useCart(); // Fetch cart data from context
+  const { cartItems, subtotal, total, setCartItems } = useCart();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -21,15 +21,77 @@ const CheckoutForm = () => {
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [orders, setOrders] = useState([]);
+  const [hasOrders, setHasOrders] = useState(false);
+  const [usePreviousAddress, setUsePreviousAddress] = useState(false);
+  // Add state for payment method
+  const [paymentMethod, setPaymentMethod] = useState("bank"); // Default to bank payment
+
+  // Fetch user's previous orders
+  const getOrders = async () => {
+    const token = localStorage.getItem('token');
+    try {
+      const response = await axios.get(`${API_URL}/orders`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setOrders(response.data.order);
+      setHasOrders(response.data.order.length > 0);
+    } catch (e) {
+      console.error("Error fetching previous orders:", e);
+    }
+  };
+
+  useEffect(() => {
+    getOrders();
+  }, []);
+
+  // Handle using previous address
+  const handleUsePreviousAddress = (e) => {
+    const checked = e.target.checked;
+    setUsePreviousAddress(checked);
+
+    if (checked && orders.length > 0) {
+      // Use the most recent order's address information
+      const latestOrder = orders[0]; // Assuming orders are sorted by date with newest first
+      setFormData({
+        name: latestOrder.name || "",
+        phone: latestOrder.phone || "",
+        email: latestOrder.email || "",
+        address: latestOrder.address || "",
+        country: latestOrder.country || "",
+        province: latestOrder.province || "",
+        zip: latestOrder.zip || "",
+        houseNumber: latestOrder.address.split(',  ')[0],
+        streetName: latestOrder.address.split(',  ')[1],
+        landmark: latestOrder.address.split(',  ')[2],
+        district: latestOrder.address.split(',  ')[3]
+        
+      });
+    } else {
+      // Reset all form fields when unchecked
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        address: "",
+        country: "",
+        province: "",
+        zip: "",
+      });
+    }
+  };
+
   const sendEmail = async (data) => {
     try {
       const serviceID = "service_42scdsw";
       const templateID = "template_rsh28zt";
-  
+
       const itemList = data.items
-        ?.map((item) => `- ${item.name} - Quantity: ${item.quantity} - Size: ${item.size}`)
+        ?.map((item) => `-${item.productId}-${item.name} - Quantity: ${item.quantity} - Size: ${item.size}`)
         .join("\n") || "- No items";
-  
+
       const message = `
   Dear ${data?.name},
   
@@ -54,7 +116,7 @@ const CheckoutForm = () => {
   Warm regards,  
   PVCU Team
   `;
-  
+
       const params = {
         sendername: "PVCU",
         to: "sreefabrics2019@gmail.com",
@@ -62,7 +124,7 @@ const CheckoutForm = () => {
         replyto: "venkat@pvcu.in",
         message: message,
       };
-  
+
       await emailjs.send(serviceID, templateID, params, "rLi115x7NbmnZdlX-");
       toast.success("Email sent successfully!");
     } catch (error) {
@@ -70,49 +132,61 @@ const CheckoutForm = () => {
       toast.error("Failed to send email. Please try again.");
     }
   };
-  
+
   const sendEmailToCustomer = async (data) => {
     try {
       const serviceID = "service_42scdsw";
       const templateID = "template_rsh28zt";
-  
+
       const itemList = data.items
-        ?.map((item) => `- ${item.name} - Quantity: ${item.quantity} - Size: ${item.size}`)
-        .join("\n") || "- No items";
-  
+        ?.map((item, index) => `${index + 1}. ${item.name} (Size: ${item.size}) - Qty: ${item.quantity}`)
+        .join("\n") || "No items in this order.";
+
       const message = `
-  Dear ${data?.name},
+  Hi ${data?.name},
   
-  Thank you for your order with PVCU! Please find your order details below:
+  Thank you for shopping with PVCU. We’ve received your order and will begin processing it soon.
   
-  ----------------------------------------
-  🧾 Order ID: ${data?.orderId}
-  💰 Amount: ₹${data?.amount}
-  🏠 Address: ${data?.address}
-  📦 Order Status: ${data?.orderStatus}
-  👤 Name: ${data?.name}
-  📧 Email: ${data?.email}
-  📞 Phone: ${data?.phone}
-  📮 ZIP Code: ${data?.zip}
-  💳 Payment Status: ${data?.paymentStatus}
-  🛒 Items:
+  ━━━━━━━━━━━━━━━━━━━━━━━  
+  🧾 Order Summary  
+  ━━━━━━━━━━━━━━━━━━━━━━━  
+  • Order ID: ${data?.orderId}  
+  • Order Date: ${new Date().toLocaleDateString()}  
+  • Payment Status: ${data?.paymentStatus}  
+  • Order Status: ${data?.orderStatus}  
+  • Total Amount: ₹${data?.amount}
+  
+  ━━━━━━━━━━━━━━━━━━━━━━━  
+  📦 Items Ordered  
+  ━━━━━━━━━━━━━━━━━━━━━━━  
   ${itemList}
-  ----------------------------------------
   
-  If you have any questions or need assistance, feel free to contact us at venkat@pvcu.in.
+  ━━━━━━━━━━━━━━━━━━━━━━━  
+  🏠 Delivery Address  
+  ━━━━━━━━━━━━━━━━━━━━━━━  
+  ${data?.name}  
+  ${data?.address}  
+  ZIP: ${data?.zip}  
+  Phone: ${data?.phone}  
+  Email: ${data?.email}
   
-  Warm regards,  
-  PVCU Team
+  ━━━━━━━━━━━━━━━━━━━━━━━  
+  Need Help?  
+  ━━━━━━━━━━━━━━━━━━━━━━━  
+  If you have any questions or need assistance, reach out to us at venkat@pvcu.in. We're here to help.
+  
+  Thank you for choosing PVCU!  
+  PVCU Customer Support Team  
   `;
-  
+
       const params = {
         sendername: "PVCU",
         to: data.email,
-        subject: "Order Details of PVCU",
+        subject: "Your PVCU Order Confirmation",
         replyto: "venkat@pvcu.in",
-        message: message,
+        message,
       };
-  
+
       await emailjs.send(serviceID, templateID, params, "rLi115x7NbmnZdlX-");
       toast.success("Email sent successfully!");
     } catch (error) {
@@ -120,7 +194,8 @@ const CheckoutForm = () => {
       toast.error("Failed to send email. Please try again.");
     }
   };
-  
+
+
   const DELIVERY_CHARGE = 100;
 
   // Handle form input changes
@@ -132,10 +207,33 @@ const CheckoutForm = () => {
     }));
   };
 
-  const handlePayment = async (e) => {
+  // Handle payment method change
+  const handlePaymentMethodChange = (method) => {
+    setPaymentMethod(method);
+  };
+
+  // Handle order submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
+    try {
+      if (paymentMethod === "bank") {
+        // Process with Razorpay for bank payment
+        await handleBankPayment();
+      } else {
+        // Process cash on delivery order
+        await handleCashOnDelivery();
+      }
+    } catch (error) {
+      console.error("Error processing order:", error);
+      toast.error("Failed to place order. Please try again.");
+      setLoading(false);
+    }
+  };
+
+  // Handle bank payment through Razorpay
+  const handleBankPayment = async () => {
     try {
       const token = localStorage.getItem("token");
       const orderFormData = new FormData();
@@ -144,11 +242,12 @@ const CheckoutForm = () => {
       orderFormData.append("name", formData.name);
       orderFormData.append("phone", formData.phone);
       orderFormData.append("email", formData.email);
-      orderFormData.append("address", formData.address);
+      orderFormData.append("address", `${formData.houseNumber},  ${formData.streetName},  ${formData.landmark},  ${formData.district},  ${formData.province},  ${formData.zip}`);
       orderFormData.append("country", formData.country);
       orderFormData.append("province", formData.province);
       orderFormData.append("zip", formData.zip);
       orderFormData.append("amount", total + DELIVERY_CHARGE);
+      orderFormData.append("paymentMethod", "bank");
 
       // Append cart items to form data
       cartItems.forEach((item) => {
@@ -167,7 +266,6 @@ const CheckoutForm = () => {
       );
 
       const { orderId, amount, currency } = response.data;
-     
 
 
       const options = {
@@ -189,9 +287,10 @@ const CheckoutForm = () => {
             );
 
             toast.success(paymentVerification.data.message);
-            sendEmail(response.data)
-            sendEmailToCustomer(response.data)
-            setCartItems([])
+            sendEmail(response.data);
+            sendEmailToCustomer(response.data);
+
+            setCartItems([]);
             await axios.delete(`${API_URL}/cart/delete/clear-cart`, {
               headers: {
                 Authorization: `Bearer ${token}`
@@ -202,7 +301,7 @@ const CheckoutForm = () => {
             }, 3000);
 
           } catch (error) {
-            alert("Payment verification failed. Please try again."); // Show error
+            toast.error("Payment verification failed. Please try again.");
             console.error(error);
           }
         },
@@ -220,12 +319,70 @@ const CheckoutForm = () => {
       razorpayInstance.open();
     } catch (error) {
       console.error("Error creating order or opening Razorpay", error);
-      alert("Payment initiation failed. Please try again.");
+      throw error;
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
-  
+
+  // Handle cash on delivery order
+  const handleCashOnDelivery = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const orderFormData = new FormData();
+
+      // Append form data fields
+      orderFormData.append("name", formData.name);
+      orderFormData.append("phone", formData.phone);
+      orderFormData.append("email", formData.email);
+      orderFormData.append("address", `${formData.houseNumber},  ${formData.streetName},  ${formData.landmark},  ${formData.district},  ${formData.province},  ${formData.zip}`);
+      orderFormData.append("country", formData.country);
+      orderFormData.append("province", formData.province);
+      orderFormData.append("zip", formData.zip);
+      orderFormData.append("amount", total + DELIVERY_CHARGE);
+      orderFormData.append("paymentMethod", "cod");
+      orderFormData.append("paymentStatus", "pending"); // Set payment status as pending for COD
+
+      // Append cart items to form data
+      cartItems.forEach((item) => {
+        orderFormData.append("items[]", JSON.stringify(item));
+      });
+
+      const response = await axios.post(
+        `${API_URL}/cart/create-order`, // Consider making a separate endpoint for COD
+        orderFormData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      toast.success("Order placed successfully!");
+      sendEmail(response.data);
+      sendEmailToCustomer(response.data);
+      setCartItems([]);
+      
+      // Clear the cart after successful order
+      await axios.delete(`${API_URL}/cart/delete/clear-cart`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      
+      setTimeout(() => {
+        navigate("/cart");
+      }, 3000);
+      
+    } catch (error) {
+      console.error("Error placing COD order:", error);
+      toast.error("Failed to place order. Please try again.");
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen p-8">
@@ -237,17 +394,34 @@ const CheckoutForm = () => {
         <h1 className="text-3xl font-extrabold text-center text-gray-900 mb-8">Checkout</h1>
         <div className="bg-white rounded-lg overflow-hidden">
           <div className="px-4 py-5 sm:p-6">
-            <form onSubmit={handlePayment} className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
               <div className="lg:col-span-7 space-y-6">
                 <div className="border-b border-gray-200 pb-4">
                   <h2 className="text-xl font-semibold text-gray-800">Customer Information</h2>
                 </div>
 
+                {/* Previous Address Checkbox - Only shown if user has previous orders */}
+                {hasOrders && (
+                  <div className="mb-4">
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        checked={usePreviousAddress}
+                        onChange={handleUsePreviousAddress}
+                        className="h-4 w-4 text-brown-600 focus:ring-brown-500 border-gray-300 rounded cursor-pointer"
+                      />
+                      <span className="text-sm font-medium text-gray-700 select-none">
+                        Use my previously saved address
+                      </span>
+                    </div>
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="col-span-2">
+                <div className="col-span-2">
                     <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="name">
-                      Full Name
+                      Full Name (First Name and Last Name)
                     </label>
                     <input
                       type="text"
@@ -256,7 +430,7 @@ const CheckoutForm = () => {
                       required
                       value={formData.name}
                       onChange={handleInputChange}
-                      placeholder="John Doe"
+                      placeholder="Full Name"
                       className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent transition"
                     />
                   </div>
@@ -315,32 +489,75 @@ const CheckoutForm = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="address">
                       Address
                     </label>
+                    </div>
+                    <div >
                     <input
                       type="text"
-                      id="address"
-                      name="address"
+                      id={'houseNumber'}
+                      name="houseNumber"
                       required
-                      value={formData.address}
+                      value={formData.houseNumber}
                       onChange={handleInputChange}
-                      placeholder="123 Main Street, Apt 4B"
+                      placeholder="Building Name"
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent transition"
+                    />
+                  </div>
+                  <div >
+                    <input
+                      type="text"
+                      id="streetName"
+                      name="streetName"
+                      required
+                      value={formData.streetName}
+                      onChange={handleInputChange}
+                      placeholder="Street Name"
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent transition"
+                    />
+                  </div>
+                  <div >
+                    <input
+                      type="text"
+                      id="landmark"
+                      name="landmark"
+                      required
+                      value={formData.landmark}
+                      onChange={handleInputChange}
+                      placeholder="Landmark"
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent transition"
+                    />
+                  </div>
+                  <div >
+                    <input
+                      type="text"
+                      id="district"
+                      name="district"
+                      required
+                      value={formData.district}
+                      onChange={handleInputChange}
+                      placeholder="District"
                       className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent transition"
                     />
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="province">
-                      State/Province
+                      State
                     </label>
-                    <input
-                      type="text"
-                      id="province"
-                      name="province"
-                      required
-                      value={formData.province}
-                      onChange={handleInputChange}
-                      placeholder="Maharashtra"
-                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent transition"
-                    />
+                    <select
+                        className="border stateName border-gray-300 rounded-l-md rounded-r-md px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                        value={formData.province}
+                        name="province"
+                        required
+                        onChange={handleInputChange}
+                      >
+                        {states.map((state) => {
+                          return (
+                            <option key={state.key} value={state.name}>{state.name}</option>
+                          )
+                        })}
+                        
+                      </select>
+                   
                   </div>
 
                   <div>
@@ -354,7 +571,7 @@ const CheckoutForm = () => {
                       required
                       value={formData.zip}
                       onChange={handleInputChange}
-                      placeholder="400001"
+                      placeholder="500019"
                       className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent transition"
                     />
                   </div>
@@ -369,7 +586,7 @@ const CheckoutForm = () => {
                     cartItems.map((item, index) => (
                       <div key={index} className="flex items-start gap-4 mb-4">
                         <img
-                          src={`${IMAGE_URL}/${item.image}`} // Replace with actual product image
+                          src={`${IMAGE_URL}/${item.image}`}
                           alt={item.productId.name}
                           className="w-24 h-full rounded-sm object-cover"
                         />
@@ -394,10 +611,6 @@ const CheckoutForm = () => {
                       <span>Subtotal</span>
                       <span>₹{subtotal}</span>
                     </div>
-                    {/* <div className="flex justify-between mb-2 text-red-500">
-                  <span>Voucher (50KDISCOUNT)</span>
-                  <span>-₹{50}</span>
-                </div> */}
                     <div className="flex justify-between mb-2">
                       <span>Delivery Charges</span>
                       <span>₹{DELIVERY_CHARGE}</span>
@@ -420,38 +633,41 @@ const CheckoutForm = () => {
                           id="bank"
                           name="payment"
                           className="h-4 w-4"
+                          checked={paymentMethod === "bank"}
+                          onChange={() => handlePaymentMethodChange("bank")}
                         />
-                        <span htmlFor="bank" className="text-sm text-black">
+                        <label htmlFor="bank" className="text-sm text-black cursor-pointer">
                           Bank
-                        </span>
+                        </label>
                       </div>
                       <img src={payment} alt="Payment Methods" className="h-6" />
                     </div>
-                    <div className="flex items-center gap-2 border border-[#8B4513] py-3 px-2">
+                    {/* <div className="flex items-center gap-2 border border-[#8B4513] py-3 px-2">
                       <div className="w-full flex gap-2 items-center">
                         <input
                           type="radio"
-                          id="bank"
+                          id="cash"
                           name="payment"
                           className="h-4 w-4"
+                          checked={paymentMethod === "cod"}
+                          onChange={() => handlePaymentMethodChange("cod")}
                         />
-                        <span htmlFor="bank" className="text-sm text-black">
+                        <label htmlFor="cash" className="text-sm text-black cursor-pointer">
                           Cash on Delivery
-                        </span>
+                        </label>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                   <button
                     className="w-full bg-[#8B4513] text-white py-2 rounded my-4"
                     disabled={loading}
-
+                    type="submit"
                   >
-                    {loading ? "Placing order" : "Place Order"}
+                    {loading ? "Placing order" : paymentMethod === "bank" ? "Proceed to Payment" : "Place Order"}
                   </button>
                 </div>
               </div>
             </form>
-
           </div>
         </div>
       </div>

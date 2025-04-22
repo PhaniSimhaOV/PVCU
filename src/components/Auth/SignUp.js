@@ -11,12 +11,19 @@ import loginImage from "../../assets/images/login.png";
 const SignUp = ({ isDialog = false, Link }) => {
     // Use the provided Link component or the React Router Link
     const LinkComponent = isDialog ? Link : RouterLink;
-    
+
     const [formData, setFormData] = useState({
         name: '',
         emailOrPhone: '',
         password: ''
     });
+
+
+    const [passwordVisibility, setPasswordVisibility] = useState(true)
+    const handleEyeClick = () => {
+        setPasswordVisibility(!passwordVisibility)
+    }
+
 
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -140,7 +147,7 @@ const SignUp = ({ isDialog = false, Link }) => {
                             </label>
                             <div className="relative">
                                 <input
-                                    type="password"
+                                    type={passwordVisibility ? "password" : "text"}
                                     id="password"
                                     value={formData.password}
                                     onChange={handleChange}
@@ -148,7 +155,7 @@ const SignUp = ({ isDialog = false, Link }) => {
                                     className="mt-2 block w-full px-4 py-2 text-gray-700 bg-gray-100 border border-gray-300 rounded-sm outline-none"
                                     required
                                 />
-                                <Visibility className="absolute top-2 right-3 text-gray-400 cursor-pointer" />
+                                <Visibility onClick={handleEyeClick} className="absolute top-2 right-3 text-gray-400 cursor-pointer" />
                             </div>
                         </div>
 

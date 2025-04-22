@@ -8,11 +8,11 @@ const CartSummary = ({ subtotal, total, promoMessage, cartItems }) => {
             <div className="mb-8">
                 <h6 className="text-2xl uppercase">Shopping Info</h6>
             </div>
-            {promoMessage && (
+            {/* {promoMessage && (
                 <div className="bg-[#EDE5E1] flex p-2 rounded mb-4">
                     {promoMessage} <button className="text-[#8B4513] underline ml-2">Use promo code</button>
                 </div>
-            )}
+            )} */}
             <div className="text-lg space-y-2">
                 <div className="flex justify-between">
                     <span>Subtotal</span>

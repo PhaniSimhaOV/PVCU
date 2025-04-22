@@ -234,7 +234,7 @@ const Footer = () => {
                                 </li>
 
                                 <li>
-                                    <a href="/privacy" className="text-[#907562] transition hover:opacity-75"> Cancellation & Refunds </a>
+                                    <a href="/cancellation&refunds" className="text-[#907562] transition hover:opacity-75"> Cancellation & Refunds </a>
                                 </li>
 
                                 <li>

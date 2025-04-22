@@ -19,6 +19,7 @@ import Orders from './components/Orders';
 import ScrollToTop from './components/ScrollToTop';
 import Privacy from './components/Privacy';
 import Terms from './components/Terms';
+import CancellationAndRefunds from './components/CancellationAndRefunds';
 
 function App() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -43,7 +44,7 @@ function App() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/termsofuse" element={<Terms />} />
         <Route path="/shippingpolicy" element={<Privacy />} />
-        <Route path="/cancellation&refunds" element={<Privacy />} />
+        <Route path="/cancellation&refunds" element={<CancellationAndRefunds />} />
 
 
 
