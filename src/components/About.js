@@ -46,16 +46,15 @@ const AboutUs = () => {
                                 </h1>
                                 <div className="my-6">
                                     <p className="text-black leading-relaxed mb-2">
-                                        At PVCU,  we bring legends to life.
-                                        Every piece in this collection is a tribute to the rich legacy of Indian superheroes, created with immense passion and detail.
+                                        Welcome to the PVCU, where fandom meets fashion and legends live on your shelf..
                                     </p>
                                     <p className="text-black leading-relaxed mb-2">
-                                        From the first sketch to the final design, each artwork is hand-drawn, ensuring authenticity and originality. Every line, every shade, and every detail is carefully crafted to reflect the essence of our beloved mythological and cinematic heroes.
+                                        We’re the official merch destination of PVCU, an Indian superhero universe inspired by our itihasas, valor, and homegrown heroes.
                                     </p>
                                     <p className="text-black leading-relaxed mb-2">
-                                        This is more than just clothing. It’s a celebration of the unsung legends of our land, a homage to the stories that shaped us, and a way for you to wear your pride.
+                                        From divine power to street-smart swag, every T-shirt, poster, and collectible here is a tribute to the epic stories we're building. One film, one fan, one hero at a time.
                                     </p>
-                                    <p className="text-black leading-relaxed mb-2"> Join the PVCU tribe and carry the spirit of our heroes with you.</p>
+                                    {/* <p className="text-black leading-relaxed mb-2"> Join the PVCU tribe and carry the spirit of our heroes with you.</p> */}
 
                                 </div>
                             </div>
@@ -63,7 +62,7 @@ const AboutUs = () => {
                     </div>
 
                     {/* Stats Section */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                    {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
                         {[
                             { number: "10.5k", description: "Sellers active our site" },
                             { number: "33k", description: "Monthly Products Sale" },
@@ -98,7 +97,7 @@ const AboutUs = () => {
                                 <p className="text-gray-700">{stat.description}</p>
                             </div>
                         ))}
-                    </div>
+                    </div> */}
 
                     {/* Team Section */}
                     {/* <div>
