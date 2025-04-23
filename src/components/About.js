@@ -62,12 +62,12 @@ const AboutUs = () => {
                     </div>
 
                     {/* Stats Section */}
-                    {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
                         {[
-                            { number: "10.5k", description: "Sellers active our site" },
-                            { number: "33k", description: "Monthly Products Sale" },
-                            { number: "45.5k", description: "Customer active in our site" },
-                            { number: "25k", description: "Annual gross sale in our site" },
+                            { number: "10.5k", description: "100% premium cotton" },
+                            { number: "33k", description: "Hanu-Man Exclusive merch" },
+                            { number: "45.5k", description: "PVCU Limited Edition" },
+                            { number: "25k", description: "Culturally-rooted, Fashion-forward" },
                         ].map((stat, index) => (
                             <div
                                 key={index}
@@ -91,13 +91,13 @@ const AboutUs = () => {
                                         </svg>
                                     </div>
                                 </div>
-                                <h2 className="text-3xl font-medium">
+                                {/* <h2 className="text-3xl font-medium">
                                     {stat.number}
-                                </h2>
+                                </h2> */}
                                 <p className="text-gray-700">{stat.description}</p>
                             </div>
                         ))}
-                    </div> */}
+                    </div>
 
                     {/* Team Section */}
                     {/* <div>
