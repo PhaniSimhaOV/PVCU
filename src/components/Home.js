@@ -348,7 +348,7 @@ const Home = () => {
             />
             <Container>
                 <div className="text-white">
-                    <nav className="flex justify-between items-center p-2">
+                    <nav className="flex justify-between items-center p-2 my-4 md:my-0 lg:my-0">
                         <div className="space-x-6 flex">
                             <div className="relative" ref={menMenuRef}>
                                 {/* <button
