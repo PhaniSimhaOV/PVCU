@@ -116,10 +116,10 @@ const Header = () => {
             <Dialog
                 open={authDialogOpen}
                 onClose={() => setAuthDialogOpen(false)}
-                maxWidth="sm"
+                fullWidth
+                maxWidth="xs" // or "lg", "md", etc.
                 PaperProps={{
                     sx: {
-                        minWidth: '500px',
                         backgroundImage: 'url("/loginimage.jpg")',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
@@ -127,6 +127,7 @@ const Header = () => {
                     },
                 }}
             >
+
                 <DialogTitle sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
                     <IconButton
                         edge="end"

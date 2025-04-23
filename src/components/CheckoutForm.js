@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useCart } from "../context/CartContext"; 
+import { useCart } from "../context/CartContext";
 import { API_URL, IMAGE_URL } from "../constants";
 import payment from "../assets/images/payment.png";
 import axios from "axios";
@@ -67,7 +67,7 @@ const CheckoutForm = () => {
         streetName: latestOrder.address.split(',  ')[1],
         landmark: latestOrder.address.split(',  ')[2],
         district: latestOrder.address.split(',  ')[3]
-        
+
       });
     } else {
       // Reset all form fields when unchecked
@@ -363,18 +363,18 @@ const CheckoutForm = () => {
       sendEmail(response.data);
       sendEmailToCustomer(response.data);
       setCartItems([]);
-      
+
       // Clear the cart after successful order
       await axios.delete(`${API_URL}/cart/delete/clear-cart`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-      
+
       setTimeout(() => {
         navigate("/cart");
       }, 3000);
-      
+
     } catch (error) {
       console.error("Error placing COD order:", error);
       toast.error("Failed to place order. Please try again.");
@@ -385,7 +385,7 @@ const CheckoutForm = () => {
   };
 
   return (
-    <div className="min-h-screen p-8">
+    <div className="min-h-screen my-12 p-4">
       <Toaster
         position="top-right"
         reverseOrder={false}
@@ -419,7 +419,7 @@ const CheckoutForm = () => {
                 )}
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="col-span-2">
+                  <div className="col-span-1">
                     <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="name">
                       Full Name (First Name and Last Name)
                     </label>
@@ -435,7 +435,7 @@ const CheckoutForm = () => {
                     />
                   </div>
 
-                  <div>
+                  <div className="col-span-1">
                     <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="email">
                       Email Address
                     </label>
@@ -451,12 +451,12 @@ const CheckoutForm = () => {
                     />
                   </div>
 
-                  <div>
+                  <div className="col-span-1">
                     <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="phone">
                       Phone Number
                     </label>
                     <div className="flex">
-                      <select
+                      {/* <select
                         className="border border-gray-300 rounded-l-md px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
                         value={formData.country}
                         name="country"
@@ -465,7 +465,7 @@ const CheckoutForm = () => {
                       >
                         <option value="+91">+91 (India)</option>
                         <option value="+1">+1 (USA)</option>
-                      </select>
+                      </select> */}
                       <input
                         type="tel"
                         id="phone"
@@ -474,7 +474,7 @@ const CheckoutForm = () => {
                         value={formData.phone}
                         onChange={handleInputChange}
                         placeholder="9876543210"
-                        className="flex-grow border border-gray-300 rounded-r-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent transition"
+                        className="flex-grow border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent transition"
                       />
                     </div>
                   </div>
@@ -484,13 +484,15 @@ const CheckoutForm = () => {
                   <h2 className="text-xl font-semibold text-gray-800">Shipping Address</h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="col-span-2">
+                <div className="col-span-1 lg:col-span-2">
                     <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="address">
                       Address
                     </label>
-                    </div>
-                    <div >
+                  </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  
+                  <div className="col-span-1">
                     <input
                       type="text"
                       id={'houseNumber'}
@@ -502,7 +504,7 @@ const CheckoutForm = () => {
                       className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent transition"
                     />
                   </div>
-                  <div >
+                  <div className="col-span-1">
                     <input
                       type="text"
                       id="streetName"
@@ -514,7 +516,7 @@ const CheckoutForm = () => {
                       className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent transition"
                     />
                   </div>
-                  <div >
+                  <div className="col-span-1">
                     <input
                       type="text"
                       id="landmark"
@@ -526,7 +528,7 @@ const CheckoutForm = () => {
                       className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent transition"
                     />
                   </div>
-                  <div >
+                  <div className="col-span-1">
                     <input
                       type="text"
                       id="district"
@@ -544,20 +546,20 @@ const CheckoutForm = () => {
                       State
                     </label>
                     <select
-                        className="border stateName border-gray-300 rounded-l-md rounded-r-md px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
-                        value={formData.province}
-                        name="province"
-                        required
-                        onChange={handleInputChange}
-                      >
-                        {states.map((state) => {
-                          return (
-                            <option key={state.key} value={state.name}>{state.name}</option>
-                          )
-                        })}
-                        
-                      </select>
-                   
+                      className="border stateName border-gray-300 rounded-l-md rounded-r-md px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
+                      value={formData.province}
+                      name="province"
+                      required
+                      onChange={handleInputChange}
+                    >
+                      {states.map((state) => {
+                        return (
+                          <option key={state.key} value={state.name}>{state.name}</option>
+                        )
+                      })}
+
+                    </select>
+
                   </div>
 
                   <div>

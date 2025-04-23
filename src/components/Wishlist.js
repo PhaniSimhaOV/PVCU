@@ -173,7 +173,7 @@ const Wishlist = () => {
                 reverseOrder={false}
             />
             <Container>
-                <div className={`mt-12 my-2 ${wishlist?.length === 0 ? 'h-96' : ''}`}>
+                <div className={`mt-14 my-2 ${wishlist?.length === 0 ? 'h-96' : ''}`}>
                     <div className="flex justify-between items-center">
                         <h1 className="text-3xl font-semibold">Wishlist ({wishlist?.length})</h1>
                         {

@@ -243,7 +243,7 @@ const ProductDetails = () => {
                     </div>
 
                 ) : (
-                    <div className="container mx-auto p-4 my-6">
+                    <div className="container mx-auto p-4 my-10">
                         <nav className="text-sm mb-4">
                             <a href="" className="text-gray-500">Home</a> /
                             <span className="text-gray-800 font-semibold"> {product?.name}</span>
@@ -328,8 +328,8 @@ const ProductDetails = () => {
                                     </select>
                                 </div>
 
-                                <div className="flex gap-2 mt-4">
-                                    <button onClick={addToCart} className="px-8 bg-[#8B4513] text-white py-3">
+                                <div className="flex flex-wrap gap-2 mt-4">
+                                    <button onClick={addToCart} className="px-8 bg-[#8B4513] text-white py-3 w-full lg:w-fit">
                                         {loading ? (
                                             <CircularProgress size={24} color="inherit" />
                                         ) : (
@@ -337,7 +337,7 @@ const ProductDetails = () => {
                                         )}
                                     </button>
                                     <button
-                                        className="px-4 py-3 border border-[#148c8d] text-[#148c8d] flex items-center gap-2"
+                                        className="px-4 py-3 border border-[#148c8d] text-[#148c8d] flex items-center gap-2 w-full lg:w-fit"
                                         onClick={() =>
                                             isProductInWishlist(product._id)
                                                 ? handleRemoveFromWishlist(product._id)
