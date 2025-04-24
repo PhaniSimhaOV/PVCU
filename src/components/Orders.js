@@ -8,7 +8,7 @@ import moment from 'moment'
 
 const Orders = () => {
     const [orders, setOrders] = useState([])
-    const [filterStatus, setFilterStatus] = useState("all")
+    const [filterStatus, setFilterStatus] = useState("paid")
 
     const getOrders = async () => {
         const token = localStorage.getItem('token')
@@ -110,6 +110,14 @@ const Orders = () => {
                                         <span>Payment Status</span>
                                         <span>{order?.paymentStatus}</span>
                                     </div>
+
+                                    {
+                                        order?.paymentStatus === "paid" && <div className="flex justify-between text-lg font-semibold mt-2">
+                                        <a href={`track-order/${order._id}`}>
+                                            <span className='text-sm text-blue-600 cursor-pointer'>Track Order</span>
+                                        </a>
+                                    </div>
+                                    }
                                 </div>
                             </div>
                         </div>

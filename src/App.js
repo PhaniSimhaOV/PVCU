@@ -21,6 +21,7 @@ import Privacy from './components/Privacy';
 import Terms from './components/Terms';
 import CancellationAndRefunds from './components/CancellationAndRefunds';
 import ShippingPolicy from './components/ShippingPolicy';
+import Tracking from './components/Tracking';
 
 function App() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -52,6 +53,8 @@ function App() {
           <Route path="/orders" element={<Orders />} />
           <Route path="/details/:id" element={<ProductDetails />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/track-order/:id" element={<Tracking />} />
+
         </Routes>
       </main>
       <Footer />
