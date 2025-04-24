@@ -298,22 +298,46 @@ const ProductDetails = () => {
                                 {/* Size Selection */}
 
 
-                                {
-                                    productSize.sizes?.length > 0 && <>
-                                        <p className="text-gray-800 mb-2 font-semibold">Please select a size : Size Chart</p>
+                                {productSize.sizes?.length > 0 && (
+                                    <>
+                                        <p className="text-gray-800 mb-2 font-semibold">
+                                            Please select a size : Size Chart
+                                        </p>
                                         <div className="grid grid-cols-4 lg:grid-cols-6 items-center gap-4 mt-4">
-                                            {productSize.sizes.map((sizeOption) => (
-                                                <button
-                                                    key={sizeOption.size}
-                                                    className={`px-4 py-2 border rounded-lg ${size === sizeOption.size ? 'bg-[#8B4513] text-white' : 'hover:bg-gray-100'}`}
-                                                    onClick={() => setSize(sizeOption.size)}
-                                                >
-                                                    {sizeOption.size}
-                                                </button>
-                                            ))}
+                                            {productSize.sizes.filter((sizeOption) => {
+                                                // Exclude XXL for Kids
+                                                return !(product.gender === "Kids" && sizeOption.size === "XXL");
+                                            }).map((sizeOption) => {
+                                                // If gender is Kids, show age-based labels
+                                                const sizeLabelMap = {
+                                                    S: "8-9",
+                                                    M: "10-11",
+                                                    L: "12-14",
+                                                    XL: "14",
+                                                };
+
+                                                const displayLabel =
+                                                    product.gender === "Kids"
+                                                        ? sizeLabelMap[sizeOption.size] || sizeOption.size
+                                                        : sizeOption.size;
+
+                                                return (
+                                                    <button
+                                                        key={sizeOption.size}
+                                                        className={`px-4 py-2 border rounded-lg ${size === sizeOption.size
+                                                            ? "bg-[#8B4513] text-white"
+                                                            : "hover:bg-gray-100"
+                                                            }`}
+                                                        onClick={() => setSize(sizeOption.size)}
+                                                    >
+                                                        {displayLabel}
+                                                    </button>
+                                                );
+                                            })}
                                         </div>
                                     </>
-                                }
+                                )}
+
 
                                 <div className="flex items-center gap-2 mt-8">
                                     <p className="text-sm text-gray-800">Quantity:</p>
