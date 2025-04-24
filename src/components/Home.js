@@ -351,17 +351,7 @@ const Home = () => {
                     <nav className="flex justify-between items-center p-2 my-4 md:my-0 lg:my-0">
                         <div className="space-x-6 flex">
                             <div className="relative" ref={menMenuRef}>
-                                {/* <button
-                                    className="text-black flex items-center gap-1"
-                                    onClick={() => toggleMenu('men')}
-                                >
-                                    Fashion & Clothing
-                                    {activeMenu === 'men' ? (
-                                        <KeyboardArrowUpIcon fontSize="small" />
-                                    ) : (
-                                        <KeyboardArrowDownIcon fontSize="small" />
-                                    )}
-                                </button> */}
+                              
                                 {activeMenu === 'men' && (
                                     <div className="z-50 absolute left-0 mt-2.5 bg-white text-black cursor-pointer rounded-sm w-48">
                                         <ul className="py-2">
@@ -501,21 +491,7 @@ const Home = () => {
                                         ))}
                                     </div>
 
-                                    {/* <div className="w-full text-center">
-                                        <a href="/products">
-
-                                            <button
-                                                // onClick={() => navigate("/products")}
-                                                type="button"
-                                                className="rounded-sm border border-gray-200 px-5 py-2 text-sm font-normal 
-                                            text-white bg-[#8B4513] transition-all duration-300 ease-in-out 
-                                            transform hover:scale-105 hover:bg-[#8B4513] focus:z-10 
-                                            focus:outline-none focus:ring-4 focus:ring-gray-100"
-                                            >
-                                                View All Products
-                                            </button>
-                                        </a>
-                                    </div> */}
+                                   
                                 </div>
                             </section>
                         </div>
@@ -638,124 +614,7 @@ const Home = () => {
                 </Container>
             </div>
 
-            {/* <Container>
-                <div className="mt-12 my-2">
-                    <div className="flex justify-between items-center">
-                        <h1 className="text-3xl font-semibold">Best Selling Products</h1>
-                    </div>
-
-                    {loading ? (
-                        <div className="text-center mt-8">
-                            <div className="today_flash_sale">
-                                <section className="py-8 antialiased md:py-12">
-                                    <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-                                        <div className="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
-                                            {skeletonCards}
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                    ) : bestSelling?.length === 0 ? (
-                        <></>
-                    ) : (
-                        <div>
-                            <section className="py-8 antialiased dark:bg-gray-900 md:py-12">
-                                <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-                                    <div className="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
-                                        {bestSelling.slice(0, 8).map((product) => (
-                                            <div
-                                                key={product.id}
-                                                className="rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative"
-                                            >
-                                                <div className="h-72 w-full">
-                                                    <Link to={`/details/${product._id}`}>
-                                                        <img
-                                                            className="w-full object-cover h-full dark:hidden"
-                                                            src={`${IMAGE_URL}/${product.imageUrl}`}
-                                                            alt={product.name}
-                                                        />
-                                                        <img
-                                                            className="w-full object-cover hidden h-full dark:block"
-                                                            src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg"
-                                                            alt={product.name}
-                                                        />
-                                                    </Link>
-                                                </div>
-                                                <div className="pt-6 p-3">
-                                                    <div className="absolute flex gap-1 top-2 bg-[#8B4513] px-2 py-1 items-center rounded-full">
-                                                        <svg
-                                                            className="h-3 w-3 text-yellow-400"
-                                                            aria-hidden="true"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="currentColor"
-                                                            viewBox="0 0 24 24"
-                                                        >
-                                                            <path d="M13.8 4.2a2 2 0 0 0-3.6 0L8.4 8.4l-4.6.3a2 2 0 0 0-1.1 3.5l3.5 3-1 4.4c-.5 1.7 1.4 3 2.9 2.1l3.9-2.3 3.9 2.3c1.5 1 3.4-.4 3-2.1l-1-4.4 3.4-3a2 2 0 0 0-1.1-3.5l-4.6-.3-1.8-4.2Z" />
-                                                        </svg>
-                                                        <span className="text-xs text-white">{product.rating}</span>
-                                                    </div>
-                                                    <div className="flex items-center justify-between gap-4">
-                                                        <div className="flex items-center flex-col justify-end gap-0 absolute top-0 right-1">
-                                                            <button
-                                                                onClick={() => addToWishlist(product._id)}
-                                                                type="button"
-                                                                data-tooltip-target="tooltip-add-to-favorites"
-                                                                className="rounded-lg p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400"
-                                                            >
-                                                                <span className="sr-only"> Add to Favorites </span>
-                                                                <svg
-                                                                    className={`h-5 w-5 ${isProductInWishlist(product._id) ? 'text-red-500' : 'text-gray-500'}`}
-                                                                    aria-hidden="true"
-                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                    fill="none"
-                                                                    viewBox="0 0 24 24"
-                                                                >
-                                                                    <path
-                                                                        stroke="currentColor"
-                                                                        strokeLinecap="round"
-                                                                        strokeLinejoin="round"
-                                                                        strokeWidth="2"
-                                                                        d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z"
-                                                                    />
-                                                                </svg>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex flex-col gap-1">
-                                                        <a
-                                                            href="#"
-                                                            className="text-sm font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
-                                                        >
-                                                            <h6 className='text-md'>{product.name}</h6>
-                                                        </a>
-                                                        <div className="flex gap-3 items-center my-2">
-                                                            {
-                                                                product.discount !== 0 && <span className="text-md text-[#8B4513]">-{product.discount}%</span>
-                                                            }
-                                                            <span className="text-md text-[#8B4513]">₹{product.price}</span>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <div className="w-full text-center">
-                                        <button
-                                            onClick={() => navigate("/products")}
-                                            type="button"
-                                            className="rounded-sm border border-gray-200 px-5 py-2 text-sm font-normal focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 text-white bg-[#8B4513]"
-                                        >
-                                            View All Products
-                                        </button>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                    )}
-                </div>
-            </Container> */}
+            
             <Container>
                 <div className='py-8 '>
                     <h1 className="text-3xl font-semibold">Join the PVCU Tribe</h1>
@@ -783,77 +642,6 @@ const Home = () => {
                     </a>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-            {/* <Container>
-                <div>
-                    <h1 className="text-3xl font-semibold">New Arrivals</h1>
-                </div>
-                <div>
-                    <section className="py-8 antialiased dark:bg-gray-900 md:py-8">
-                        <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-                            {loading ? (
-                                skeletons
-                            ) : newArrivals?.length === 0 ? (
-                                // <NoFound name="New Arrivals" />
-                                <></>
-                            ) : (
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                    <div className="grid grid-rows-2 gap-4">
-                                        {newArrivals.slice(1, 3).map((product) => (
-                                            <div
-                                                key={product.id}
-                                                className="rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative"
-                                            >
-                                                <a href="">
-                                                    <img
-                                                        className="w-full h-full object-cover rounded-lg"
-                                                        src={`${IMAGE_URL}/${product.imageUrl}`}
-                                                        alt={product.name}
-                                                    />
-                                                </a>
-                                                <div className="w-full text-center absolute bottom-3 text-3xl text-white  uppercase">
-                                                    {product.name}
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <div className="row-span-1">
-                                        {newArrivals[0] && (
-                                            <div
-                                                key={newArrivals[0].id}
-                                                className="rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative h-full"
-                                            >
-                                                <a href="">
-                                                    <img
-                                                        className="w-full h-full object-cover rounded-lg"
-                                                        src={`${IMAGE_URL}/${newArrivals[0].imageUrl}`}
-                                                        alt={newArrivals[0].name}
-                                                    />
-                                                </a>
-                                                <div className="w-full text-center absolute bottom-3 text-3xl text-white  uppercase">
-                                                    {newArrivals[0].name}
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </section>
-                </div>
-            </Container> */}
-
 
 
         </div>

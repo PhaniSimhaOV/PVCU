@@ -16,31 +16,6 @@ const Wishlist = () => {
 
     const [bestSelling, setBestSelling] = useState([])
 
-    const skeletonCards = Array.from({ length: 5 }).map((_, index) => (
-        <div
-            key={index}
-            className="flex-none w-64 rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative"
-        >
-            <div className="h-72 w-full">
-                <Skeleton variant="rectangular" height="100%" />
-            </div>
-            <div className="pt-6 p-3">
-                <div className="absolute flex gap-1 top-2 bg-[#8B4513] px-2 py-1 items-center rounded-full">
-                    <Skeleton variant="circular" width={20} height={20} />
-                    <Skeleton variant="text" width={30} height={15} />
-                </div>
-                <div className="flex flex-col gap-1">
-                    <Skeleton variant="text" width="60%" height={20} />
-                    <Skeleton variant="text" width="80%" height={25} />
-                    <div className="flex gap-3 items-center my-2">
-                        <Skeleton variant="text" width="20%" height={20} />
-                        <Skeleton variant="text" width="30%" height={20} />
-                        <Skeleton variant="text" width="40%" height={15} />
-                    </div>
-                </div>
-            </div>
-        </div>
-    ));
 
     const getWishlistData = async () => {
         setPageLoading(true); // Start loading
@@ -173,7 +148,7 @@ const Wishlist = () => {
                 reverseOrder={false}
             />
             <Container>
-                <div className={`mt-14 my-2 ${wishlist?.length === 0 ? 'h-96' : ''}`}>
+                <div className={`mt-16 my-2 ${wishlist?.length === 0 ? 'h-96' : ''}`}>
                     <div className="flex justify-between items-center">
                         <h1 className="text-3xl font-semibold">Wishlist ({wishlist?.length})</h1>
                         {

@@ -38,10 +38,10 @@ const Footer = () => {
             <Dialog
                 open={authDialogOpen}
                 onClose={() => setAuthDialogOpen(false)}
-                maxWidth="sm"
+                maxWidth="xs"
+                fullWidth
                 PaperProps={{
                     sx: {
-                        minWidth: '500px',
                         backgroundImage: 'url("/loginimage.jpg")',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
