@@ -8,6 +8,13 @@ import { Dialog, DialogContent, DialogTitle, IconButton } from "@mui/material";
 import Login from "../Auth/Login";
 import SignUp from "../Auth/SignUp";
 import CloseIcon from '@mui/icons-material/Close';
+import twitter from "../../assets/images/twitter.png"
+import youtube from "../../assets/images/youtube.png"
+import facebook from "../../assets/images/facebook.png"
+import spotify from "../../assets/images/spotify.png"
+import linkedin from "../../assets/images/linkedin.png"
+import instagram from "../../assets/images/instagram.png"
+
 
 
 const Footer = () => {
@@ -192,7 +199,7 @@ const Footer = () => {
                                 </li> */}
 
                                 <li>
-                                    <a  onClick={() => setAuthDialogOpen(true)}className="cursor-pointer text-[#907562] transition hover:opacity-75">
+                                    <a onClick={() => setAuthDialogOpen(true)} className="cursor-pointer text-[#907562] transition hover:opacity-75">
                                         Login / Register
                                     </a>
                                 </li>
@@ -251,11 +258,28 @@ const Footer = () => {
                             </ul>
                         </div>
 
-                        {/* <div>
-                            <p className="font-medium text-white">Download App</p>
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2">
+                            <a href="https://x.com/ThePVCU" target="_blank" rel="noopener noreferrer">
+                                <img src={twitter} className="w-32" alt="Twitter" />
+                            </a>
+                            <a href="https://www.youtube.com/@thepvcu" target="_blank" rel="noopener noreferrer">
+                                <img src={youtube} className="w-32" alt="YouTube" />
+                            </a>
+                            <a href="https://www.instagram.com/thepvcu" target="_blank" rel="noopener noreferrer">
+                                <img src={instagram} className="w-32" alt="Instagram" />
+                            </a>
+                            <a href="https://spotify.app.link/8RGSZ92hsJb" target="_blank" rel="noopener noreferrer">
+                                <img src={spotify} className="w-32" alt="Spotify" />
+                            </a>
+                            <a href="https://www.facebook.com/ThePVCU" target="_blank" rel="noopener noreferrer">
+                                <img src={facebook} className="w-32" alt="Facebook" />
+                            </a>
+                            <a href="https://www.linkedin.com/company/thepvcu/" target="_blank" rel="noopener noreferrer">
+                                <img src={linkedin} className="w-32" alt="LinkedIn" />
+                            </a>
+                        </div>
 
 
-                        </div> */}
                     </div>
                 </div>
             </div>

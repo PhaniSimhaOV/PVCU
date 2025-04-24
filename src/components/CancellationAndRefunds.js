@@ -5,7 +5,7 @@ const CancellationAndRefunds = () => {
         <div className="max-w-3xl mx-auto p-6 bg-white  rounded-lg">
             <h1 className="text-3xl font-bold text-gray-800 my-4">Cancellation  Policy</h1>
             <ul className="list-disc pl-6 text-gray-600">
-                <li>Orders once placed cannot be cancelled, as we begin processing immediately to ensure timely delivery..</li>
+                <li>Orders once placed cannot be cancelled, as we begin processing immediately to ensure timely delivery.</li>
                 <li>We request you to review your order carefully before confirming your purchase.</li>
                 <li>For any other issues, feel free to reach out at superhelp@pvcu.in , we’re here to help wherever possible.</li>
             </ul>
