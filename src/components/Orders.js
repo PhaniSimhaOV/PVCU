@@ -24,6 +24,8 @@ const Orders = () => {
         }
     }
 
+    
+
     useEffect(() => {
         getOrders()
     }, [])
@@ -113,10 +115,10 @@ const Orders = () => {
 
                                     {
                                         order?.paymentStatus === "paid" && <div className="flex justify-between text-lg font-semibold mt-2">
-                                        <a href={`track-order/${order._id}`}>
-                                            <span className='text-sm text-blue-600 cursor-pointer'>Track Order</span>
-                                        </a>
-                                    </div>
+                                            <a href={`track-order/${order.razorpay_order_id}`}>
+                                                <span className='text-sm text-blue-600 cursor-pointer'>Track Order</span>
+                                            </a>
+                                        </div>
                                     }
                                 </div>
                             </div>

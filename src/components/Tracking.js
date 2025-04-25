@@ -31,7 +31,7 @@ const Tracking = () => {
                     Authorization: `Bearer ${token}`
                 }
             })
-            const foundOrder = response.data.order.find(o => o._id === id)
+            const foundOrder = response.data.order.find(o => o.razorpay_order_id === id)
             setOrder(foundOrder)
         } catch (e) {
             console.error('Error fetching orders:', e)
@@ -98,7 +98,7 @@ const Tracking = () => {
                             <Payment className="text-gray-500 mr-3" />
                             <div>
                                 <p className="font-medium">Payment Status</p>
-                                <p className="text-gray-600">{order.paymentStatus}</p>
+                                <p className="text-gray-600">{order?.paymentStatus}</p>
                             </div>
                         </div>
                     </div>
@@ -141,7 +141,7 @@ const Tracking = () => {
 
                     <div className="border border-gray-200 p-4 rounded-md">
                         <h3 className="text-md font-semibold mb-2">Order No</h3>
-                        <p className="text-gray-600 mb-4">{order?._id}</p>
+                        <p className="text-gray-600 mb-4">{order?.razorpay_order_id}</p>
 
                         <h4 className="text-sm font-medium mb-1">Order Details</h4>
                         <ul className="text-sm list-disc">
@@ -158,126 +158,17 @@ const Tracking = () => {
                     </div>
 
                     <div className="border border-gray-200 p-4 rounded-md">
-                        <div className="absolute right-8 cursor-pointer">
-                            <IconButton onClick={fetchTrackingInfo}>
-                                <Refresh />
-                            </IconButton>
-                        </div>
-                        <div className="space-y-6">
-                            { }
-                            {
-                                trackingInfo ?
-                                    trackingInfo?.Shipment?.Scans?.map((track, index) => {
-                                        const isLast = index === trackingInfo.Shipment.Scans.length - 1;
-                                        const total = trackingInfo.Shipment.Scans.length;
-
-                                        // Always show CheckCircle if only one entry, otherwise show Clock only for the last one
-                                        const showCheck = total === 1 || index < total - 1;
-
-                                        return (
-                                            <div className="flex items-start" key={index}>
-                                                <div className="flex flex-col items-center mr-4">
-                                                    {showCheck ? (
-                                                        <CheckCircle className="text-green-500" />
-                                                    ) : (
-                                                        <CancelIcon className="text-red-500" />
-                                                    )}
-                                                    {index !== total - 1 && (
-                                                        <div className="w-0.5 h-8 bg-gray-300 mt-1"></div>
-                                                    )}
-                                                </div>
-                                                <div>
-                                                    <h3 className="font-medium">
-                                                        {index === 0
-                                                            ? "Order processed and awaiting pickup"
-                                                            : track?.ScanDetail?.Instructions}
-                                                    </h3>
-                                                    <p className="text-gray-500 text-sm">
-                                                        {moment(track?.ScanDetail?.StatusDateTime).format('MMMM Do YYYY, h:mm A')}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        );
-                                    }) : <>
-                                        <div className="flex items-start">
-                                            <div className="flex flex-col items-center mr-4">
-                                                <CheckCircle className="text-green-500" />
-
-                                                <div className="w-0.5 h-8 bg-gray-300 mt-1"></div>
-                                            </div>
-                                            <div>
-                                                <h3 className="font-medium">
-                                                    Order processed and awaiting pickup
-                                                </h3>
-                                                <p className="text-gray-500 text-sm">
-                                                    {moment(order.createdAt).format('MMMM Do YYYY, h:mm A')}
-                                                </p>
-                                            </div>
-
-
-                                        </div>
-                                        <div className="flex items-start">
-                                            <div className="flex flex-col items-center mr-4">
-                                                <Sync className="text-green-500" />
-
-                                                <div className="w-0.5 h-8 bg-gray-300 mt-1"></div>
-                                            </div>
-                                            <div>
-                                                <h3 className="font-medium">
-                                                    Order processed and awaiting pickup
-                                                </h3>
-                                                <p className="text-gray-500 text-sm">
-                                                    {moment(order.createdAt).format('MMMM Do YYYY, h:mm A')}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </>
-                            }
-                            {/* <div className="flex items-start">
-                                <div className="flex flex-col items-center mr-4">
-                                    <CheckCircle className="text-green-500" />
-                                    <div className="w-0.5 h-8 bg-gray-300 mt-1"></div>
-                                </div>
-                                <div>
-                                    <h3 className="font-medium">Order Received</h3>
-                                    <p className="text-gray-500 text-sm">23 Apr 2025, 06:44 pm</p>
-                                </div>
-                            </div>
-
-                            <div className="flex items-start">
-                                <div className="flex flex-col items-center mr-4">
-                                    <Assignment className="text-green-500" />
-                                    <div className="w-0.5 h-8 bg-gray-300 mt-1"></div>
-                                </div>
-                                <div>
-                                    <h3 className="font-medium">Ready To Ship</h3>
-                                    <p className="text-gray-500 text-sm">23 Apr 2025, 06:44 pm</p>
-                                </div>
-                            </div>
-
-                            <div className="flex items-start">
-                                <div className="flex flex-col items-center mr-4">
-                                    <Schedule className="text-green-500" />
-                                    <div className="w-0.5 h-8 bg-gray-300 mt-1"></div>
-                                </div>
-                                <div>
-                                    <h3 className="font-medium">Scheduled for Pickup</h3>
-                                    <p className="text-gray-500 text-sm">In-transit</p>
-                                    <p className="text-gray-500 text-sm">23 Apr 2025, 06:44 pm</p>
-                                    <p className="text-gray-500 text-sm">Manifest uploaded at...</p>
-                                </div>
-                            </div>
-
-                            <div className="flex items-start">
-                                <div className="flex flex-col items-center mr-4">
-                                    <DirectionsCar className="text-blue-500" />
-                                </div>
-                                <div>
-                                    <h3 className="font-medium">Out for delivery</h3>
-                                </div>
-                            </div> */}
-                        </div>
+                        <h6>Track order via link - &nbsp;
+                            <a
+                                className="text-blue-600"
+                                href={`https://www.delhivery.com/track-v2/package/${trackingInfo?.Shipment?.AWB}`}
+                                target="_blank"
+                                rel="noopener noreferrer">
+                                {`https://www.delhivery.com/track-v2/package/${trackingInfo?.Shipment?.AWB}`}
+                            </a>
+                        </h6>
                     </div>
+
 
 
                 </div>

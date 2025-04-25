@@ -212,9 +212,94 @@ const CheckoutForm = () => {
     setPaymentMethod(method);
   };
 
+  const createOrder = async (res) => {
+    const token = localStorage.getItem("token");
+    const payload = {
+      channel_id: "2122163e-f339-4fd9-b860-8adf5e092b52",
+      currency: "INR",
+      facility_id: "7334eb84-23ce-497e-b41a-a98f9cf90bbe",
+
+      items: res.items.map((data, index) => {
+        return {
+          sku_name: data.name,
+          unit_price: data.price + DELIVERY_CHARGE,
+          quantity: data.quantity,
+          category_name: "T-Shirt"
+        };
+      }),
+      // [
+      //   {
+      //     sku_name: "Cenima hero - Super hero",
+      //     unit_price: 799,
+      //     unit_item_discount: 0,
+      //     quantity: 1,
+      //     image_urls: [""],
+      //     category_name: "Cloth"
+      //   }
+      // ]
+      payment_mode: "PREPAID",
+      box_list: [
+        {
+          length: 15,
+          breadth: 15,
+          height: 15,
+          weight: 50,
+          length_unit: "CM",
+          weight_unit: "GM",
+          shipping_mode: "SURFACE",
+          contains_fragile_items: "",
+          packaging_type: "BOX",
+          chargeableWeight: 675
+        }
+      ],
+      source_order_number: res.orderId,
+      cod_amount: "",
+      total_weight: 0,
+      shipping_address: {
+        address_line1: "4-111 1stgodown,Old PSR Poultry,Vissakoderu Village",
+        address_line2: "Palakoderu Mandal,West Godavari district",
+        city: "Andhra Pradesh",
+        country: "IN",
+        email: "Sreefabrics2019@gmail.com",
+        first_name: "Varma",
+        last_name: "pinnamaraju",
+        phone: "+918008499905",
+        pin_code: "500005",
+        state: "Telangana"
+      },
+      billing_address: {
+        address_line1: res.address,
+        address_line2: "",
+        city: res.province,
+        country: "IN",
+        email: res.email,
+        first_name: res.name,
+        last_name: res.name,
+        phone: res.phone,
+        pin_code: res.zip,
+        state: "Telangana"
+      },
+      client_warehouse_id: "7334eb84-23ce-497e-b41a-a98f9cf90bbe",
+      client_warehouse_uuid: "delhivery::clientwarehouse::884556aa-8a75-4acb-985b-4658815ae4ce",
+      seller_name: "SREE FABRICS"
+    };
+    try {
+      const response = await axios.post(`${API_URL}/orders/manifest_order`, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      console.log('✅ Order Created:', response.data);
+    } catch (error) {
+      console.error('❌ Error Creating Order:', error.response?.data || error.message);
+    }
+  };
+
+
   // Handle order submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     setLoading(true);
 
     try {
@@ -267,7 +352,6 @@ const CheckoutForm = () => {
 
       const { orderId, amount, currency } = response.data;
 
-
       const options = {
         key: process.env.REACT_APP_RAZORPAY_KEY_ID,
         amount: amount * DELIVERY_CHARGE,
@@ -289,6 +373,8 @@ const CheckoutForm = () => {
             toast.success(paymentVerification.data.message);
             sendEmail(response.data);
             sendEmailToCustomer(response.data);
+            createOrder(response.data)
+
 
             setCartItems([]);
             await axios.delete(`${API_URL}/cart/delete/clear-cart`, {
@@ -296,6 +382,7 @@ const CheckoutForm = () => {
                 Authorization: `Bearer ${token}`
               }
             });
+
             setTimeout(() => {
               navigate("/cart");
             }, 3000);
@@ -485,13 +572,13 @@ const CheckoutForm = () => {
                 </div>
 
                 <div className="col-span-1 lg:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="address">
-                      Address
-                    </label>
-                  </div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="address">
+                    Address
+                  </label>
+                </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  
+
                   <div className="col-span-1">
                     <input
                       type="text"
