@@ -407,7 +407,7 @@ const Home = () => {
                                             <div
                                                 key={product.id}
                                                 className="flex-none w-64 rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative 
-                        transition-all duration-300 ease-in-out "
+                        transition-all duration-300 ease-in-out transform hover:scale-105"
                                             >
                                                 <div className="w-full">
                                                     <a href={`/details/${product._id}`}>
@@ -424,7 +424,7 @@ const Home = () => {
                                                 <div className="pt-6 p-3">
 
                                                     <div className="flex items-center justify-between gap-4">
-                                                        <div className="flex items-center flex-col justify-end gap-0 absolute top-2 left-2">
+                                                        <div className="flex items-center flex-col justify-end gap-0 absolute top-3 left-2">
                                                             <button
                                                                 onClick={() =>
                                                                     isProductInWishlist(product._id)
@@ -524,7 +524,7 @@ const Home = () => {
                             <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
                                 <div className="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-4 xl:grid-cols-4">
                                     {sortedProducts?.map((product) => (
-                                        <div key={product.id} className="rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative">
+                                        <div key={product.id} className="rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative transition-all duration-300 ease-in-out transform hover:scale-105">
                                             <div className="h-full w-full relative">
                                                 {/* <a href=""> */}
                                                 <a href={`/details/${product._id}`}>
