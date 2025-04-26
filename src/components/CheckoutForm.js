@@ -623,7 +623,7 @@ const CheckoutForm = () => {
                       required
                       value={formData.district}
                       onChange={handleInputChange}
-                      placeholder="District"
+                      placeholder="City"
                       className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent transition"
                     />
                   </div>
