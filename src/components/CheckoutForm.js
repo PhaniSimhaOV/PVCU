@@ -573,7 +573,7 @@ const CheckoutForm = () => {
 
                 <div className="col-span-1 lg:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="address">
-                    Address
+                    Address <span className="text-red-500">*</span>
                   </label>
                 </div>
 
@@ -630,7 +630,7 @@ const CheckoutForm = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="province">
-                      State
+                      State <span className="text-red-500">*</span>
                     </label>
                     <select
                       className="border stateName border-gray-300 rounded-l-md rounded-r-md px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent"
@@ -651,7 +651,7 @@ const CheckoutForm = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="zip">
-                      PIN Code
+                      PIN Code <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
