@@ -125,8 +125,6 @@ const CheckoutForm = () => {
   
             <h3 style="color: #111;">🧾 Order Summary</h3>
             <p><strong>Order Date:</strong> ${new Date().toLocaleDateString()}</p>
-            <p><strong>Payment Status:</strong> ${data?.paymentStatus}</p>
-            <p><strong>Order Status:</strong> ${data?.orderStatus}</p>
             <p><strong>Total Amount:</strong> ₹${data?.amount} (Delivery charges included - ₹100)</p>
   
             <hr style="margin: 20px 0;" />
@@ -212,8 +210,6 @@ const CheckoutForm = () => {
 
     <h3 style="color: #111;">🧾 Order Summary</h3>
     <p><strong>Order Date:</strong> ${new Date().toLocaleDateString()}</p>
-    <p><strong>Payment Status:</strong> ${data?.paymentStatus}</p>
-    <p><strong>Order Status:</strong> ${data?.orderStatus}</p>
     <p><strong>Total Amount:</strong> ₹${data?.amount} (Delivery charges included  - ₹100)</p>
 
     <hr style="margin: 20px 0;" />
