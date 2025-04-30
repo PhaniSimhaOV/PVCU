@@ -85,47 +85,82 @@ const CheckoutForm = () => {
 
   const sendEmail = async (data) => {
     try {
-      const serviceID = "service_42scdsw";
-      const templateID = "template_rsh28zt";
+      const serviceID = "service_483omi1";
+      const templateID = "template_swa0c7f";
 
       const itemList = data.items
-        ?.map((item) => `-${item.productId}-${item.name} - Quantity: ${item.quantity} - Size: ${item.size}`)
-        .join("\n") || "- No items";
+        ?.map((item, index) => {
+          const itemImage = item.image
+            ? `<img src="${IMAGE_URL}/${item.image}" alt="${item.name}" style="max-width: 100px; height: auto; margin-right: 20px;" />`
+            : "";
+          return `
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+              <div style="flex-shrink: 0;">
+                ${itemImage}
+              </div>
+              <div>
+                <strong>${index + 1}. ${item.name}</strong><br />
+                <span>Product ID: ${item.productId}</span><br />
+                <span>Size: ${item.size}</span><br />
+                <span>Qty: ${item.quantity}</span>
+              </div>
+            </div>
+          `;
+        })
+        .join("\n") || "<p>No items in this order.</p>";
 
       const message = `
-  Dear ${data?.name},
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #ddd;">
+          <div style="padding: 20px; background-color: #f3f3f3; text-align: center;">
+            <img src="https://pvcutest.netlify.app/static/media/logo.715d833549582766189e.png" alt="PVCU" height="40" />
+            <h2 style="margin-top: 10px;">New Order Received</h2>
+            <p style="color: #555;">Order # ${data?.orderId}</p>
+          </div>
   
-  Thank you for your order with PVCU! Please find your order details below:
+          <div style="padding: 20px;">
+            <p style="font-size: 16px;">Dear Admin,</p>
+            <p>A new order has been placed. Below are the full order details:</p>
   
-  ----------------------------------------
-  🧾 Order ID: ${data?.orderId}
-  💰 Amount: ₹${data?.amount}
-  🏠 Address: ${data?.address}
-  📦 Order Status: ${data?.orderStatus}
-  👤 Name: ${data?.name}
-  📧 Email: ${data?.email}
-  📞 Phone: ${data?.phone}
-  📮 ZIP Code: ${data?.zip}
-  💳 Payment Status: ${data?.paymentStatus}
-  🛒 Items:
-  ${itemList}
-  ----------------------------------------
+            <hr style="margin: 20px 0;" />
   
-  If you have any questions or need assistance, feel free to contact us at venkat@pvcu.in.
+            <h3 style="color: #111;">🧾 Order Summary</h3>
+            <p><strong>Order Date:</strong> ${new Date().toLocaleDateString()}</p>
+            <p><strong>Payment Status:</strong> ${data?.paymentStatus}</p>
+            <p><strong>Order Status:</strong> ${data?.orderStatus}</p>
+            <p><strong>Total Amount:</strong> ₹${data?.amount}</p>
   
-  Warm regards,  
-  PVCU Team
-  `;
+            <hr style="margin: 20px 0;" />
+  
+            <h3 style="color: #111;">📦 Items Ordered</h3>
+            ${itemList}
+  
+            <hr style="margin: 20px 0;" />
+  
+            <h3 style="color: #111;">Customer & Delivery Info</h3>
+            <p>
+              <strong>Name:</strong> ${data?.name}<br />
+              <strong>Email:</strong> ${data?.email}<br />
+              <strong>Phone:</strong> ${data?.phone}<br />
+              <strong>ZIP:</strong> ${data?.zip}<br />
+              <strong>Address:</strong> ${data?.address}
+            </p>
+  
+            <hr style="margin: 20px 0;" />
+  
+            <p style="text-align: center; color: #777;">For questions, contact venkat@pvcu.in<br /><strong>PVCU System</strong></p>
+          </div>
+        </div>
+      `;
 
       const params = {
         sendername: "PVCU",
-        to: "sreefabrics2019@gmail.com",
-        subject: "Order Details of PVCU",
+        to: "shahraj135421@gmail.com",
+        subject: "New Order Notification - PVCU",
         replyto: "venkat@pvcu.in",
         message: message,
       };
 
-      await emailjs.send(serviceID, templateID, params, "rLi115x7NbmnZdlX-");
+      await emailjs.send(serviceID, templateID, params, "NxhtBqyX-cv96PgUm");
       toast.success("Email sent successfully!");
     } catch (error) {
       console.error("Error sending email:", error);
@@ -133,50 +168,77 @@ const CheckoutForm = () => {
     }
   };
 
+
   const sendEmailToCustomer = async (data) => {
     try {
-      const serviceID = "service_42scdsw";
-      const templateID = "template_rsh28zt";
+      const serviceID = "service_483omi1";
+      const templateID = "template_swa0c7f";
 
       const itemList = data.items
-        ?.map((item, index) => `${index + 1}. ${item.name} (Size: ${item.size}) - Qty: ${item.quantity}`)
-        .join("\n") || "No items in this order.";
+        ?.map((item, index) => {
+          const itemImage = item.image
+            ? `<img src="${IMAGE_URL}/${item.image}" alt="${item.name}" style="max-width: 100px; height: auto; margin-right: 20px;" />`
+            : "";
+          return `
+            <div style="display: flex; align-items: center; margin-bottom: 15px;">
+              <div style="flex-shrink: 0;">
+                ${itemImage}
+              </div>
+              <div>
+                <strong>${index + 1}. ${item.name}</strong><br />
+                <span>Product ID: ${item.productId}</span><br />
+                <span>Size: ${item.size}</span><br />
+                <span>Qty: ${item.quantity}</span>
+              </div>
+            </div>
+          `;
+        })
+        .join("\n") || "<p>No items in this order.</p>";
+
 
       const message = `
-  Hi ${data?.name},
-  
-  Thank you for shopping with PVCU. We’ve received your order and will begin processing it soon.
-  
-  ━━━━━━━━━━━━━━━━━━━━━━━  
-  🧾 Order Summary  
-  ━━━━━━━━━━━━━━━━━━━━━━━  
-  • Order ID: ${data?.orderId}  
-  • Order Date: ${new Date().toLocaleDateString()}  
-  • Payment Status: ${data?.paymentStatus}  
-  • Order Status: ${data?.orderStatus}  
-  • Total Amount: ₹${data?.amount}
-  
-  ━━━━━━━━━━━━━━━━━━━━━━━  
-  📦 Items Ordered  
-  ━━━━━━━━━━━━━━━━━━━━━━━  
-  ${itemList}
-  
-  ━━━━━━━━━━━━━━━━━━━━━━━  
-  🏠 Delivery Address  
-  ━━━━━━━━━━━━━━━━━━━━━━━  
-  ${data?.name}  
-  ${data?.address}  
-  ZIP: ${data?.zip}  
-  Phone: ${data?.phone}  
-  Email: ${data?.email}
-  
-  ━━━━━━━━━━━━━━━━━━━━━━━  
-  Need Help?  
-  ━━━━━━━━━━━━━━━━━━━━━━━  
-  If you have any questions or need assistance, reach out to us at venkat@pvcu.in. We're here to help.
-  
-  Thank you for choosing PVCU!  
-  PVCU Customer Support Team  
+  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #ddd;">
+  <div style="padding: 20px; background-color: #f3f3f3; text-align: center;">
+    <img src="https://pvcutest.netlify.app/static/media/logo.715d833549582766189e.png" alt="PVCU" height="40" />
+    <h2 style="margin-top: 10px;">Order Confirmation</h2>
+    <p style="color: #555;">Order # ${data?.orderId}</p>
+  </div>
+
+  <div style="padding: 20px;">
+    <p style="font-size: 16px;">Hello <strong>${data?.name}</strong>,</p>
+    <p>Thank you for your order. We’ve received your order and will begin processing it soon.</p>
+
+    <hr style="margin: 20px 0;" />
+
+    <h3 style="color: #111;">🧾 Order Summary</h3>
+    <p><strong>Order Date:</strong> ${new Date().toLocaleDateString()}</p>
+    <p><strong>Payment Status:</strong> ${data?.paymentStatus}</p>
+    <p><strong>Order Status:</strong> ${data?.orderStatus}</p>
+    <p><strong>Total Amount:</strong> ₹${data?.amount}</p>
+
+    <hr style="margin: 20px 0;" />
+
+    <h3 style="color: #111;">📦 Items Ordered</h3>
+    ${itemList}
+
+
+    <hr style="margin: 20px 0;" />
+
+    <h3 style="color: #111;">Your Order will be sent to</h3>
+    <p>${data?.name}<br />
+       ${data?.address}<br />
+       ZIP: ${data?.zip}<br />
+       Phone: ${data?.phone}<br />
+       India
+    </p>
+
+    <p style="margin-top: 20px;">To ensure your safety, the Delivery Agent will drop the package at your doorstep, ring the doorbell and then move back to maintain adequate distance while waiting for you to collect your package.</p>
+
+
+    <p style="text-align: center; color: #777;">We hope to see you again<br /><strong>PVCU</strong></p>
+  </div>
+</div>
+
   `;
 
       const params = {
@@ -184,10 +246,10 @@ const CheckoutForm = () => {
         to: data.email,
         subject: "Your PVCU Order Confirmation",
         replyto: "venkat@pvcu.in",
-        message,
+        message: message,
       };
 
-      await emailjs.send(serviceID, templateID, params, "rLi115x7NbmnZdlX-");
+      await emailjs.send(serviceID, templateID, params, "NxhtBqyX-cv96PgUm");
       toast.success("Email sent successfully!");
     } catch (error) {
       console.error("Error sending email:", error);
@@ -215,7 +277,7 @@ const CheckoutForm = () => {
   const createOrder = async (res) => {
     const totalAmount = res.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const totalQuantity = res.items.reduce((sum, item) => sum + item.quantity, 0);
-    const productsDesc = res.items.map(item => `${item.name} - ${item.quantity}`).join(", ");
+    const productsDesc = res.items.map(item => `${item.name} - ${item.quantity} - ${item.size}`).join(", ");
     const token = localStorage.getItem("token");
     const payload = {
       format: "json",
@@ -393,7 +455,6 @@ const CheckoutForm = () => {
       );
 
       const { orderId, amount, currency } = response.data;
-      
 
 
       const options = {
@@ -415,8 +476,8 @@ const CheckoutForm = () => {
             );
 
             toast.success(paymentVerification.data.message);
-            sendEmail(response.data);
             sendEmailToCustomer(response.data);
+            sendEmail(response.data);
             createOrder(response.data)
 
 
