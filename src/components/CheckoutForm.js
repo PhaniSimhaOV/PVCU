@@ -91,18 +91,18 @@ const CheckoutForm = () => {
       const itemList = data.items
         ?.map((item, index) => {
           const itemImage = item.image
-            ? `<img src="${IMAGE_URL}/${item.image}" alt="${item.name}" style="max-width: 100px; height: auto; margin-right: 20px;" />`
+            ? `<img src="${IMAGE_URL}/${item.image}" alt="${item.name}" style="max-width: 150px; height: auto; margin-right: 20px;" />`
             : "";
           return `
             <div style="display: flex; align-items: center; margin-bottom: 15px;">
               <div style="flex-shrink: 0;">
                 ${itemImage}
               </div>
-              <div>
+              <div style="font-size:15px">
                 <strong>${index + 1}. ${item.name}</strong><br />
-                <span>Product ID: ${item.productId}</span><br />
                 <span>Size: ${item.size}</span><br />
-                <span>Qty: ${item.quantity}</span>
+                <span>Qty: ${item.quantity}</span><br/>
+                <span>₹${item.price}</span>
               </div>
             </div>
           `;
@@ -127,7 +127,7 @@ const CheckoutForm = () => {
             <p><strong>Order Date:</strong> ${new Date().toLocaleDateString()}</p>
             <p><strong>Payment Status:</strong> ${data?.paymentStatus}</p>
             <p><strong>Order Status:</strong> ${data?.orderStatus}</p>
-            <p><strong>Total Amount:</strong> ₹${data?.amount}</p>
+            <p><strong>Total Amount:</strong> ₹${data?.amount} (Delivery charges included - ₹100)</p>
   
             <hr style="margin: 20px 0;" />
   
@@ -154,7 +154,7 @@ const CheckoutForm = () => {
 
       const params = {
         sendername: "PVCU",
-        to: "shahraj135421@gmail.com",
+        to: "sreefabrics2019@gmail.com",
         subject: "New Order Notification - PVCU",
         replyto: "venkat@pvcu.in",
         message: message,
@@ -177,18 +177,18 @@ const CheckoutForm = () => {
       const itemList = data.items
         ?.map((item, index) => {
           const itemImage = item.image
-            ? `<img src="${IMAGE_URL}/${item.image}" alt="${item.name}" style="max-width: 100px; height: auto; margin-right: 20px;" />`
+            ? `<img src="${IMAGE_URL}/${item.image}" alt="${item.name}" style="max-width: 150px; height: auto; margin-right: 20px;" />`
             : "";
           return `
             <div style="display: flex; align-items: center; margin-bottom: 15px;">
               <div style="flex-shrink: 0;">
                 ${itemImage}
               </div>
-              <div>
+              <div style="font-size:15px">
                 <strong>${index + 1}. ${item.name}</strong><br />
-                <span>Product ID: ${item.productId}</span><br />
                 <span>Size: ${item.size}</span><br />
-                <span>Qty: ${item.quantity}</span>
+                <span>Qty: ${item.quantity}</span><br/>
+                <span>₹${item.price}</span>
               </div>
             </div>
           `;
@@ -214,7 +214,7 @@ const CheckoutForm = () => {
     <p><strong>Order Date:</strong> ${new Date().toLocaleDateString()}</p>
     <p><strong>Payment Status:</strong> ${data?.paymentStatus}</p>
     <p><strong>Order Status:</strong> ${data?.orderStatus}</p>
-    <p><strong>Total Amount:</strong> ₹${data?.amount}</p>
+    <p><strong>Total Amount:</strong> ₹${data?.amount} (Delivery charges included  - ₹100)</p>
 
     <hr style="margin: 20px 0;" />
 
