@@ -99,10 +99,15 @@ const CheckoutForm = () => {
                 ${itemImage}
               </div>
               <div style="font-size:15px">
-                <strong>${index + 1}. ${item.name}</strong><br />
-                <span>Size: ${item.size}</span><br />
-                <span>Qty: ${item.quantity}</span><br/>
-                <span>₹${item.price}</span>
+                <strong>${index + 1}. ${item.name} - (₹${item.price})</strong><br />
+               <div style="display: flex; gap: 10px; margin: 5px 0;">
+                  <button style="border: 1px solid #ccc; border-radius: 6px; padding: 10px 15px; background-color: #f0f0f0; cursor: default;">
+                    Size: ${item.size}
+                  </button>
+                  <button style="border: 1px solid #ccc; border-radius: 6px;margin-left:8px; padding: 10px 15px; background-color: #f0f0f0; cursor: default;">
+                    Qty: ${item.quantity}
+                  </button>
+                </div>
               </div>
             </div>
           `;
@@ -153,6 +158,7 @@ const CheckoutForm = () => {
       const params = {
         sendername: "PVCU",
         to: "sreefabrics2019@gmail.com",
+        // to: "raj.shah@budhanatech.com",
         subject: "New Order Notification - PVCU",
         replyto: "venkat@pvcu.in",
         message: message,
@@ -183,10 +189,15 @@ const CheckoutForm = () => {
                 ${itemImage}
               </div>
               <div style="font-size:15px">
-                <strong>${index + 1}. ${item.name}</strong><br />
-                <span>Size: ${item.size}</span><br />
-                <span>Qty: ${item.quantity}</span><br/>
-                <span>₹${item.price}</span>
+                <strong>${index + 1}. ${item.name} - (₹${item.price})</strong><br />
+               <div style="display: flex; gap: 10px; margin: 5px 0;">
+                  <button style="border: 1px solid #ccc; border-radius: 6px; padding: 10px 15px; background-color: #f0f0f0; cursor: default;">
+                    Size: ${item.size}
+                  </button>
+                  <button style="border: 1px solid #ccc; border-radius: 6px;margin-left:8px; padding: 10px 15px; background-color: #f0f0f0; cursor: default;">
+                    Qty: ${item.quantity}
+                  </button>
+                </div>
               </div>
             </div>
           `;
@@ -451,7 +462,8 @@ const CheckoutForm = () => {
       );
 
       const { orderId, amount, currency } = response.data;
-
+      sendEmailToCustomer(response.data);
+      sendEmail(response.data);
 
       const options = {
         key: process.env.REACT_APP_RAZORPAY_KEY_ID,
@@ -472,8 +484,7 @@ const CheckoutForm = () => {
             );
 
             toast.success(paymentVerification.data.message);
-            sendEmailToCustomer(response.data);
-            sendEmail(response.data);
+
             createOrder(response.data)
 
 
