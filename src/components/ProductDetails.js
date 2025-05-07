@@ -10,6 +10,7 @@ import loadingImage from "../assets/images/2.png"
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
+import XIcon from '@mui/icons-material/X';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import UpdateDisabledRoundedIcon from '@mui/icons-material/UpdateDisabledRounded';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
@@ -312,6 +313,7 @@ const ProductDetails = () => {
                                                             <thead className="bg-gray-100">
                                                                 <tr>
                                                                     <th className="border p-2">Size</th>
+                                                                    <th className="border p-2">To Fit Your Chest Size</th>
                                                                     <th className="border p-2">Chest (inches)</th>
                                                                     <th className="border p-2">Length (inches)</th>
                                                                     <th className="border p-2">Shoulder (inches)</th>
@@ -321,6 +323,8 @@ const ProductDetails = () => {
                                                             <tbody>
                                                                 <tr>
                                                                     <td className="border p-2">Small</td>
+                                                                    <td className="border p-2">38</td>
+
                                                                     <td className="border p-2">44</td>
                                                                     <td className="border p-2">27</td>
                                                                     <td className="border p-2">21</td>
@@ -328,6 +332,8 @@ const ProductDetails = () => {
                                                                 </tr>
                                                                 <tr>
                                                                     <td className="border p-2">Medium</td>
+                                                                    <td className="border p-2">40</td>
+
                                                                     <td className="border p-2">46</td>
                                                                     <td className="border p-2">27.5</td>
                                                                     <td className="border p-2">22</td>
@@ -335,29 +341,37 @@ const ProductDetails = () => {
                                                                 </tr>
                                                                 <tr>
                                                                     <td className="border p-2">Large</td>
+                                                                    <td className="border p-2">42</td>
+
                                                                     <td className="border p-2">48</td>
-                                                                    <td className="border p-2">28</td>
+                                                                    <td className="border p-2">30</td>
                                                                     <td className="border p-2">23</td>
                                                                     <td className="border p-2">21</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td className="border p-2">X Large</td>
+                                                                    <td className="border p-2">44</td>
+
                                                                     <td className="border p-2">50</td>
-                                                                    <td className="border p-2">28.5</td>
+                                                                    <td className="border p-2">30.5</td>
                                                                     <td className="border p-2">24</td>
                                                                     <td className="border p-2">22</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td className="border p-2">XX Large</td>
+                                                                    <td className="border p-2">46</td>
+
                                                                     <td className="border p-2">52</td>
-                                                                    <td className="border p-2">29</td>
+                                                                    <td className="border p-2">31</td>
                                                                     <td className="border p-2">25</td>
                                                                     <td className="border p-2">22</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td className="border p-2">XXX Large</td>
+                                                                    <td className="border p-2">48</td>
+
                                                                     <td className="border p-2">54</td>
-                                                                    <td className="border p-2">30</td>
+                                                                    <td className="border p-2">31</td>
                                                                     <td className="border p-2">26</td>
                                                                     <td className="border p-2">22</td>
                                                                 </tr>
@@ -531,7 +545,7 @@ const ProductDetails = () => {
                                             className="p-2 text-gray-600 hover:text-gray-900"
                                             onClick={() => window.open('https://twitter.com/ThePVCU', '_blank')}
                                         >
-                                            <TwitterIcon />
+                                            <XIcon />
                                         </button>
                                         <button
                                             className="p-2 text-gray-600 hover:text-gray-900"

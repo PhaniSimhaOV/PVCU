@@ -838,7 +838,7 @@ const CheckoutForm = () => {
                           onChange={() => handlePaymentMethodChange("bank")}
                         />
                         <label htmlFor="bank" className="text-sm text-black cursor-pointer">
-                          Bank
+                        Pay Now 
                         </label>
                       </div>
                       <img src={payment} alt="Payment Methods" className="h-6" />
