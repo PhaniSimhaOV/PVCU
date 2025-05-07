@@ -378,7 +378,7 @@ const Home = () => {
             <Carousel />
 
             <Container>
-                <div className="mt-12 my-2">
+                <div className="mt-12 my-6">
                     <div className="flex justify-between items-center">
                         <h1 className="text-3xl font-semibold">Our Products</h1>
 
@@ -402,7 +402,7 @@ const Home = () => {
                         <div className="today_flash_sale">
                             <section className="py-8 antialiased md:py-6">
                                 <div className="mx-auto max-w-screen-xl px-1 2xl:px-0">
-                                    <div ref={productContainerRef} className="mb-4 flex lg:grid  lg:grid-cols-4 gap-4 overflow-x-auto scroll-smooth">
+                                    <div ref={productContainerRef} className="mb-4 flex flex-row gap-4 overflow-x-auto scroll-smooth lg:grid lg:grid-cols-4 lg:overflow-x-visible">
                                         {product.slice().reverse().filter((product) => !product.name.toLowerCase().includes("hanuman")).map((product) => (
                                             <div
                                                 key={product.id}

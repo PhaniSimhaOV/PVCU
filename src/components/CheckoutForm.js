@@ -85,8 +85,8 @@ const CheckoutForm = () => {
 
   const sendEmail = async (data) => {
     try {
-      const serviceID = "service_483omi1";
-      const templateID = "template_swa0c7f";
+      const serviceID = "service_fx57edi";
+      const templateID = "template_66ga818";
 
       const itemList = data.items
         ?.map((item, index) => {
@@ -164,7 +164,7 @@ const CheckoutForm = () => {
         message: message,
       };
 
-      await emailjs.send(serviceID, templateID, params, "NxhtBqyX-cv96PgUm");
+      await emailjs.send(serviceID, templateID, params, "jOHuBCTL2gi4JawXZ");
       toast.success("Email sent successfully!");
     } catch (error) {
       console.error("Error sending email:", error);
@@ -175,8 +175,8 @@ const CheckoutForm = () => {
 
   const sendEmailToCustomer = async (data) => {
     try {
-      const serviceID = "service_483omi1";
-      const templateID = "template_swa0c7f";
+      const serviceID = "service_fx57edi";
+      const templateID = "template_66ga818";
 
       const itemList = data.items
         ?.map((item, index) => {
@@ -256,7 +256,7 @@ const CheckoutForm = () => {
         message: message,
       };
 
-      await emailjs.send(serviceID, templateID, params, "NxhtBqyX-cv96PgUm");
+      await emailjs.send(serviceID, templateID, params, "jOHuBCTL2gi4JawXZ");
       toast.success("Email sent successfully!");
     } catch (error) {
       console.error("Error sending email:", error);
@@ -462,8 +462,6 @@ const CheckoutForm = () => {
       );
 
       const { orderId, amount, currency } = response.data;
-      sendEmailToCustomer(response.data);
-      sendEmail(response.data);
 
       const options = {
         key: process.env.REACT_APP_RAZORPAY_KEY_ID,
@@ -486,6 +484,9 @@ const CheckoutForm = () => {
             toast.success(paymentVerification.data.message);
 
             createOrder(response.data)
+            sendEmailToCustomer(response.data);
+            sendEmail(response.data);
+
 
 
             setCartItems([]);
@@ -838,7 +839,7 @@ const CheckoutForm = () => {
                           onChange={() => handlePaymentMethodChange("bank")}
                         />
                         <label htmlFor="bank" className="text-sm text-black cursor-pointer">
-                        Pay Now 
+                          Pay Now
                         </label>
                       </div>
                       <img src={payment} alt="Payment Methods" className="h-6" />
