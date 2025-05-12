@@ -270,7 +270,7 @@ const ProductDetails = () => {
                                                 alt="Thumbnail"
                                                 onLoad={() => setIsLoaded(true)}
                                                 onClick={() => setPreviewImage(imageUrl)}
-                                                className="border rounded-sm w-full object-cover h-full cursor-pointer transition-transform duration-300"
+                                                className="border rounded-sm w-full object-cover h-full cursor-pointer transition-all duration-300 ease-in-out transform hover:scale-105"
                                                 style={{ display: isLoaded ? 'block' : 'none' }}
                                             />
                                         );
@@ -309,7 +309,8 @@ const ProductDetails = () => {
                                             <Tooltip
                                                 title={
                                                     <div style={{ width: '420px',display:"flex",flexDirection:"column",gap:"10px" }}>
-                                                        <table className="w-full border border-collapse mb-6">
+                                                        {
+                                                            product?.gender !== "Kids" && <table className="w-full border border-collapse mb-6">
                                                             <thead className="bg-gray-100">
                                                                 <tr>
                                                                     <th className="border p-2">Size</th>
@@ -377,7 +378,9 @@ const ProductDetails = () => {
                                                                 </tr>
                                                             </tbody>
                                                         </table>
-                                                        <table className="w-full border border-collapse">
+                                                        }
+                                                        {
+                                                            product?.gender === "Kids" && <table className="w-full border border-collapse">
                                                             <thead className="bg-gray-100">
                                                                 <tr>
                                                                     <th className="border p-2">Size</th>
@@ -428,6 +431,7 @@ const ProductDetails = () => {
                                                                 </tr>
                                                             </tbody>
                                                         </table>
+                                                        }
                                                     </div>
                                                 }
                                                 placement="bottom"

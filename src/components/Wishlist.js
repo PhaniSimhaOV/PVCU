@@ -173,22 +173,17 @@ const Wishlist = () => {
                             <div className="today_flash_sale">
                                 <section className="py-8 antialiased md:py-12">
                                     <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-                                        <div className="mb-4 flex gap-4 overflow-x-auto">
+                                        <div className="mb-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                                             {wishlist.map((product) => (
                                                 <div
                                                     key={product?.productId?.id || Math.random()}
-                                                    className="flex-none w-64 rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative"
+                                                    className="flex-none w-64 rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative transition-all duration-300 ease-in-out transform hover:scale-105"
                                                 >
                                                     <div className="w-full">
                                                         <Link to={`/details/${product?.productId?._id}`}>
                                                             <img
-                                                                className="w-full object-cover h-72 dark:hidden"
+                                                                className="w-full object-cover  dark:hidden"
                                                                 src={`${IMAGE_URL}/${product?.productId?.imageUrl}`}
-                                                                alt={product?.productId?.name}
-                                                            />
-                                                            <img
-                                                                className="w-full object-cover hidden h-72 dark:block"
-                                                                src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg"
                                                                 alt={product?.productId?.name}
                                                             />
                                                         </Link>

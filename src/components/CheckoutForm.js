@@ -85,7 +85,7 @@ const CheckoutForm = () => {
 
   const sendEmail = async (data) => {
     try {
-      const serviceID = "service_fx57edi";
+      const serviceID = "service_61pyo6s";
       const templateID = "template_66ga818";
 
       const itemList = data.items
@@ -175,7 +175,7 @@ const CheckoutForm = () => {
 
   const sendEmailToCustomer = async (data) => {
     try {
-      const serviceID = "service_fx57edi";
+      const serviceID = "service_61pyo6s";
       const templateID = "template_66ga818";
 
       const itemList = data.items
