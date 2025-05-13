@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Accordion, AccordionDetails, AccordionSummary, CircularProgress, Container } from '@mui/material'
 import React, { useEffect, useState } from 'react'
@@ -18,6 +19,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Tooltip } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import oversized from "../assets/images/Oversized-FIT.jpg"
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -620,6 +622,7 @@ const ProductDetails = () => {
                                             Product Details
                                         </AccordionSummary>
                                         <AccordionDetails>
+                                            <img src={oversized} width={250} className='h-auto mx-auto mb-4'/>
                                             <ul className="list-disc pl-5 text-gray-800">
                                                 <li>100% Cotton Premium Exclusive of Decoration</li>
                                                 <li>Made in India</li>

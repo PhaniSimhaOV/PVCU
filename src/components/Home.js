@@ -504,7 +504,7 @@ const Home = () => {
                     <div className="flex justify-between items-center">
                         <h1 className="text-3xl font-semibold">For The Next Generation </h1>
                     </div>
-                    <div className='my-6 mb-12 cursor-pointer'>
+                    <div className='my-6 mb-12 cursor-pointer transition-all duration-300 hover:scale-105'>
                         <a href={`/details/67ebd4ef5d2648edb1c2cae9`}> <img src={kids} /></a>
 
                     </div>
