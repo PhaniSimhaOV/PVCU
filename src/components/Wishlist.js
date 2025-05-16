@@ -84,7 +84,6 @@ const Wishlist = () => {
     };
 
     const addToCart = async (product) => {
-        console.log("Product", product)
         try {
             setLoading(true);
 
@@ -138,6 +137,7 @@ const Wishlist = () => {
             );
 
             toast.success('Item added to cart successfully');
+            handleRemoveFromWishlist(product?.productId?._id) 
             setIsAdded(true); // Mark as added after successful addition
         } catch (error) {
             console.error('Error adding to cart:', error.response?.data || error.message);
@@ -298,7 +298,7 @@ const Wishlist = () => {
                                                         </div>
                                                         <div className="absolute top-2 right-2">
                                                             <button
-                                                                onClick={() => { addToCart(product); handleRemoveFromWishlist(product?.productId?._id) }} // Call the remove function
+                                                                onClick={() => { addToCart(product)}} // Call the remove function
                                                                 className="bg-[#AB5A25] rounded-full p-1 text-white transition-all duration-300 ease-in-out transform hover:scale-110 hover:bg-[#91481F]"
                                                             >
                                                                 <ShoppingBag />
