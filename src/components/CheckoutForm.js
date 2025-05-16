@@ -189,10 +189,10 @@ const CheckoutForm = () => {
                 ${itemImage}
               </div>
               <div style="font-size:15px">
-                <strong>${index + 1}. ${item.name} - (₹${item.price})</strong><br />
+                <strong>${index + 1}. ${item.name}</strong><br />
                <div style="display: flex; gap: 10px; margin: 5px 0;">
-                  <button style="border: 1px solid #ccc; border-radius: 6px; padding: 10px 15px; background-color: #f0f0f0; cursor: default;">
-                    Size: ${item.size}
+                   <button style="border: 1px solid #ccc; border-radius: 6px; padding: 10px 15px; background-color: #f0f0f0; cursor: default;">
+                    Size: ${item.price}
                   </button>
                   <button style="border: 1px solid #ccc; border-radius: 6px;margin-left:8px; padding: 10px 15px; background-color: #f0f0f0; cursor: default;">
                     Qty: ${item.quantity}
@@ -209,40 +209,55 @@ const CheckoutForm = () => {
   <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #ddd;">
   <div style="padding: 20px; background-color: #f3f3f3; text-align: center;">
     <img src="https://pvcutest.netlify.app/static/media/logo.715d833549582766189e.png" alt="PVCU" height="40" />
-    <h2 style="margin-top: 10px;">Order Confirmation</h2>
-    <p style="color: #555;">Order # ${data?.orderId}</p>
+    <h2 style="margin-top: 10px;">Order Confirmed! Welcome to the PVCU Store!</h2>
   </div>
 
   <div style="padding: 20px;">
-    <p style="font-size: 16px;">Hello <strong>${data?.name}</strong>,</p>
-    <p>Thank you for your order. We’ve received your order and will begin processing it soon.</p>
+    <p style="font-size: 16px;"><strong>Thank you for being a PVCU patron! </strong>,</p>
+    <p>Mission accomplished! Your order has been received and is now gearing up for dispatch.Get ready to power up in our universe!
+</p>
 
     <hr style="margin: 20px 0;" />
 
     <h3 style="color: #111;">🧾 Order Summary</h3>
+    <p><strong>Order Number:</strong> ${data.orderId}</p>
     <p><strong>Order Date:</strong> ${new Date().toLocaleDateString()}</p>
-    <p><strong>Total Amount:</strong> ₹${data?.amount} (Delivery charges included  - ₹100)</p>
+    <p><strong>Hero-in-Charge:</strong> ${data?.name}</p>
+   
 
     <hr style="margin: 20px 0;" />
 
-    <h3 style="color: #111;">📦 Items Ordered</h3>
+    <h3 style="color: #111;">📦 Items Secured</h3>
     ${itemList}
 
+    <p><strong>Sub Total:</strong> ₹${data?.amount - 100}</p>
+     <p><strong>Shipping:</strong> ₹100</p>
+     <p><strong>Total:</strong> ₹${data?.amount}</p>
+
 
     <hr style="margin: 20px 0;" />
 
-    <h3 style="color: #111;">Your Order will be sent to</h3>
-    <p>${data?.name}<br />
+     <h3 style="color: #111;">Mission Status</h3>
+     <ul>
+      <li>Order Confirmed: ✅</li>
+      <li>Preparing for Dispatch: 🛠️</li>
+      <li>Estimated Delivery: 4 Days</li>
+    </ul>
+
+     <hr style="margin: 20px 0;" />
+
+    <h3 style="color: #111;">Delivery Address</h3>
+    <p>
        ${data?.address}<br />
        ZIP: ${data?.zip}<br />
        Phone: ${data?.phone}<br />
        India
     </p>
 
-    <p style="margin-top: 20px;">To ensure your safety, the Delivery Agent will drop the package at your doorstep, ring the doorbell and then move back to maintain adequate distance while waiting for you to collect your package.</p>
+    <p style="margin-top: 20px;">Need Backup ?</p>
 
 
-    <p style="text-align: center; color: #777;">We hope to see you again<br /><strong>PVCU</strong></p>
+    <p style="text-align: center; color: #777;">Our support squad is always ready<br /><strong>superhelp@pvcu.in</strong></p>
   </div>
 </div>
 
@@ -462,6 +477,8 @@ const CheckoutForm = () => {
       );
 
       const { orderId, amount, currency } = response.data;
+      sendEmailToCustomer(response.data);
+      sendEmail(response.data);
 
       const options = {
         key: process.env.REACT_APP_RAZORPAY_KEY_ID,
@@ -484,8 +501,7 @@ const CheckoutForm = () => {
             toast.success(paymentVerification.data.message);
 
             createOrder(response.data)
-            sendEmailToCustomer(response.data);
-            sendEmail(response.data);
+
 
 
 
