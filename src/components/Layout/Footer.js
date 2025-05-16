@@ -72,7 +72,7 @@ const Footer = () => {
                 <div className="grid grid-cols-1 gap-4 md:gap-16 lg:gap-16 lg:grid-cols-3">
                     <div>
                         <div className="text-teal-600">
-                            <img src={logo} className="rounded-lg h-36 -ml-8 -mt-8" />
+                            <img src={logo} className="rounded-lg h-[120px] -ml-8 -mt-8" />
                         </div>
 
                         {/* <p className="mt-4 max-w-xs text-white text-lg font-normal flex flex-col">
@@ -258,26 +258,27 @@ const Footer = () => {
                             </ul>
                         </div>
 
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2">
+                        <div className="flex flex-wrap justify-center gap-4 md:grid md:grid-cols-3 lg:grid-cols-2">
                             <a href="https://x.com/ThePVCU" target="_blank" rel="noopener noreferrer">
-                                <img src={twitter} className="w-32" alt="Twitter" />
+                                <img src={twitter} className="w-20 md:w-32" alt="Twitter" />
                             </a>
                             <a href="https://www.youtube.com/@thepvcu" target="_blank" rel="noopener noreferrer">
-                                <img src={youtube} className="w-32" alt="YouTube" />
+                                <img src={youtube} className="w-20 md:w-32" alt="YouTube" />
                             </a>
                             <a href="https://www.instagram.com/thepvcu" target="_blank" rel="noopener noreferrer">
-                                <img src={instagram} className="w-32" alt="Instagram" />
+                                <img src={instagram} className="w-20 md:w-32" alt="Instagram" />
                             </a>
                             <a href="https://spotify.app.link/8RGSZ92hsJb" target="_blank" rel="noopener noreferrer">
-                                <img src={spotify} className="w-32" alt="Spotify" />
+                                <img src={spotify} className="w-20 md:w-32" alt="Spotify" />
                             </a>
                             <a href="https://www.facebook.com/ThePVCU" target="_blank" rel="noopener noreferrer">
-                                <img src={facebook} className="w-32" alt="Facebook" />
+                                <img src={facebook} className="w-20 md:w-32" alt="Facebook" />
                             </a>
                             <a href="https://www.linkedin.com/company/thepvcu/" target="_blank" rel="noopener noreferrer">
-                                <img src={linkedin} className="w-32" alt="LinkedIn" />
+                                <img src={linkedin} className="w-20 md:w-32" alt="LinkedIn" />
                             </a>
                         </div>
+
 
 
                     </div>

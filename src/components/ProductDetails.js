@@ -8,12 +8,9 @@ import { API_URL, IMAGE_URL } from '../constants';
 import toast, { Toaster } from 'react-hot-toast';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import loadingImage from "../assets/images/2.png"
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
 import XIcon from '@mui/icons-material/X';
 import InstagramIcon from '@mui/icons-material/Instagram';
-import UpdateDisabledRoundedIcon from '@mui/icons-material/UpdateDisabledRounded';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -310,77 +307,79 @@ const ProductDetails = () => {
                                             Please select a size :{" "}
                                             <Tooltip
                                                 title={
-                                                    <div style={{ width: '420px',display:"flex",flexDirection:"column",gap:"10px" }}>
+                                                    <div style={{
+                                                        width: '420px', display: "flex", flexDirection: "column", gap: "10px", background: "rgb(172 91 36/var(--tw-bg-opacity,1))" }}>
                                                         {
-                                                            product?.gender !== "Kids" && <table className="w-full border border-collapse mb-6">
-                                                            <thead className="bg-gray-100">
-                                                                <tr>
-                                                                    <th className="border p-2">Size</th>
-                                                                    <th className="border p-2">To Fit Your Chest Size</th>
-                                                                    <th className="border p-2">Chest (inches)</th>
-                                                                    <th className="border p-2">Length (inches)</th>
-                                                                    <th className="border p-2">Shoulder (inches)</th>
-                                                                    <th className="border p-2">Neck (inches)</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td className="border p-2">Small</td>
-                                                                    <td className="border p-2">38</td>
+                                                                product?.gender !== "Kids" && <table className="w-full border border-collapse mb-6">
+                                                                <thead className="bg-[rgb(172 91 36/var(--tw-bg-opacity,1))
+]">
+                                                                    <tr>
+                                                                        <th className="border p-2">Size</th>
+                                                                        <th className="border p-2">To Fit Your Chest Size</th>
+                                                                        <th className="border p-2">Chest (inches)</th>
+                                                                        <th className="border p-2">Length (inches)</th>
+                                                                        <th className="border p-2">Shoulder (inches)</th>
+                                                                        <th className="border p-2">Neck (inches)</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td className="border p-2">Small</td>
+                                                                        <td className="border p-2">38</td>
 
-                                                                    <td className="border p-2">44</td>
-                                                                    <td className="border p-2">27</td>
-                                                                    <td className="border p-2">21</td>
-                                                                    <td className="border p-2">21</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="border p-2">Medium</td>
-                                                                    <td className="border p-2">40</td>
+                                                                        <td className="border p-2">44</td>
+                                                                        <td className="border p-2">27</td>
+                                                                        <td className="border p-2">21</td>
+                                                                        <td className="border p-2">21</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td className="border p-2">Medium</td>
+                                                                        <td className="border p-2">40</td>
 
-                                                                    <td className="border p-2">46</td>
-                                                                    <td className="border p-2">27.5</td>
-                                                                    <td className="border p-2">22</td>
-                                                                    <td className="border p-2">21</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="border p-2">Large</td>
-                                                                    <td className="border p-2">42</td>
+                                                                        <td className="border p-2">46</td>
+                                                                        <td className="border p-2">27.5</td>
+                                                                        <td className="border p-2">22</td>
+                                                                        <td className="border p-2">21</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td className="border p-2">Large</td>
+                                                                        <td className="border p-2">42</td>
 
-                                                                    <td className="border p-2">48</td>
-                                                                    <td className="border p-2">30</td>
-                                                                    <td className="border p-2">23</td>
-                                                                    <td className="border p-2">21</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="border p-2">X Large</td>
-                                                                    <td className="border p-2">44</td>
+                                                                        <td className="border p-2">48</td>
+                                                                        <td className="border p-2">30</td>
+                                                                        <td className="border p-2">23</td>
+                                                                        <td className="border p-2">21</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td className="border p-2">X Large</td>
+                                                                        <td className="border p-2">44</td>
 
-                                                                    <td className="border p-2">50</td>
-                                                                    <td className="border p-2">30.5</td>
-                                                                    <td className="border p-2">24</td>
-                                                                    <td className="border p-2">22</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="border p-2">XX Large</td>
-                                                                    <td className="border p-2">46</td>
+                                                                        <td className="border p-2">50</td>
+                                                                        <td className="border p-2">30.5</td>
+                                                                        <td className="border p-2">24</td>
+                                                                        <td className="border p-2">22</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td className="border p-2">XX Large</td>
+                                                                        <td className="border p-2">46</td>
 
-                                                                    <td className="border p-2">52</td>
-                                                                    <td className="border p-2">31</td>
-                                                                    <td className="border p-2">25</td>
-                                                                    <td className="border p-2">22</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="border p-2">XXX Large</td>
-                                                                    <td className="border p-2">48</td>
+                                                                        <td className="border p-2">52</td>
+                                                                        <td className="border p-2">31</td>
+                                                                        <td className="border p-2">25</td>
+                                                                        <td className="border p-2">22</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td className="border p-2">XXX Large</td>
+                                                                        <td className="border p-2">48</td>
 
-                                                                    <td className="border p-2">54</td>
-                                                                    <td className="border p-2">31</td>
-                                                                    <td className="border p-2">26</td>
-                                                                    <td className="border p-2">22</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                        }
+                                                                        <td className="border p-2">54</td>
+                                                                        <td className="border p-2">31</td>
+                                                                        <td className="border p-2">26</td>
+                                                                        <td className="border p-2">22</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                    }
                                                         {
                                                             product?.gender === "Kids" && <table className="w-full border border-collapse">
                                                             <thead className="bg-gray-100">
@@ -436,133 +435,132 @@ const ProductDetails = () => {
                                                         }
                                                     </div>
                                                 }
-                                                placement="bottom"
-                                                arrow
-                                                componentsProps={{
-                                                    tooltip: {
-                                                        sx: {
-                                                            bgcolor: 'white',
-                                                            color: 'black',
-                                                            border: '1px solid #ccc',
-                                                            boxShadow: 3,
-                                                            maxWidth: '444px',
-                                                            p: 1,
-                                                        }
-                                                    }
-                                                }}
+                                        placement="bottom"
+                                        arrow
+                                        componentsProps={{
+                                            tooltip: {
+                                                sx: {
+                                                    bgcolor: 'white',
+                                                    color: 'black',
+                                                    border: '1px solid #ccc',
+                                                    boxShadow: 3,
+                                                    maxWidth: '444px',
+                                                    p: 1,
+                                                }
+                                            }
+                                        }}
                                             >
-                                                <span className="text-blue-600 cursor-pointer inline-flex items-center">
-                                                    Size Chart <InfoOutlinedIcon fontSize="small" className="ml-1" />
-                                                </span>
-                                            </Tooltip>
+                                        <span className="text-blue-600 cursor-pointer inline-flex items-center">
+                                            Size Chart <InfoOutlinedIcon fontSize="small" className="ml-1" />
+                                        </span>
+                                    </Tooltip>
 
-                                        </p>
-                                        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 items-center gap-4 mt-4">
-                                            {productSize.sizes.filter((sizeOption) => {
-                                                // Exclude XXL for Kids
-                                                return !(product.gender === "Kids" && sizeOption.size === "XXL");
-                                            }).map((sizeOption) => {
-                                                // If gender is Kids, show age-based labels
-                                                const sizeLabelMap = {
-                                                    S: "8-9",
-                                                    M: "10-11",
-                                                    L: "12-14",
-                                                    XL: "14",
-                                                };
+                            </p>
+                            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 items-center gap-4 mt-4">
+                                {productSize.sizes.filter((sizeOption) => {
+                                    // Exclude XXL for Kids
+                                    return !(product.gender === "Kids" && sizeOption.size === "XXL");
+                                }).map((sizeOption) => {
+                                    // If gender is Kids, show age-based labels
+                                    const sizeLabelMap = {
+                                        S: "8-9",
+                                        M: "10-11",
+                                        L: "12-14",
+                                        XL: "14",
+                                    };
 
-                                                const displayLabel =
-                                                    product.gender === "Kids"
-                                                        ? sizeLabelMap[sizeOption.size] || sizeOption.size
-                                                        : sizeOption.size;
+                                    const displayLabel =
+                                        product.gender === "Kids"
+                                            ? sizeLabelMap[sizeOption.size] || sizeOption.size
+                                            : sizeOption.size;
 
-                                                return (
-                                                    <button
-                                                        key={sizeOption.size}
-                                                        className={`px-4 py-2 border rounded-lg ${size === sizeOption.size
-                                                            ? "bg-[#8B4513] text-white"
-                                                            : "hover:bg-gray-100"
-                                                            }`}
-                                                        onClick={() => setSize(sizeOption.size)}
-                                                    >
-                                                        {displayLabel}
-                                                    </button>
-                                                );
-                                            })}
-                                        </div>
-                                    </>
+                                    return (
+                                        <button
+                                            key={sizeOption.size}
+                                            className={`px-4 py-2 border rounded-lg ${size === sizeOption.size
+                                                ? "bg-[#8B4513] text-white"
+                                                : "hover:bg-gray-100"
+                                                }`}
+                                            onClick={() => setSize(sizeOption.size)}
+                                        >
+                                            {displayLabel}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </>
                                 )}
 
 
-                                <div className="flex items-center gap-2 mt-8">
-                                    <p className="text-sm text-gray-800">Quantity:</p>
-                                    <select
-                                        value={quantity}
-                                        onChange={(e) => setQuantity(parseInt(e.target.value))}
-                                        className="border border-[#148c8d] rounded-md px-2 py-1"
-                                    >
-                                        {[...Array(10).keys()].map(i => (
-                                            <option key={i + 1} value={i + 1}>{i + 1}</option>
-                                        ))}
-                                    </select>
-                                </div>
+                        <div className="flex items-center gap-2 mt-8">
+                            <p className="text-sm text-gray-800">Quantity:</p>
+                            <select
+                                value={quantity}
+                                onChange={(e) => setQuantity(parseInt(e.target.value))}
+                                className="border border-[#148c8d] rounded-md px-2 py-1"
+                            >
+                                {[...Array(10).keys()].map(i => (
+                                    <option key={i + 1} value={i + 1}>{i + 1}</option>
+                                ))}
+                            </select>
+                        </div>
 
-                                <div className="flex flex-wrap gap-2 mt-4">
-                                    <button onClick={addToCart} className="px-8 bg-[#8B4513] text-white py-3 w-full lg:w-fit">
-                                        {loading ? (
-                                            <CircularProgress size={24} color="inherit" />
-                                        ) : (
-                                            'ADD TO CART'
-                                        )}
-                                    </button>
-                                    <button
-                                        className="px-4 py-3 border border-[#148c8d] text-[#148c8d] flex items-center gap-2 w-full lg:w-fit"
-                                        onClick={() =>
-                                            isProductInWishlist(product._id)
-                                                ? handleRemoveFromWishlist(product._id)
-                                                : addToWishlist(product._id)
-                                        }
-                                    >
-                                        {
-                                            isProductInWishlist(product._id) ?
-                                                <FavoriteIcon fontSize="small" />
-                                                : <FavoriteBorderRoundedIcon fontSize="small" />
-                                        }
+                        <div className="flex flex-wrap gap-2 mt-4">
+                            <button onClick={addToCart} className="px-8 bg-[#8B4513] text-white py-3 w-full lg:w-fit">
+                                {loading ? (
+                                    <CircularProgress size={24} color="inherit" />
+                                ) : (
+                                    'ADD TO CART'
+                                )}
+                            </button>
+                            <button
+                                className="px-4 py-3 border border-[#148c8d] text-[#148c8d] flex items-center gap-2 w-full lg:w-fit"
+                                onClick={() =>
+                                    isProductInWishlist(product._id)
+                                        ? handleRemoveFromWishlist(product._id)
+                                        : addToWishlist(product._id)
+                                }
+                            >
+                                {
+                                    isProductInWishlist(product._id) ?
+                                        <FavoriteIcon fontSize="small" />
+                                        : <FavoriteBorderRoundedIcon fontSize="small" />
+                                }
 
-                                        ADD TO WISHLIST
-                                    </button>
-                                </div>
+                                ADD TO WISHLIST
+                            </button>
+                        </div>
+                        <div className="mb-6 mt-4 flex items-center gap-4">
+                            <p className="text-sm text-gray-800 mb-0">Share</p>
+                            <div className="flex gap-2">
+                                <button
+                                    className="p-2 text-gray-600 hover:text-gray-900"
+                                    onClick={() => window.open('https://youtube.com/@thepvcu?si=VFLyQROR_UfUWfJl', '_blank')}
+                                >
+                                    <YouTubeIcon fontSize="medium" />
+                                </button>
+                                <button
+                                    className="p-2 text-gray-600 hover:text-gray-900"
+                                    onClick={() => window.open('https://www.facebook.com/ThePVCU', '_blank')}
+                                >
+                                    <FacebookIcon fontSize="medium" />
+                                </button>
+                                <button
+                                    className="p-2 text-gray-600 hover:text-gray-900"
+                                    onClick={() => window.open('https://twitter.com/ThePVCU', '_blank')}
+                                >
+                                    <XIcon fontSize="medium" />
+                                </button>
+                                <button
+                                    className="p-2 text-gray-600 hover:text-gray-900"
+                                    onClick={() => window.open('https://www.instagram.com/thepvcu', '_blank')}
+                                >
+                                    <InstagramIcon fontSize="medium" />
+                                </button>
+                            </div>
+                        </div>
 
-                                <div className="mb-6 mt-4 flex items-center gap-4">
-                                    <p className="text-sm text-gray-800 mb-0">Share</p>
-                                    <div className="flex gap-2">
-                                        <button
-                                            className="p-2 text-gray-600 hover:text-gray-900"
-                                            onClick={() => window.open('https://youtube.com/@thepvcu?si=VFLyQROR_UfUWfJl', '_blank')}
-                                        >
-                                            <YouTubeIcon />
-                                        </button>
-                                        <button
-                                            className="p-2 text-gray-600 hover:text-gray-900"
-                                            onClick={() => window.open('https://www.facebook.com/ThePVCU', '_blank')}
-                                        >
-                                            <FacebookIcon />
-                                        </button>
-                                        <button
-                                            className="p-2 text-gray-600 hover:text-gray-900"
-                                            onClick={() => window.open('https://twitter.com/ThePVCU', '_blank')}
-                                        >
-                                            <XIcon />
-                                        </button>
-                                        <button
-                                            className="p-2 text-gray-600 hover:text-gray-900"
-                                            onClick={() => window.open('https://www.instagram.com/thepvcu', '_blank')}
-                                        >
-                                            <InstagramIcon />
-                                        </button>
-                                    </div>
-                                </div>
-
-                                {/* <div className="mb-6">
+                        {/* <div className="mb-6">
                                     <p className="text-sm font-medium text-gray-800 mb-2">Delivery Details</p>
                                     <div className="relative w-full max-w-xl">
                                         <input
@@ -576,7 +574,7 @@ const ProductDetails = () => {
                                     </div>
                                 </div> */}
 
-                                {/* <div className="flex items-start gap-2 p-3 border rounded-md mb-6">
+                        {/* <div className="flex items-start gap-2 p-3 border rounded-md mb-6">
                                     <div className="mt-1"><UpdateDisabledRoundedIcon /></div>
                                     <div>
                                         <p className="text-sm text-gray-800">This product is eligible for return or exchange under our 30-day return or exchange policy.</p>
@@ -586,7 +584,7 @@ const ProductDetails = () => {
 
 
 
-                                {/* <button onClick={addToCart} className="w-full bg-[#8B4513] text-white py-3 rounded-lg ">
+                        {/* <button onClick={addToCart} className="w-full bg-[#8B4513] text-white py-3 rounded-lg ">
                                         {loading ? (
                                             <CircularProgress size={24} color="inherit" />
                                         ) : (
@@ -594,52 +592,52 @@ const ProductDetails = () => {
                                         )}
                                     </button> */}
 
-                                <div className="mt-8">
-                                    <Accordion
-                                        expanded={expandedPanels.panel1}
-                                        onChange={handleAccordionToggle("panel1")}
-                                        elevation={0}
-                                        sx={{ boxShadow: "none", border: "1px solid #ddd" }}
-                                    >
-                                        <AccordionSummary sx={{ fontWeight: "bold" }} expandIcon={<ExpandMoreIcon />}>
-                                            Product Description
-                                        </AccordionSummary>
-                                        <AccordionDetails>
-                                            <div className="text-gray-800 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: product.description }} />
-                                            <div className='mt-2 text-sm'>
-                                                <span className='font-semibold'>Note - </span><span>The shades of this T-shirt might slightly vary from the picture.</span>
-                                            </div>
-                                        </AccordionDetails>
-                                    </Accordion>
+                        <div className="mt-8">
+                            <Accordion
+                                expanded={expandedPanels.panel1}
+                                onChange={handleAccordionToggle("panel1")}
+                                elevation={0}
+                                sx={{ boxShadow: "none", border: "1px solid #ddd" }}
+                            >
+                                <AccordionSummary sx={{ fontWeight: "bold" }} expandIcon={<ExpandMoreIcon />}>
+                                    Product Description
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <div className="text-gray-800 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: product.description }} />
+                                    <div className='mt-2 text-sm'>
+                                        <span className='font-semibold'>Note - </span><span>The shades of this T-shirt might slightly vary from the picture.</span>
+                                    </div>
+                                </AccordionDetails>
+                            </Accordion>
 
-                                    <Accordion
-                                        expanded={expandedPanels.panel2}
-                                        onChange={handleAccordionToggle("panel2")}
-                                        elevation={0}
-                                        sx={{ boxShadow: "none", border: "1px solid #ddd" }}
-                                    >
-                                        <AccordionSummary sx={{ fontWeight: "bold" }} expandIcon={<ExpandMoreIcon />}>
-                                            Product Details
-                                        </AccordionSummary>
-                                        <AccordionDetails>
-                                            <img src={oversized} width={250} className='h-auto mx-auto mb-4'/>
-                                            <ul className="list-disc pl-5 text-gray-800">
-                                                <li>100% Cotton Premium Exclusive of Decoration</li>
-                                                <li>Made in India</li>
-                                                <li>Machine wash cold with like colors</li>
-                                                <li>Do not bleach</li>
-                                                <li>Tumble dry low</li>
-                                                <li>Warm iron</li>
-                                                <li>Do not dry clean</li>
-                                                <li>Use mild detergent</li>
-                                                <li>Dry immediately after wash</li>
-                                                <li>Do not iron on print, tapes & emblems</li>
-                                            </ul>
-                                        </AccordionDetails>
-                                    </Accordion>
-                                </div>
+                            <Accordion
+                                expanded={expandedPanels.panel2}
+                                onChange={handleAccordionToggle("panel2")}
+                                elevation={0}
+                                sx={{ boxShadow: "none", border: "1px solid #ddd" }}
+                            >
+                                <AccordionSummary sx={{ fontWeight: "bold" }} expandIcon={<ExpandMoreIcon />}>
+                                    Product Details
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <img src={oversized} width={250} className='h-auto mx-auto mb-4' />
+                                    <ul className="list-disc pl-5 text-gray-800">
+                                        <li>100% Cotton Premium Exclusive of Decoration</li>
+                                        <li>Made in India</li>
+                                        <li>Machine wash cold with like colors</li>
+                                        <li>Do not bleach</li>
+                                        <li>Tumble dry low</li>
+                                        <li>Warm iron</li>
+                                        <li>Do not dry clean</li>
+                                        <li>Use mild detergent</li>
+                                        <li>Dry immediately after wash</li>
+                                        <li>Do not iron on print, tapes & emblems</li>
+                                    </ul>
+                                </AccordionDetails>
+                            </Accordion>
+                        </div>
 
-                                {/* <p className="text-gray-800 my-4 font-semibold">Quantity:</p>
+                        {/* <p className="text-gray-800 my-4 font-semibold">Quantity:</p>
                                 <div className='flex gap-4 my-2 items-center'>
                                     <div>
                                         <div className="flex items-center gap-4">
@@ -650,11 +648,11 @@ const ProductDetails = () => {
                                     </div>
 
                                 </div> */}
-                            </div>
-                        </div>
                     </div>
+                        </div>
+                    </div >
                 )}
-        </Container>
+        </Container >
     )
 }
 
