@@ -64,7 +64,7 @@ const Cart = () => {
         <Container>
             <div className="container mx-auto p-4 my-14">
                 <nav className="text-sm mb-6">
-                    <a href="" className="text-gray-500">Home</a> /
+                    <a href="/" className="text-gray-500">Home</a> /
                     <span className="text-gray-800 font-semibold"> Your Cart</span>
                 </nav>
 

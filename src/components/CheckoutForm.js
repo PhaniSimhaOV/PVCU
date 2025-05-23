@@ -150,7 +150,7 @@ const CheckoutForm = () => {
   
             <hr style="margin: 20px 0;" />
   
-            <p style="text-align: center; color: #777;">For questions, contact venkat@pvcu.in<br /><strong>PVCU System</strong></p>
+            <p style="text-align: center; color: #777;">For questions, contact superhelp@pvcu.in<br /><strong>PVCU System</strong></p>
           </div>
         </div>
       `;
@@ -192,7 +192,7 @@ const CheckoutForm = () => {
                 <strong>${index + 1}. ${item.name}</strong><br />
                <div style="display: flex; gap: 10px; margin: 5px 0;">
                    <button style="border: 1px solid #ccc; border-radius: 6px; padding: 10px 15px; background-color: #f0f0f0; cursor: default;">
-                    Size: ${item.price}
+                    Size: ${item.size}
                   </button>
                   <button style="border: 1px solid #ccc; border-radius: 6px;margin-left:8px; padding: 10px 15px; background-color: #f0f0f0; cursor: default;">
                     Qty: ${item.quantity}
@@ -213,7 +213,7 @@ const CheckoutForm = () => {
   </div>
 
   <div style="padding: 20px;">
-    <p style="font-size: 16px;"><strong>Thank you for being a PVCU patron! </strong>,</p>
+    <p style="font-size: 16px;"><strong>Thank you for being a PVCU patron! </strong></p>
     <p>Mission accomplished! Your order has been received and is now gearing up for dispatch.Get ready to power up in our universe!
 </p>
 
@@ -477,8 +477,7 @@ const CheckoutForm = () => {
       );
 
       const { orderId, amount, currency } = response.data;
-      sendEmailToCustomer(response.data);
-      sendEmail(response.data);
+     
 
       const options = {
         key: process.env.REACT_APP_RAZORPAY_KEY_ID,
@@ -500,7 +499,9 @@ const CheckoutForm = () => {
 
             toast.success(paymentVerification.data.message);
 
-            createOrder(response.data)
+             createOrder(response.data)
+             sendEmailToCustomer(response.data);
+             sendEmail(response.data);
 
 
 
@@ -511,6 +512,7 @@ const CheckoutForm = () => {
                 Authorization: `Bearer ${token}`
               }
             });
+            localStorage.removeItem("cartItems")
 
             setTimeout(() => {
               navigate("/cart");

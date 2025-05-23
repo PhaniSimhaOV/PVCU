@@ -23,8 +23,10 @@ const Contact = () => {
     setSubmitting(true);
 
     try {
-      const serviceID = "service_42scdsw";
-      const templateID = "template_rsh28zt";
+       const serviceID = "service_61pyo6s";
+      const templateID = "template_66ga818";
+      // const serviceID = "service_42scdsw";
+      // const templateID = "template_rsh28zt";
 
       const params = {
         sendername: formData.name,
@@ -39,7 +41,7 @@ const Contact = () => {
         `,
       };
 
-      await emailjs.send(serviceID, templateID, params, "rLi115x7NbmnZdlX-");
+      await emailjs.send(serviceID, templateID, params, "jOHuBCTL2gi4JawXZ");
       toast.success("Email sent successfully!");
       setFormData({
         name: "",

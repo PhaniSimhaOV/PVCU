@@ -49,7 +49,7 @@ const Orders = () => {
         <Container>
             <div className={`container mx-auto p-4 my-12 ${orders?.length === 0 ? 'h-96' : ''}`}>
                 <nav className="text-sm mb-4">
-                    <a href="" className="text-gray-500">Home</a> /
+                    <a href="/" className="text-gray-500">Home</a> /
                     <a href="" className="text-gray-500 font-semibold"> Your Orders </a>
                 </nav>
 

@@ -46,9 +46,10 @@ const Carousel = () => {
 
     const BANNER_URLS = {
         "67ebcdbf5d2648edb1c2ca49": "/details/67ebd41c5d2648edb1c2cac5",
-        "67ebcdc85d2648edb1c2ca4d": "/products",
+        "67ebcdc85d2648edb1c2ca4d": "/details/67ebd5545d2648edb1c2caf5",
         "67ecd0c45d2648edb1c2ce7f": "/details/67ebd4ef5d2648edb1c2cae9",
-        "67f5fb1b541c66611959c9ba":"/details/67ebd4ef5d2648edb1c2cae9"
+        "67f5fb1b541c66611959c9ba":"/details/67ebd4ef5d2648edb1c2cae9",
+        "682ada7f9cd789b032f7dd49":"/details/67ebd32f5d2648edb1c2caaa"
     };
 
 

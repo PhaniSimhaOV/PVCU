@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import logo from "../../assets/images/3.png"
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import { Link } from "react-router-dom";
@@ -14,12 +14,14 @@ import facebook from "../../assets/images/facebook.png"
 import spotify from "../../assets/images/spotify.png"
 import linkedin from "../../assets/images/linkedin.png"
 import instagram from "../../assets/images/instagram.png"
+import { AuthContext } from "../../context/AuthContext";
 
 
 
 const Footer = () => {
     const [authDialogOpen, setAuthDialogOpen] = useState(false);
     const [showLogin, setShowLogin] = useState(true);
+    const { isAuthenticated, logout } = useContext(AuthContext);
     const toggleAuthForm = () => setShowLogin(!showLogin);
 
     const DialogLink = ({ children }) => {
@@ -72,7 +74,7 @@ const Footer = () => {
                 <div className="grid grid-cols-1 gap-4 md:gap-16 lg:gap-16 lg:grid-cols-3">
                     <div>
                         <div className="text-teal-600">
-                            <img src={logo} className="rounded-lg h-[120px] -ml-8 -mt-8" />
+                            <img src={logo} className="rounded-lg h-[100px] -ml-8 -mt-8" />
                         </div>
 
                         {/* <p className="mt-4 max-w-xs text-white text-lg font-normal flex flex-col">
@@ -198,11 +200,11 @@ const Footer = () => {
                                     <a href="#" className="text-[#907562] transition hover:opacity-75"> My Account </a>
                                 </li> */}
 
-                                <li>
+                                {!isAuthenticated && <li>
                                     <a onClick={() => setAuthDialogOpen(true)} className="cursor-pointer text-[#907562] transition hover:opacity-75">
                                         Login / Register
                                     </a>
-                                </li>
+                                </li>}
 
                                 <li>
                                     <a href="/cart" className="text-[#907562] transition hover:opacity-75">

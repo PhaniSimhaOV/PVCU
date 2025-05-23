@@ -2,7 +2,8 @@ import React, { createContext, useState, useEffect } from 'react';
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-    const [cartItems, setCartItems] = useState([]);
+    const items = JSON.parse(localStorage.getItem("cartItems"));
+    const [cartItems, setCartItems] = useState(items || []);
     const [subtotal, setSubtotal] = useState(0);
     const [total, setTotal] = useState(0);
 

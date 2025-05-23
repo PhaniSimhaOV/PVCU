@@ -351,7 +351,7 @@ const Home = () => {
                     <nav className="flex justify-between items-center p-2 my-4 md:my-0 lg:my-0">
                         <div className="space-x-6 flex">
                             <div className="relative" ref={menMenuRef}>
-                              
+
                                 {activeMenu === 'men' && (
                                     <div className="z-50 absolute left-0 mt-2.5 bg-white text-black cursor-pointer rounded-sm w-48">
                                         <ul className="py-2">
@@ -491,7 +491,7 @@ const Home = () => {
                                         ))}
                                     </div>
 
-                                   
+
                                 </div>
                             </section>
                         </div>
@@ -594,16 +594,17 @@ const Home = () => {
                                                     </div>
                                                 </div>
                                                 {/* </a> */}
-                                                <div className="w-full text-center absolute bottom-3">
-                                                    <button
-                                                        type="button"
-                                                        className="rounded-sm border border-gray-200 px-5 py-2 text-sm focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 text-black bg-white font-medium"
-                                                    >
-                                                        {product.name}
-                                                    </button>
-                                                </div>
+                                                <a href={`/details/${product._id}`}>
+                                                    <div className="w-full text-center absolute bottom-3">
+                                                        <button
+                                                            type="button"
+                                                            className="rounded-sm border border-gray-200 px-5 py-2 text-sm focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 text-black bg-white font-medium"
+                                                        >
+                                                            {product.name}
+                                                        </button>
+                                                    </div>
+                                                </a>
                                             </div>
-
                                         </div>
                                     ))}
 
@@ -614,7 +615,7 @@ const Home = () => {
                 </Container>
             </div>
 
-            
+
             <Container>
                 <div className='py-8 '>
                     <h1 className="text-3xl font-semibold">Join the PVCU Tribe</h1>

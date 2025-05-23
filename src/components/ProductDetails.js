@@ -248,7 +248,7 @@ const ProductDetails = () => {
                 ) : (
                     <div className="container mx-auto p-4 my-10">
                         <nav className="text-sm mb-4">
-                            <a href="" className="text-gray-500">Home</a> /
+                            <a href="/" className="text-gray-500">Home</a> /
                             <span className="text-gray-800 font-semibold"> {product?.name}</span>
                         </nav>
 
@@ -308,9 +308,10 @@ const ProductDetails = () => {
                                             <Tooltip
                                                 title={
                                                     <div style={{
-                                                        width: '420px', display: "flex", flexDirection: "column", gap: "10px", background: "rgb(172 91 36/var(--tw-bg-opacity,1))" }}>
+                                                        width: '420px', display: "flex", flexDirection: "column", gap: "10px", background: "rgb(172 91 36/var(--tw-bg-opacity,1))", color: "white"
+                                                    }}>
                                                         {
-                                                                product?.gender !== "Kids" && <table className="w-full border border-collapse mb-6">
+                                                            product?.gender !== "Kids" && <table className="w-full border border-collapse mb-6">
                                                                 <thead className="bg-[rgb(172 91 36/var(--tw-bg-opacity,1))
 ]">
                                                                     <tr>
@@ -379,188 +380,188 @@ const ProductDetails = () => {
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
-                                                    }
+                                                        }
                                                         {
-                                                            product?.gender === "Kids" && <table className="w-full border border-collapse">
-                                                            <thead className="bg-gray-100">
-                                                                <tr>
-                                                                    <th className="border p-2">Size</th>
-                                                                    <th className="border p-2">Age</th>
-                                                                    <th className="border p-2">Chest (in)</th>
-                                                                    <th className="border p-2">Length (in)</th>
-                                                                    <th className="border p-2">Shoulder (in)</th>
-                                                                    <th className="border p-2">Sleeve Length (in)</th>
-                                                                    <th className="border p-2">Neck (in)</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td className="border p-2">Small</td>
-                                                                    <td className="border p-2">8-9</td>
-                                                                    <td className="border p-2">26-28</td>
-                                                                    <td className="border p-2">20-21</td>
-                                                                    <td className="border p-2">12-13</td>
-                                                                    <td className="border p-2">6</td>
-                                                                    <td className="border p-2">12-13</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="border p-2">Medium</td>
-                                                                    <td className="border p-2">10-11</td>
-                                                                    <td className="border p-2">28-30</td>
-                                                                    <td className="border p-2">22-23</td>
-                                                                    <td className="border p-2">13-14</td>
-                                                                    <td className="border p-2">6.5</td>
-                                                                    <td className="border p-2">13-14</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="border p-2">Large</td>
-                                                                    <td className="border p-2">12-13</td>
-                                                                    <td className="border p-2">30-32</td>
-                                                                    <td className="border p-2">24-25</td>
-                                                                    <td className="border p-2">14-15</td>
-                                                                    <td className="border p-2">7</td>
-                                                                    <td className="border p-2">14-15</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td className="border p-2">X Large</td>
-                                                                    <td className="border p-2">14</td>
-                                                                    <td className="border p-2">32-34</td>
-                                                                    <td className="border p-2">26-27</td>
-                                                                    <td className="border p-2">15-16</td>
-                                                                    <td className="border p-2">7.5</td>
-                                                                    <td className="border p-2">15-16</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
+                                                            product?.gender === "Kids" && <table className="w-full border border-collapse" style={{ background: "rgb(172 91 36/var(--tw-bg-opacity,1))", color: "white" }}>
+                                                                <thead >
+                                                                    <tr>
+                                                                        <th className="border p-2">Size</th>
+                                                                        <th className="border p-2">Age</th>
+                                                                        <th className="border p-2">Chest (in)</th>
+                                                                        <th className="border p-2">Length (in)</th>
+                                                                        <th className="border p-2">Shoulder (in)</th>
+                                                                        <th className="border p-2">Sleeve Length (in)</th>
+                                                                        <th className="border p-2">Neck (in)</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td className="border p-2">Small</td>
+                                                                        <td className="border p-2">8-9</td>
+                                                                        <td className="border p-2">26-28</td>
+                                                                        <td className="border p-2">20-21</td>
+                                                                        <td className="border p-2">12-13</td>
+                                                                        <td className="border p-2">6</td>
+                                                                        <td className="border p-2">12-13</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td className="border p-2">Medium</td>
+                                                                        <td className="border p-2">10-11</td>
+                                                                        <td className="border p-2">28-30</td>
+                                                                        <td className="border p-2">22-23</td>
+                                                                        <td className="border p-2">13-14</td>
+                                                                        <td className="border p-2">6.5</td>
+                                                                        <td className="border p-2">13-14</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td className="border p-2">Large</td>
+                                                                        <td className="border p-2">12-13</td>
+                                                                        <td className="border p-2">30-32</td>
+                                                                        <td className="border p-2">24-25</td>
+                                                                        <td className="border p-2">14-15</td>
+                                                                        <td className="border p-2">7</td>
+                                                                        <td className="border p-2">14-15</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td className="border p-2">X Large</td>
+                                                                        <td className="border p-2">14</td>
+                                                                        <td className="border p-2">32-34</td>
+                                                                        <td className="border p-2">26-27</td>
+                                                                        <td className="border p-2">15-16</td>
+                                                                        <td className="border p-2">7.5</td>
+                                                                        <td className="border p-2">15-16</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         }
                                                     </div>
                                                 }
-                                        placement="bottom"
-                                        arrow
-                                        componentsProps={{
-                                            tooltip: {
-                                                sx: {
-                                                    bgcolor: 'white',
-                                                    color: 'black',
-                                                    border: '1px solid #ccc',
-                                                    boxShadow: 3,
-                                                    maxWidth: '444px',
-                                                    p: 1,
-                                                }
-                                            }
-                                        }}
+                                                placement="bottom"
+                                                arrow
+                                                componentsProps={{
+                                                    tooltip: {
+                                                        sx: {
+                                                            bgcolor: 'white',
+                                                            color: 'black',
+                                                            border: '1px solid #ccc',
+                                                            boxShadow: 3,
+                                                            maxWidth: '444px',
+                                                            p: 1,
+                                                        }
+                                                    }
+                                                }}
                                             >
-                                        <span className="text-blue-600 cursor-pointer inline-flex items-center">
-                                            Size Chart <InfoOutlinedIcon fontSize="small" className="ml-1" />
-                                        </span>
-                                    </Tooltip>
+                                                <span className="text-blue-600 cursor-pointer inline-flex items-center">
+                                                    Size Chart <InfoOutlinedIcon fontSize="small" className="ml-1" />
+                                                </span>
+                                            </Tooltip>
 
-                            </p>
-                            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 items-center gap-4 mt-4">
-                                {productSize.sizes.filter((sizeOption) => {
-                                    // Exclude XXL for Kids
-                                    return !(product.gender === "Kids" && sizeOption.size === "XXL");
-                                }).map((sizeOption) => {
-                                    // If gender is Kids, show age-based labels
-                                    const sizeLabelMap = {
-                                        S: "8-9",
-                                        M: "10-11",
-                                        L: "12-14",
-                                        XL: "14",
-                                    };
+                                        </p>
+                                        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 items-center gap-4 mt-4">
+                                            {productSize.sizes.filter((sizeOption) => {
+                                                // Exclude XXL for Kids
+                                                return !(product.gender === "Kids" && sizeOption.size === "XXL");
+                                            }).map((sizeOption) => {
+                                                // If gender is Kids, show age-based labels
+                                                const sizeLabelMap = {
+                                                    S: "8-9",
+                                                    M: "10-11",
+                                                    L: "12-14",
+                                                    XL: "14",
+                                                };
 
-                                    const displayLabel =
-                                        product.gender === "Kids"
-                                            ? sizeLabelMap[sizeOption.size] || sizeOption.size
-                                            : sizeOption.size;
+                                                const displayLabel =
+                                                    product.gender === "Kids"
+                                                        ? sizeLabelMap[sizeOption.size] || sizeOption.size
+                                                        : sizeOption.size;
 
-                                    return (
+                                                return (
+                                                    <button
+                                                        key={sizeOption.size}
+                                                        className={`px-4 py-2 border rounded-lg ${size === sizeOption.size
+                                                            ? "bg-[#8B4513] text-white"
+                                                            : "hover:bg-gray-100"
+                                                            }`}
+                                                        onClick={() => setSize(sizeOption.size)}
+                                                    >
+                                                        {displayLabel}
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                    </>
+                                )}
+
+
+                                <div className="flex items-center gap-2 mt-8">
+                                    <p className="text-sm text-gray-800">Quantity:</p>
+                                    <select
+                                        value={quantity}
+                                        onChange={(e) => setQuantity(parseInt(e.target.value))}
+                                        className="border border-[#148c8d] rounded-md px-2 py-1"
+                                    >
+                                        {[...Array(10).keys()].map(i => (
+                                            <option key={i + 1} value={i + 1}>{i + 1}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div className="flex flex-wrap gap-2 mt-4">
+                                    <button onClick={addToCart} className="px-8 bg-[#8B4513] text-white py-3 w-full lg:w-fit">
+                                        {loading ? (
+                                            <CircularProgress size={24} color="inherit" />
+                                        ) : (
+                                            'ADD TO CART'
+                                        )}
+                                    </button>
+                                    <button
+                                        className="px-4 py-3 border border-[#148c8d] text-[#148c8d] flex items-center gap-2 w-full lg:w-fit"
+                                        onClick={() =>
+                                            isProductInWishlist(product._id)
+                                                ? handleRemoveFromWishlist(product._id)
+                                                : addToWishlist(product._id)
+                                        }
+                                    >
+                                        {
+                                            isProductInWishlist(product._id) ?
+                                                <FavoriteIcon fontSize="small" />
+                                                : <FavoriteBorderRoundedIcon fontSize="small" />
+                                        }
+
+                                        ADD TO WISHLIST
+                                    </button>
+                                </div>
+                                <div className="mb-6 mt-4 flex items-center gap-4">
+                                    <p className="text-sm text-gray-800 mb-0">Share</p>
+                                    <div className="flex gap-2">
                                         <button
-                                            key={sizeOption.size}
-                                            className={`px-4 py-2 border rounded-lg ${size === sizeOption.size
-                                                ? "bg-[#8B4513] text-white"
-                                                : "hover:bg-gray-100"
-                                                }`}
-                                            onClick={() => setSize(sizeOption.size)}
+                                            className="p-2 text-gray-600 hover:text-gray-900"
+                                            onClick={() => window.open('https://youtube.com/@thepvcu?si=VFLyQROR_UfUWfJl', '_blank')}
                                         >
-                                            {displayLabel}
+                                            <YouTubeIcon sx={{ fontSize: "27px" }} />
                                         </button>
-                                    );
-                                })}
-                            </div>
-                        </>
-                                )}
+                                        <button
+                                            className="p-2 text-gray-600 hover:text-gray-900"
+                                            onClick={() => window.open('https://www.facebook.com/ThePVCU', '_blank')}
+                                        >
+                                            <FacebookIcon sx={{ fontSize: "27px" }} />
+                                        </button>
+                                        <button
+                                            className="p-2 text-gray-600 hover:text-gray-900"
+                                            onClick={() => window.open('https://twitter.com/ThePVCU', '_blank')}
+                                        >
+                                            <XIcon fontSize="medium" />
+                                        </button>
+                                        <button
+                                            className="p-2 text-gray-600 hover:text-gray-900"
+                                            onClick={() => window.open('https://www.instagram.com/thepvcu', '_blank')}
+                                        >
+                                            <InstagramIcon fontSize="medium" />
+                                        </button>
+                                    </div>
+                                </div>
 
-
-                        <div className="flex items-center gap-2 mt-8">
-                            <p className="text-sm text-gray-800">Quantity:</p>
-                            <select
-                                value={quantity}
-                                onChange={(e) => setQuantity(parseInt(e.target.value))}
-                                className="border border-[#148c8d] rounded-md px-2 py-1"
-                            >
-                                {[...Array(10).keys()].map(i => (
-                                    <option key={i + 1} value={i + 1}>{i + 1}</option>
-                                ))}
-                            </select>
-                        </div>
-
-                        <div className="flex flex-wrap gap-2 mt-4">
-                            <button onClick={addToCart} className="px-8 bg-[#8B4513] text-white py-3 w-full lg:w-fit">
-                                {loading ? (
-                                    <CircularProgress size={24} color="inherit" />
-                                ) : (
-                                    'ADD TO CART'
-                                )}
-                            </button>
-                            <button
-                                className="px-4 py-3 border border-[#148c8d] text-[#148c8d] flex items-center gap-2 w-full lg:w-fit"
-                                onClick={() =>
-                                    isProductInWishlist(product._id)
-                                        ? handleRemoveFromWishlist(product._id)
-                                        : addToWishlist(product._id)
-                                }
-                            >
-                                {
-                                    isProductInWishlist(product._id) ?
-                                        <FavoriteIcon fontSize="small" />
-                                        : <FavoriteBorderRoundedIcon fontSize="small" />
-                                }
-
-                                ADD TO WISHLIST
-                            </button>
-                        </div>
-                        <div className="mb-6 mt-4 flex items-center gap-4">
-                            <p className="text-sm text-gray-800 mb-0">Share</p>
-                            <div className="flex gap-2">
-                                <button
-                                    className="p-2 text-gray-600 hover:text-gray-900"
-                                    onClick={() => window.open('https://youtube.com/@thepvcu?si=VFLyQROR_UfUWfJl', '_blank')}
-                                >
-                                    <YouTubeIcon fontSize="medium" />
-                                </button>
-                                <button
-                                    className="p-2 text-gray-600 hover:text-gray-900"
-                                    onClick={() => window.open('https://www.facebook.com/ThePVCU', '_blank')}
-                                >
-                                    <FacebookIcon fontSize="medium" />
-                                </button>
-                                <button
-                                    className="p-2 text-gray-600 hover:text-gray-900"
-                                    onClick={() => window.open('https://twitter.com/ThePVCU', '_blank')}
-                                >
-                                    <XIcon fontSize="medium" />
-                                </button>
-                                <button
-                                    className="p-2 text-gray-600 hover:text-gray-900"
-                                    onClick={() => window.open('https://www.instagram.com/thepvcu', '_blank')}
-                                >
-                                    <InstagramIcon fontSize="medium" />
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* <div className="mb-6">
+                                {/* <div className="mb-6">
                                     <p className="text-sm font-medium text-gray-800 mb-2">Delivery Details</p>
                                     <div className="relative w-full max-w-xl">
                                         <input
@@ -574,7 +575,7 @@ const ProductDetails = () => {
                                     </div>
                                 </div> */}
 
-                        {/* <div className="flex items-start gap-2 p-3 border rounded-md mb-6">
+                                {/* <div className="flex items-start gap-2 p-3 border rounded-md mb-6">
                                     <div className="mt-1"><UpdateDisabledRoundedIcon /></div>
                                     <div>
                                         <p className="text-sm text-gray-800">This product is eligible for return or exchange under our 30-day return or exchange policy.</p>
@@ -584,7 +585,7 @@ const ProductDetails = () => {
 
 
 
-                        {/* <button onClick={addToCart} className="w-full bg-[#8B4513] text-white py-3 rounded-lg ">
+                                {/* <button onClick={addToCart} className="w-full bg-[#8B4513] text-white py-3 rounded-lg ">
                                         {loading ? (
                                             <CircularProgress size={24} color="inherit" />
                                         ) : (
@@ -592,52 +593,52 @@ const ProductDetails = () => {
                                         )}
                                     </button> */}
 
-                        <div className="mt-8">
-                            <Accordion
-                                expanded={expandedPanels.panel1}
-                                onChange={handleAccordionToggle("panel1")}
-                                elevation={0}
-                                sx={{ boxShadow: "none", border: "1px solid #ddd" }}
-                            >
-                                <AccordionSummary sx={{ fontWeight: "bold" }} expandIcon={<ExpandMoreIcon />}>
-                                    Product Description
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <div className="text-gray-800 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: product.description }} />
-                                    <div className='mt-2 text-sm'>
-                                        <span className='font-semibold'>Note - </span><span>The shades of this T-shirt might slightly vary from the picture.</span>
-                                    </div>
-                                </AccordionDetails>
-                            </Accordion>
+                                <div className="mt-8">
+                                    <Accordion
+                                        expanded={expandedPanels.panel1}
+                                        onChange={handleAccordionToggle("panel1")}
+                                        elevation={0}
+                                        sx={{ boxShadow: "none", border: "1px solid #ddd" }}
+                                    >
+                                        <AccordionSummary sx={{ fontWeight: "bold" }} expandIcon={<ExpandMoreIcon />}>
+                                            Product Description
+                                        </AccordionSummary>
+                                        <AccordionDetails>
+                                            <div className="text-gray-800 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: product.description }} />
+                                            <div className='mt-2 text-sm'>
+                                                <span className='font-semibold'>Note - </span><span>The shades of this T-shirt might slightly vary from the picture.</span>
+                                            </div>
+                                        </AccordionDetails>
+                                    </Accordion>
 
-                            <Accordion
-                                expanded={expandedPanels.panel2}
-                                onChange={handleAccordionToggle("panel2")}
-                                elevation={0}
-                                sx={{ boxShadow: "none", border: "1px solid #ddd" }}
-                            >
-                                <AccordionSummary sx={{ fontWeight: "bold" }} expandIcon={<ExpandMoreIcon />}>
-                                    Product Details
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <img src={oversized} width={250} className='h-auto mx-auto mb-4' />
-                                    <ul className="list-disc pl-5 text-gray-800">
-                                        <li>100% Cotton Premium Exclusive of Decoration</li>
-                                        <li>Made in India</li>
-                                        <li>Machine wash cold with like colors</li>
-                                        <li>Do not bleach</li>
-                                        <li>Tumble dry low</li>
-                                        <li>Warm iron</li>
-                                        <li>Do not dry clean</li>
-                                        <li>Use mild detergent</li>
-                                        <li>Dry immediately after wash</li>
-                                        <li>Do not iron on print, tapes & emblems</li>
-                                    </ul>
-                                </AccordionDetails>
-                            </Accordion>
-                        </div>
+                                    <Accordion
+                                        expanded={expandedPanels.panel2}
+                                        onChange={handleAccordionToggle("panel2")}
+                                        elevation={0}
+                                        sx={{ boxShadow: "none", border: "1px solid #ddd" }}
+                                    >
+                                        <AccordionSummary sx={{ fontWeight: "bold" }} expandIcon={<ExpandMoreIcon />}>
+                                            Product Details
+                                        </AccordionSummary>
+                                        <AccordionDetails>
+                                            <img src={oversized} width={250} className='h-auto mx-auto mb-4' />
+                                            <ul className="list-disc pl-5 text-gray-800">
+                                                <li>100% Cotton Premium Exclusive of Decoration</li>
+                                                <li>Made in India</li>
+                                                <li>Machine wash cold with like colors</li>
+                                                <li>Do not bleach</li>
+                                                <li>Tumble dry low</li>
+                                                <li>Warm iron</li>
+                                                <li>Do not dry clean</li>
+                                                <li>Use mild detergent</li>
+                                                <li>Dry immediately after wash</li>
+                                                <li>Do not iron on print, tapes & emblems</li>
+                                            </ul>
+                                        </AccordionDetails>
+                                    </Accordion>
+                                </div>
 
-                        {/* <p className="text-gray-800 my-4 font-semibold">Quantity:</p>
+                                {/* <p className="text-gray-800 my-4 font-semibold">Quantity:</p>
                                 <div className='flex gap-4 my-2 items-center'>
                                     <div>
                                         <div className="flex items-center gap-4">
@@ -648,7 +649,7 @@ const ProductDetails = () => {
                                     </div>
 
                                 </div> */}
-                    </div>
+                            </div>
                         </div>
                     </div >
                 )}

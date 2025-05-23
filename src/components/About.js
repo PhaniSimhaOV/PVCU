@@ -46,7 +46,7 @@ const AboutUs = () => {
                                 </h1>
                                 <div className="my-6">
                                     <p className="text-black leading-relaxed mb-2">
-                                        Welcome to the PVCU, where fandom meets fashion and legends live on your shelf..
+                                        Welcome to the PVCU, where fandom meets fashion and legends live on your shelf.
                                     </p>
                                     <p className="text-black leading-relaxed mb-2">
                                         We’re the official merch destination of PVCU, an Indian superhero universe inspired by our itihasas, valor, and homegrown heroes.

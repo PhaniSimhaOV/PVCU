@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 const PaymentButton = ({ totalAmount, cartItems }) => {
     const navigate = useNavigate()
     const handleNavigate = () => {
-        navigate("/checkout", { state: { cartItems } });
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+        navigate("/checkout");
     };
     return (
         <button
