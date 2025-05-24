@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Accordion, AccordionDetails, AccordionSummary, CircularProgress, Container } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL, IMAGE_URL } from '../constants';
 import toast, { Toaster } from 'react-hot-toast';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import loadingImage from "../assets/images/2.png"
+import loadingImage from "../assets/images/2.gif"
 import FacebookIcon from '@mui/icons-material/Facebook';
 import XIcon from '@mui/icons-material/X';
 import InstagramIcon from '@mui/icons-material/Instagram';
@@ -227,8 +227,47 @@ const ProductDetails = () => {
             [panel]: isExpanded,
         }));
     };
+    const chartRef = useRef(null);
+    const [open, setOpen] = useState(false);
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (chartRef.current && !chartRef.current.contains(event.target)) {
+                setOpen(false);
+            }
+        }
 
-    const [showSizeChart, setShowSizeChart] = useState(false);
+        if (open) {
+            document.addEventListener("mousedown", handleClickOutside);
+        } else {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [open]);
+
+    const sizeLabelMap = {
+        S: "8-9",
+        M: "10-12",
+        L: "12-13",
+        XL: "14",
+    };
+    const filteredSizes = productSize?.sizes?.filter((sizeOption) => {
+        let targetSize = sizeOption?.size;
+
+        if (product?.gender === "Kids") {
+            targetSize = sizeLabelMap[sizeOption?.size] || sizeOption?.size;
+        }
+
+        const matchingProductSize = product?.sizes?.find(
+            (pSize) => pSize?.size === targetSize
+        );
+
+        const hasStock = matchingProductSize && matchingProductSize?.stock > 0;
+        const excludeXXLForKids = !(product?.gender === "Kids" && sizeOption?.size === "XXL");
+        return hasStock && excludeXXLForKids;
+    });
     return (
         <Container>
             <Toaster
@@ -241,7 +280,6 @@ const ProductDetails = () => {
                         <img
                             src={loadingImage}
                             alt="Loading..."
-                            className="w-42 h-20 animate-bounce"
                         />
                     </div>
 
@@ -304,171 +342,149 @@ const ProductDetails = () => {
                                 {productSize.sizes?.length > 0 && (
                                     <>
                                         <p className="text-gray-800 mb-2 font-semibold">
-                                            Please select a size :{" "}
-                                            <Tooltip
-                                                title={
-                                                    <div style={{
-                                                        width: '420px', display: "flex", flexDirection: "column", gap: "10px", background: "rgb(172 91 36/var(--tw-bg-opacity,1))", color: "white"
-                                                    }}>
-                                                        {
-                                                            product?.gender !== "Kids" && <table className="w-full border border-collapse mb-6">
-                                                                <thead className="bg-[rgb(172 91 36/var(--tw-bg-opacity,1))
-]">
-                                                                    <tr>
-                                                                        <th className="border p-2">Size</th>
-                                                                        <th className="border p-2">To Fit Your Chest Size</th>
-                                                                        <th className="border p-2">Chest (inches)</th>
-                                                                        <th className="border p-2">Length (inches)</th>
-                                                                        <th className="border p-2">Shoulder (inches)</th>
-                                                                        <th className="border p-2">Neck (inches)</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td className="border p-2">Small</td>
-                                                                        <td className="border p-2">38</td>
-
-                                                                        <td className="border p-2">44</td>
-                                                                        <td className="border p-2">27</td>
-                                                                        <td className="border p-2">21</td>
-                                                                        <td className="border p-2">21</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td className="border p-2">Medium</td>
-                                                                        <td className="border p-2">40</td>
-
-                                                                        <td className="border p-2">46</td>
-                                                                        <td className="border p-2">27.5</td>
-                                                                        <td className="border p-2">22</td>
-                                                                        <td className="border p-2">21</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td className="border p-2">Large</td>
-                                                                        <td className="border p-2">42</td>
-
-                                                                        <td className="border p-2">48</td>
-                                                                        <td className="border p-2">30</td>
-                                                                        <td className="border p-2">23</td>
-                                                                        <td className="border p-2">21</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td className="border p-2">X Large</td>
-                                                                        <td className="border p-2">44</td>
-
-                                                                        <td className="border p-2">50</td>
-                                                                        <td className="border p-2">30.5</td>
-                                                                        <td className="border p-2">24</td>
-                                                                        <td className="border p-2">22</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td className="border p-2">XX Large</td>
-                                                                        <td className="border p-2">46</td>
-
-                                                                        <td className="border p-2">52</td>
-                                                                        <td className="border p-2">31</td>
-                                                                        <td className="border p-2">25</td>
-                                                                        <td className="border p-2">22</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td className="border p-2">XXX Large</td>
-                                                                        <td className="border p-2">48</td>
-
-                                                                        <td className="border p-2">54</td>
-                                                                        <td className="border p-2">31</td>
-                                                                        <td className="border p-2">26</td>
-                                                                        <td className="border p-2">22</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        }
-                                                        {
-                                                            product?.gender === "Kids" && <table className="w-full border border-collapse" style={{ background: "rgb(172 91 36/var(--tw-bg-opacity,1))", color: "white" }}>
-                                                                <thead >
-                                                                    <tr>
-                                                                        <th className="border p-2">Size</th>
-                                                                        <th className="border p-2">Age</th>
-                                                                        <th className="border p-2">Chest (in)</th>
-                                                                        <th className="border p-2">Length (in)</th>
-                                                                        <th className="border p-2">Shoulder (in)</th>
-                                                                        <th className="border p-2">Sleeve Length (in)</th>
-                                                                        <th className="border p-2">Neck (in)</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td className="border p-2">Small</td>
-                                                                        <td className="border p-2">8-9</td>
-                                                                        <td className="border p-2">26-28</td>
-                                                                        <td className="border p-2">20-21</td>
-                                                                        <td className="border p-2">12-13</td>
-                                                                        <td className="border p-2">6</td>
-                                                                        <td className="border p-2">12-13</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td className="border p-2">Medium</td>
-                                                                        <td className="border p-2">10-11</td>
-                                                                        <td className="border p-2">28-30</td>
-                                                                        <td className="border p-2">22-23</td>
-                                                                        <td className="border p-2">13-14</td>
-                                                                        <td className="border p-2">6.5</td>
-                                                                        <td className="border p-2">13-14</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td className="border p-2">Large</td>
-                                                                        <td className="border p-2">12-13</td>
-                                                                        <td className="border p-2">30-32</td>
-                                                                        <td className="border p-2">24-25</td>
-                                                                        <td className="border p-2">14-15</td>
-                                                                        <td className="border p-2">7</td>
-                                                                        <td className="border p-2">14-15</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td className="border p-2">X Large</td>
-                                                                        <td className="border p-2">14</td>
-                                                                        <td className="border p-2">32-34</td>
-                                                                        <td className="border p-2">26-27</td>
-                                                                        <td className="border p-2">15-16</td>
-                                                                        <td className="border p-2">7.5</td>
-                                                                        <td className="border p-2">15-16</td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        }
-                                                    </div>
-                                                }
-                                                placement="bottom"
-                                                arrow
-                                                componentsProps={{
-                                                    tooltip: {
-                                                        sx: {
-                                                            bgcolor: 'white',
-                                                            color: 'black',
-                                                            border: '1px solid #ccc',
-                                                            boxShadow: 3,
-                                                            maxWidth: '444px',
-                                                            p: 1,
-                                                        }
-                                                    }
-                                                }}
-                                            >
-                                                <span className="text-blue-600 cursor-pointer inline-flex items-center">
+                                            <div>
+                                                Please select a size :{" "}
+                                                <span onClick={() => setOpen(true)} className="text-blue-600 cursor-pointer inline-flex items-center">
                                                     Size Chart <InfoOutlinedIcon fontSize="small" className="ml-1" />
                                                 </span>
-                                            </Tooltip>
+
+                                            </div>
+
+                                            {open && <div ref={chartRef} style={{
+                                                width: '450px', display: "flex", flexDirection: "column", gap: "10px", background: "rgb(172 91 36/var(--tw-bg-opacity,1))", color: "white"
+                                            }}>
+                                                {
+                                                    product?.gender !== "Kids" && <table className="w-full border border-collapse mb-6">
+                                                        <thead className="bg-[rgb(172 91 36/var(--tw-bg-opacity,1))
+]">
+                                                            <tr>
+                                                                <th className="border p-2">Size</th>
+                                                                <th className="border p-2">To Fit Your Chest Size</th>
+                                                                <th className="border p-2">Chest (inches)</th>
+                                                                <th className="border p-2">Length (inches)</th>
+                                                                <th className="border p-2">Shoulder (inches)</th>
+                                                                <th className="border p-2">Neck (inches)</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td className="border p-2">Small</td>
+                                                                <td className="border p-2">38</td>
+
+                                                                <td className="border p-2">44</td>
+                                                                <td className="border p-2">27</td>
+                                                                <td className="border p-2">21</td>
+                                                                <td className="border p-2">21</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td className="border p-2">Medium</td>
+                                                                <td className="border p-2">40</td>
+
+                                                                <td className="border p-2">46</td>
+                                                                <td className="border p-2">27.5</td>
+                                                                <td className="border p-2">22</td>
+                                                                <td className="border p-2">21</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td className="border p-2">Large</td>
+                                                                <td className="border p-2">42</td>
+
+                                                                <td className="border p-2">48</td>
+                                                                <td className="border p-2">30</td>
+                                                                <td className="border p-2">23</td>
+                                                                <td className="border p-2">21</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td className="border p-2">X Large</td>
+                                                                <td className="border p-2">44</td>
+
+                                                                <td className="border p-2">50</td>
+                                                                <td className="border p-2">30.5</td>
+                                                                <td className="border p-2">24</td>
+                                                                <td className="border p-2">22</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td className="border p-2">XX Large</td>
+                                                                <td className="border p-2">46</td>
+
+                                                                <td className="border p-2">52</td>
+                                                                <td className="border p-2">31</td>
+                                                                <td className="border p-2">25</td>
+                                                                <td className="border p-2">22</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td className="border p-2">XXX Large</td>
+                                                                <td className="border p-2">48</td>
+
+                                                                <td className="border p-2">54</td>
+                                                                <td className="border p-2">31</td>
+                                                                <td className="border p-2">26</td>
+                                                                <td className="border p-2">22</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                                {
+                                                    product?.gender === "Kids" && <table className="w-full border border-collapse" style={{ background: "rgb(172 91 36/var(--tw-bg-opacity,1))", color: "white" }}>
+                                                        <thead >
+                                                            <tr>
+                                                                <th className="border p-2">Size</th>
+                                                                <th className="border p-2">Age</th>
+                                                                <th className="border p-2">Chest (in)</th>
+                                                                <th className="border p-2">Length (in)</th>
+                                                                <th className="border p-2">Shoulder (in)</th>
+                                                                <th className="border p-2">Sleeve Length (in)</th>
+                                                                <th className="border p-2">Neck (in)</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td className="border p-2">Small</td>
+                                                                <td className="border p-2">8-9</td>
+                                                                <td className="border p-2">26-28</td>
+                                                                <td className="border p-2">20-21</td>
+                                                                <td className="border p-2">12-13</td>
+                                                                <td className="border p-2">6</td>
+                                                                <td className="border p-2">12-13</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td className="border p-2">Medium</td>
+                                                                <td className="border p-2">10-11</td>
+                                                                <td className="border p-2">28-30</td>
+                                                                <td className="border p-2">22-23</td>
+                                                                <td className="border p-2">13-14</td>
+                                                                <td className="border p-2">6.5</td>
+                                                                <td className="border p-2">13-14</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td className="border p-2">Large</td>
+                                                                <td className="border p-2">12-13</td>
+                                                                <td className="border p-2">30-32</td>
+                                                                <td className="border p-2">24-25</td>
+                                                                <td className="border p-2">14-15</td>
+                                                                <td className="border p-2">7</td>
+                                                                <td className="border p-2">14-15</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td className="border p-2">X Large</td>
+                                                                <td className="border p-2">14</td>
+                                                                <td className="border p-2">32-34</td>
+                                                                <td className="border p-2">26-27</td>
+                                                                <td className="border p-2">15-16</td>
+                                                                <td className="border p-2">7.5</td>
+                                                                <td className="border p-2">15-16</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                            </div>}
+
+
 
                                         </p>
                                         <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 items-center gap-4 mt-4">
-                                            {productSize.sizes.filter((sizeOption) => {
-                                                // Exclude XXL for Kids
-                                                return !(product.gender === "Kids" && sizeOption.size === "XXL");
-                                            }).map((sizeOption) => {
-                                                // If gender is Kids, show age-based labels
-                                                const sizeLabelMap = {
-                                                    S: "8-9",
-                                                    M: "10-11",
-                                                    L: "12-14",
-                                                    XL: "14",
-                                                };
+                                            {filteredSizes?.map((sizeOption) => {
+
 
                                                 const displayLabel =
                                                     product.gender === "Kids"
@@ -482,7 +498,7 @@ const ProductDetails = () => {
                                                             ? "bg-[#8B4513] text-white"
                                                             : "hover:bg-gray-100"
                                                             }`}
-                                                        onClick={() => setSize(sizeOption.size)}
+                                                        onClick={() => { console.log("Selected size:", sizeOption); setSize(sizeOption.size) }}
                                                     >
                                                         {displayLabel}
                                                     </button>

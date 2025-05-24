@@ -339,6 +339,13 @@ const Home = () => {
         const order = ['Hanu-Man', 'Super-Hero', 'Michael', 'Hey Siri!'];
         return order.indexOf(a.name) - order.indexOf(b.name);
     });
+
+    const BANNER_URLS = {
+        "67ebdd495d2648edb1c2cb6f": "/details/67ebd5545d2648edb1c2caf5",
+        "67ee8ac85d2648edb1c2d82a": "/details/67ebd41c5d2648edb1c2cac5",
+        "67ebdec65d2648edb1c2cbbb": "/details/67f8cfdc541c66611959ce6a",
+        "67ebde8d5d2648edb1c2cbb9":"/details/67ebd25d5d2648edb1c2ca9c",
+    };
     return (
         <div>
 
@@ -527,7 +534,7 @@ const Home = () => {
                                         <div key={product.id} className="rounded-lg border border-gray-100 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800 relative transition-all duration-300 ease-in-out transform hover:scale-105">
                                             <div className="h-full w-full relative">
                                                 {/* <a href=""> */}
-                                                <a href={`/details/${product._id}`}>
+                                                <a href={BANNER_URLS[product._id] || "#"}>
                                                     <img
                                                         className="w-full h-full dark:hidden"
                                                         src={`${IMAGE_URL}/${product.imageUrl}`}

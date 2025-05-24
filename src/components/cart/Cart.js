@@ -6,7 +6,7 @@ import { useCart } from "../../context/CartContext";  // Import the custom hook 
 import emptyCartLogo from "../../assets/images/empty-cart.png";
 import axios from "axios";
 import { API_URL } from "../../constants";
-import loadingImage from "../../assets/images/2.png"
+import loadingImage from "../../assets/images/2.gif"
 
 
 const Cart = () => {
@@ -53,7 +53,6 @@ const Cart = () => {
                     <img
                         src={loadingImage}
                         alt="Loading..."
-                        className="w-42 h-20 animate-bounce"
                     />
                 </div>
             </Container>

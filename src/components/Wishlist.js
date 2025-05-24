@@ -6,7 +6,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import NoFound from "../components/common/NoFound"
 import { Link, useNavigate } from 'react-router-dom';
-import loadingImage from "../assets/images/2.png"
+import loadingImage from "../assets/images/2.gif"
 import { ShoppingBag } from '@mui/icons-material';
 
 const Wishlist = () => {
@@ -201,7 +201,6 @@ const Wishlist = () => {
                     <img
                         src={loadingImage}
                         alt="Loading..."
-                        className="w-42 h-20 animate-bounce"
                     />
                 </div>
             </Container>
