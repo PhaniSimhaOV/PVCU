@@ -253,20 +253,26 @@ const ProductDetails = () => {
         L: "12-13",
         XL: "14",
     };
-    const filteredSizes = productSize?.sizes?.filter((sizeOption) => {
-        let targetSize = sizeOption?.size;
+    // const filteredSizes = productSize?.sizes?.filter((sizeOption) => {
+    //     let targetSize = sizeOption?.size;
 
-        if (product?.gender === "Kids") {
-            targetSize = sizeLabelMap[sizeOption?.size] || sizeOption?.size;
+    //     if (product?.gender === "Kids") {
+    //         targetSize = sizeLabelMap[sizeOption?.size] || sizeOption?.size;
+    //     }
+
+    //     const matchingProductSize = product?.sizes?.find(
+    //         (pSize) => pSize?.size === targetSize
+    //     );
+
+    //     const hasStock = matchingProductSize && matchingProductSize?.stock > 0;
+    //     const excludeXXLForKids = !(product?.gender === "Kids" && sizeOption?.size === "XXL");
+    //     return hasStock && excludeXXLForKids;
+    // });
+    const filteredSizes = productSize?.sizes?.filter(sizeOption => {
+        if (product?.gender === "Kids" && sizeOption.size === "XXL") {
+            return false;
         }
-
-        const matchingProductSize = product?.sizes?.find(
-            (pSize) => pSize?.size === targetSize
-        );
-
-        const hasStock = matchingProductSize && matchingProductSize?.stock > 0;
-        const excludeXXLForKids = !(product?.gender === "Kids" && sizeOption?.size === "XXL");
-        return hasStock && excludeXXLForKids;
+        return true;
     });
     return (
         <Container>
@@ -484,21 +490,39 @@ const ProductDetails = () => {
                                         </p>
                                         <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 items-center gap-4 mt-4">
                                             {filteredSizes?.map((sizeOption) => {
+                                                let targetSize = sizeOption.size;
 
+                                                if (product?.gender === "Kids") {
+                                                    targetSize = sizeLabelMap[sizeOption.size] || sizeOption.size;
+                                                }
 
-                                                const displayLabel =
-                                                    product.gender === "Kids"
-                                                        ? sizeLabelMap[sizeOption.size] || sizeOption.size
-                                                        : sizeOption.size;
+                                                const matchingProductSize = product?.sizes?.find(
+                                                    (pSize) => pSize.size === targetSize
+                                                );
+
+                                                const hasStock = matchingProductSize && matchingProductSize.stock > 0;
+                                                const isDisabled = !hasStock;
+
+                                                const displayLabel = product.gender === "Kids"
+                                                    ? (sizeLabelMap[sizeOption.size] || sizeOption.size)
+                                                    : sizeOption.size;
+
 
                                                 return (
                                                     <button
+                                                        title={isDisabled ? "Size not available" : ""}
                                                         key={sizeOption.size}
-                                                        className={`px-4 py-2 border rounded-lg ${size === sizeOption.size
-                                                            ? "bg-[#8B4513] text-white"
-                                                            : "hover:bg-gray-100"
-                                                            }`}
-                                                        onClick={() => { console.log("Selected size:", sizeOption); setSize(sizeOption.size) }}
+                                                        disabled={isDisabled}
+                                                        className={`px-4 py-2 border rounded-lg
+          ${size === sizeOption.size ? "bg-[#8B4513] text-white" : "hover:bg-gray-100"}
+          ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}
+        `}
+                                                        onClick={() => {
+                                                            if (!isDisabled) {
+                                                                console.log("Selected size:", sizeOption);
+                                                                setSize(sizeOption.size);
+                                                            }
+                                                        }}
                                                     >
                                                         {displayLabel}
                                                     </button>
